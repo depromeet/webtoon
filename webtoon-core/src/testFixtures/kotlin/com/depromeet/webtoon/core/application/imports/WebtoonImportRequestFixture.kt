@@ -7,14 +7,19 @@ import java.time.DayOfWeek
 
 fun webtoonImportRequestFixture(
     title: String = "고양이 일상",
+    url: String = "naver.com",
+    thumbnailImage: String = "",
     dayOfWeeks: List<DayOfWeek> = listOf(DayOfWeek.MONDAY, DayOfWeek.THURSDAY),
     authors: List<String> = listOf("감자", "웅"),
     site: WebtoonSite = NAVER,
     genres: List<String> = listOf("고양이", "일상"),
     score: Double = 4.8,
     popular: Int = 2,
+
 ) = WebtoonImportRequest(
     title = title,
+    url = url,
+    thumbnailImage = thumbnailImage,
     dayOfWeeks = dayOfWeeks,
     authors = authors,
     site = site,
