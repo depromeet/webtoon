@@ -31,13 +31,12 @@ class DaumCrawlerService(val webtoonImportService: WebtoonImportService) {
         val webtoonImportRequests = getWebtoonImportRequests(todayWebtoonNicknamesSortedAsPopularity)
         // 입력될 데이터 확인
         webtoonImportRequests.forEach(System.out::println)
-        /*
+
         // todo webtoonImportService 이용해 넣어 주기만 하면 된다. 근데 테스트는 ..?
         val listIterator = webtoonImportRequests.listIterator()
         while (listIterator.hasNext()) {
             webtoonImportService.importWebtoon(listIterator.next())
         }
-        */
     }
 
     private fun getWebtoonImportRequests(nicknames: List<String>): List<WebtoonImportRequest> {
@@ -85,7 +84,7 @@ class DaumCrawlerService(val webtoonImportService: WebtoonImportService) {
         return webtoonImportRequests
     }
 
-    private fun getSortedNicknamesByPopularity(): List<String> {
+    fun getSortedNicknamesByPopularity(): List<String> {
         val popularNicknames = getPopularNicknames()
         val todayNicknames = getTodayUpdatedNicknames()
 
