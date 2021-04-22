@@ -6,6 +6,7 @@ import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.DaumWebtoonDetail
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.WebtoonWeeks
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoonlist.DaumWebtoonCrawlResult
 import com.depromeet.webtoon.core.type.WebtoonSite
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -29,13 +30,12 @@ class DaumCrawlerService(val webtoonImportService: WebtoonImportService) {
     fun updateDaumWebtoons() {
         val todayWebtoonNicknamesSortedAsPopularity = getSortedNicknamesByPopularity()
         val webtoonImportRequests = getWebtoonImportRequests(todayWebtoonNicknamesSortedAsPopularity)
-        // 입력될 데이터 확인
-        webtoonImportRequests.forEach(System.out::println)
 
-        // todo webtoonImportService 이용해 넣어 주기만 하면 된다. 근데 테스트는 ..?
         val listIterator = webtoonImportRequests.listIterator()
         while (listIterator.hasNext()) {
-            webtoonImportService.importWebtoon(listIterator.next())
+            val importRequest = listIterator.next()
+            webtoonImportService.importWebtoon(importRequest)
+            log.info("[DaumCrawlerService] - webtoon import. webtoon title : ${importRequest.title}")
         }
     }
 
@@ -134,5 +134,9 @@ class DaumCrawlerService(val webtoonImportService: WebtoonImportService) {
         return client.get()
             .uri("data/mobile/webtoon?sort=view&page_size=50&page_no=$pageNum&$currentTime").retrieve()
             .bodyToMono(DaumWebtoonCrawlResult::class.java).block()
+    }
+
+    companion object{
+        val log = LoggerFactory.getLogger(DaumCrawlerService::class.java)
     }
 }
