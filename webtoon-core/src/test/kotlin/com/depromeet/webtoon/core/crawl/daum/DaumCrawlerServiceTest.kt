@@ -1,12 +1,17 @@
 package com.depromeet.webtoon.core.crawl.daum
 
 import io.kotest.core.spec.style.FunSpec
+import io.mockk.mockk
 
 class DaumCrawlerServiceTest : FunSpec({
 
-    test("crawl") {
-        // TODO 수정 필요
-//        val crawlService = DaumCrawlerService(daumRequestAdapter = DaumRequestAdapter(), mockk())
-//        crawlService.getPopularWebtoons()
+    context("DaumCrawlerService") {
+        test("updateDaumWebtoons 연관 메소드 호출 테스트") {
+
+            val crawlService = DaumCrawlerService(mockk())
+
+            // when
+            crawlService.updateDaumWebtoons()
+        }
     }
 })

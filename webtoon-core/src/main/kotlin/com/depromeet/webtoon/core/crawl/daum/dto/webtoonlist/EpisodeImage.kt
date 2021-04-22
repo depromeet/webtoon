@@ -1,4 +1,5 @@
-package com.depromeet.webtoon.core.crawl.daum.dto
+package com.depromeet.webtoon.core.crawl.daum.dto.webtoonlist
+
 /*
 Copyright (c) 2021 Kotlin Data Classes Generated from JSON powered by http://www.json2kotlin.com
 
@@ -11,8 +12,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class Artists (
+data class EpisodeImage (
 
-	val name : String,
-	val penName : String
+	val url : String,
+	val serviceStatus : String
 )
