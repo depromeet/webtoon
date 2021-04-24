@@ -1,4 +1,4 @@
-package com.depromeet.webtoon.core.crawl.daum.dto
+package com.depromeet.webtoon.core.crawl.daum.dto.webtoonlist
 
 data class DaumWebtoonCrawlResult(
 
@@ -23,6 +23,7 @@ data class Data(
 data class Webtoons(
 
     val id: Int,
+    val nickname: String,
     val title: String,
     val finishYn: String,
     val thumbnailImage2: ThumbnailImage2,
@@ -30,5 +31,6 @@ data class Webtoons(
     val dateCreated: Long,
     val cartoon: Cartoon,
     val latestWebtoonEpisode: LatestWebtoonEpisode,
-    val averageScore: Double
+    val averageScore: Double,
+    val ageGrade: Int
 )

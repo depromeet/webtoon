@@ -1,4 +1,4 @@
-package com.depromeet.webtoon.core.crawl.daum.dto
+package com.depromeet.webtoon.core.crawl.daum.dto.webtoonlist
 
 import com.depromeet.webtoon.core.domain.author.model.Author
 
