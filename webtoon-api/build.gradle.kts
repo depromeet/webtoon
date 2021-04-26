@@ -17,6 +17,6 @@ tasks.jar {
 
 tasks.bootJar {
     enabled = true
-    mainClassName = "com.depromeet.webtoon.api.WebtoonApiApplication"
+    mainClassName = "com.depromeet.webtoon.api.WebtoonApiApplicationKt"
     archiveFileName.set("webtoon-api.jar")
 }
