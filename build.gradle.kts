@@ -44,6 +44,9 @@ subprojects {
             dependency("io.kotest:kotest-property:4.3.1")
             dependency("io.kotest:kotest-extensions-spring:4.3.1")
             dependency("io.mockk:mockk:1.10.2")
+            dependency("io.kotest:kotest-runner-junit5:4.4.3")
+            dependency("io.kotest:kotest-extensions-spring:4.4.3")
+            dependency("org.jsoup:jsoup:1.13.1")
         }
     }
 
@@ -56,10 +59,10 @@ subprojects {
 
         // test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
-        testImplementation("io.mockk:mockk:1.10.2")
+        testImplementation("io.mockk:mockk")
 
-        testImplementation("io.kotest:kotest-runner-junit5:4.4.3")
-        testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
+        testImplementation("io.kotest:kotest-runner-junit5")
+        testImplementation("io.kotest:kotest-extensions-spring")
     }
 
     configurations {

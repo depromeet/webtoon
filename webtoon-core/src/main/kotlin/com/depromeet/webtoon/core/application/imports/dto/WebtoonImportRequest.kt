@@ -5,6 +5,8 @@ import java.time.DayOfWeek
 
 data class WebtoonImportRequest(
     val title: String,
+    val url: String,
+    val thumbnailImage: String,
     val dayOfWeeks: List<DayOfWeek>,
     val authors: List<String>,
     val site: WebtoonSite,

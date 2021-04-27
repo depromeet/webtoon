@@ -3,7 +3,9 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-data-jpa")
     api("org.springframework.boot:spring-boot-starter-validation")
 
+    // TODO 크롤러는 별도로 분리할것??!!
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.jsoup:jsoup")
 
     runtimeOnly("com.h2database:h2")
 

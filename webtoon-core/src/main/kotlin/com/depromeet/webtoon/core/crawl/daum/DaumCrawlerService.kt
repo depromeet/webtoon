@@ -17,7 +17,9 @@ import java.time.LocalDate
 
 // API 서비스 호출 + 정제
 @Service
-class DaumCrawlerService(val webtoonImportService: WebtoonImportService) {
+class DaumCrawlerService(
+    val webtoonImportService: WebtoonImportService
+) {
 
     private val client: WebClient = WebClient.builder()
         .baseUrl("http://m.webtoon.daum.net")
@@ -41,7 +43,10 @@ class DaumCrawlerService(val webtoonImportService: WebtoonImportService) {
 
     private fun getWebtoonImportRequests(nicknames: List<String>): List<WebtoonImportRequest> {
         val webtoonImportRequests = ArrayList<WebtoonImportRequest>()
-        fun crawlResultToWebtoonImportRequest(crawlResult: DaumWebtoonDetailCrawlResult, popular: Int): WebtoonImportRequest {
+        fun crawlResultToWebtoonImportRequest(
+            crawlResult: DaumWebtoonDetailCrawlResult,
+            popular: Int
+        ): WebtoonImportRequest {
 
             fun setDayOfWeek(list: List<WebtoonWeeks>): List<DayOfWeek> {
                 val dayOfWeeks = ArrayList<DayOfWeek>()
@@ -58,13 +63,15 @@ class DaumCrawlerService(val webtoonImportService: WebtoonImportService) {
             }
 
             return WebtoonImportRequest(
-                crawlResult.data.webtoon.title,
-                setDayOfWeek(crawlResult.data.webtoon.webtoonWeeks),
-                crawlResult.data.webtoon.cartoon.artists.map { it.name }.distinct(),
-                WebtoonSite.DAUM,
-                crawlResult.data.webtoon.cartoon.genres.map { it.name },
-                crawlResult.data.webtoon.averageScore,
-                popular
+                title = crawlResult.data.webtoon.title,
+                dayOfWeeks = setDayOfWeek(crawlResult.data.webtoon.webtoonWeeks),
+                authors = crawlResult.data.webtoon.cartoon.artists.map { it.name }.distinct(),
+                site = WebtoonSite.DAUM,
+                genres = crawlResult.data.webtoon.cartoon.genres.map { it.name },
+                score = crawlResult.data.webtoon.averageScore,
+                popular = popular,
+                url = "TODO",
+                thumbnailImage = "TODO",
             )
         }
 
@@ -136,7 +143,7 @@ class DaumCrawlerService(val webtoonImportService: WebtoonImportService) {
             .bodyToMono(DaumWebtoonCrawlResult::class.java).block()
     }
 
-    companion object{
+    companion object {
         val log = LoggerFactory.getLogger(DaumCrawlerService::class.java)
     }
 }
