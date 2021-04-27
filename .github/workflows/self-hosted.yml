@@ -18,7 +18,7 @@ jobs:
           ./gradlew clean :webtoon-api:bootJar
       - name: kill application if exist
         run: |
-          sudo pgrep -f webtoon-api | xargs -r kill -15
+          pgrep -f webtoon-api | xargs -r sudo kill -15
           sleep 5
       - name: replace jar file
         run: |
