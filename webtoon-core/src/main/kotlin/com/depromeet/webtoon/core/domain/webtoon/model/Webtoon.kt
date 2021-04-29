@@ -7,7 +7,9 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
+import javax.persistence.CollectionTable
 import javax.persistence.Column
+import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
 import javax.persistence.EnumType
@@ -15,6 +17,7 @@ import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType.IDENTITY
 import javax.persistence.Id
+import javax.persistence.JoinColumn
 import javax.persistence.ManyToMany
 
 @Entity
@@ -24,6 +27,8 @@ class Webtoon constructor(
     title: String = "",
     site: WebtoonSite = NONE,
     authors: List<Author> = mutableListOf(),
+    weekdays: List<String> = mutableListOf(),
+    popularity: Int = 0,
     createdAt: LocalDateTime? = null,
     modifiedAt: LocalDateTime? = null,
 ) {
@@ -31,7 +36,7 @@ class Webtoon constructor(
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id")
+    @Column(name = "webtoon_id")
     var id: Long? = id
 
     @Column(name = "title")
@@ -43,6 +48,13 @@ class Webtoon constructor(
 
     @ManyToMany
     var authors: MutableList<Author> = authors.toMutableList()
+
+    @ElementCollection
+    @CollectionTable(name = "week_day", joinColumns = [JoinColumn(name = "webtoon_id")])
+    var weekdays: List<String> = weekdays.toMutableList()
+
+    @Column(name = "popularity")
+    var popularity: Int = popularity
 
     @CreatedDate
     var createdAt: LocalDateTime? = createdAt

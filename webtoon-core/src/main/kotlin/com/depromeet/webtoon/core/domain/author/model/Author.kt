@@ -1,6 +1,7 @@
 package com.depromeet.webtoon.core.domain.author.model
 
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -35,6 +36,7 @@ constructor(
     var name: String = name
 
     @ManyToMany(mappedBy = "authors")
+    @JsonIgnore
     var webtoons: List<Webtoon>? = webtoons
 
     @CreatedDate

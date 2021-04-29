@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 class WebtoonImportService(
     val webtoonService: WebtoonService,
     val authorService: AuthorService,
+
 ) {
     @Transactional(readOnly = false)
     fun importWebtoon(importRequest: WebtoonImportRequest): Webtoon {
@@ -31,7 +32,9 @@ class WebtoonImportService(
     ) = WebtoonUpsertRequest(
         title = importRequest.title,
         site = importRequest.site,
-        authors = authors
+        authors = authors,
+        dayOfWeeks = importRequest.dayOfWeeks,
+        popularity = importRequest.popular
     )
 
     companion object {
