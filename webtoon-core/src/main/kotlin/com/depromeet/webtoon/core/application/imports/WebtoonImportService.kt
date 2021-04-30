@@ -34,7 +34,8 @@ class WebtoonImportService(
         site = importRequest.site,
         authors = authors,
         dayOfWeeks = importRequest.dayOfWeeks,
-        popularity = importRequest.popular
+        popularity = importRequest.popular,
+        thumbnail = importRequest.thumbnailImage
     )
 
     companion object {

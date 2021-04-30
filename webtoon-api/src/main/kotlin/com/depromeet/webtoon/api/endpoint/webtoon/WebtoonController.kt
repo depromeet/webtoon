@@ -2,6 +2,7 @@ package com.depromeet.webtoon.api.endpoint.webtoon
 
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.api.endpoint.dto.Site
+import com.depromeet.webtoon.api.endpoint.dto.WeekdayWebtoon
 import com.depromeet.webtoon.api.endpoint.dto.WeekdayWebtoonsResponse
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateRequest
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateResponseDto
@@ -41,7 +42,7 @@ class WebtoonController(
                 HttpStatus.OK, null,
                 WeekdayWebtoonsResponse(
                     listOf(Site(WebtoonSite.DAUM, "daum.test"), Site(WebtoonSite.NAVER, "naver.test")),
-                    webtoons
+                    webtoons.map { WeekdayWebtoon(it.id!!, it.site.name, it.title, it.authors, it.popularity, it.thumbnail!!) }
                 )
             )
         } else {

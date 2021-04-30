@@ -29,6 +29,7 @@ class Webtoon constructor(
     authors: List<Author> = mutableListOf(),
     weekdays: List<String> = mutableListOf(),
     popularity: Int = 0,
+    thumbnail: String = "",
     createdAt: LocalDateTime? = null,
     modifiedAt: LocalDateTime? = null,
 ) {
@@ -55,6 +56,9 @@ class Webtoon constructor(
 
     @Column(name = "popularity")
     var popularity: Int = popularity
+
+    @Column(name = "thumbnail")
+    var thumbnail: String = thumbnail
 
     @CreatedDate
     var createdAt: LocalDateTime? = createdAt
