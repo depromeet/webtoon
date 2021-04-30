@@ -33,7 +33,7 @@ class WebtoonController(
     private val log = LoggerFactory.getLogger(WebtoonController::class.java)
 
     @GetMapping("/api/v1/webtoons/{weekDay}")
-    fun getWebtoonList(@ApiParam("요일", required = true, example = "mon") @PathVariable weekDay: DayOfWeek): ApiResponse<WeekdayWebtoonsResponse> {
+    fun getWebtoonList(@ApiParam("요일", required = true, example = "MONDAY") @PathVariable weekDay: DayOfWeek): ApiResponse<WeekdayWebtoonsResponse> {
 
         val webtoons = webtoonService.getWeekdayWebtoons(weekDay.name)
 
@@ -42,7 +42,7 @@ class WebtoonController(
                 HttpStatus.OK, null,
                 WeekdayWebtoonsResponse(
                     listOf(Site(WebtoonSite.DAUM, "daum.test"), Site(WebtoonSite.NAVER, "naver.test")),
-                    webtoons.map { WeekdayWebtoon(it.id!!, it.site.name, it.title, it.authors, it.popularity, it.thumbnail!!) }
+                    webtoons.map { WeekdayWebtoon(it.id!!, it.site.name, it.title, it.authors, it.popularity, it.thumbnail) }
                 )
             )
         } else {
