@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service
 class WebtoonService(
     val webtoonRepository: WebtoonRepository
 ) {
+
+    fun getWeekdayWebtoons(weekDay: String): List<Webtoon>? {
+        return webtoonRepository.findAllByWeekdaysOrderByPopularityAsc(weekDay)
+    }
+
     fun getWebtoons(): List<WebtoonCreateResponseDto> {
         val webtoon = webtoonRepository.findAll()
 
@@ -32,11 +37,21 @@ class WebtoonService(
                 site = request.site
                 title = request.title
                 authors = request.authors.toMutableList()
+                weekdays = request.dayOfWeeks.map { it.name }.toMutableList()
+                popularity = request.popularity
+                thumbnail = request.thumbnail
             }
         }
         // 존재하지 않는 경우 새롭게 데이터를 입력한 다음 저장
         else {
-            Webtoon(title = request.title, site = request.site, authors = request.authors)
+            Webtoon(
+                title = request.title,
+                site = request.site,
+                authors = request.authors,
+                weekdays = request.dayOfWeeks.map { it.name }.toMutableList(),
+                popularity = request.popularity,
+                thumbnail = request.thumbnail
+            )
                 .let { webtoonRepository.save(it) }
         }
     }

@@ -70,8 +70,8 @@ class DaumCrawlerService(
                 genres = crawlResult.data.webtoon.cartoon.genres.map { it.name },
                 score = crawlResult.data.webtoon.averageScore,
                 popular = popular,
+                thumbnailImage = crawlResult.data.webtoon.thumbnailImage2.url,
                 url = "TODO",
-                thumbnailImage = "TODO",
             )
         }
 
@@ -85,7 +85,6 @@ class DaumCrawlerService(
             val crawlResultToWebtoonImportRequest =
                 crawlResultToWebtoonImportRequest(crawlResult!!, listIterator.nextIndex())
 
-            // println(crawlResultToWebtoonImportRequest)
             webtoonImportRequests.add(crawlResultToWebtoonImportRequest)
         }
         return webtoonImportRequests
