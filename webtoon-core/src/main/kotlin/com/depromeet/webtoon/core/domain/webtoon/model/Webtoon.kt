@@ -3,6 +3,7 @@ package com.depromeet.webtoon.core.domain.webtoon.model
 import com.depromeet.webtoon.core.domain.author.model.Author
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WebtoonSite.NONE
+import com.depromeet.webtoon.core.type.WeekDay
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -27,7 +28,7 @@ class Webtoon constructor(
     title: String = "",
     site: WebtoonSite = NONE,
     authors: List<Author> = mutableListOf(),
-    weekdays: List<String> = mutableListOf(),
+    weekdays: List<WeekDay> = mutableListOf(),
     popularity: Int = 0,
     thumbnail: String = "",
     createdAt: LocalDateTime? = null,
@@ -37,7 +38,7 @@ class Webtoon constructor(
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "webtoon_id")
+    @Column(name = "id")
     var id: Long? = id
 
     @Column(name = "title")
@@ -51,8 +52,9 @@ class Webtoon constructor(
     var authors: MutableList<Author> = authors.toMutableList()
 
     @ElementCollection
-    @CollectionTable(name = "week_day", joinColumns = [JoinColumn(name = "webtoon_id")])
-    var weekdays: List<String> = weekdays.toMutableList()
+    @CollectionTable(name = "week_day", joinColumns = [JoinColumn(name = "id")])
+    @Enumerated(EnumType.STRING)
+    var weekdays: MutableList<WeekDay> = weekdays.toMutableList()
 
     @Column(name = "popularity")
     var popularity: Int = popularity

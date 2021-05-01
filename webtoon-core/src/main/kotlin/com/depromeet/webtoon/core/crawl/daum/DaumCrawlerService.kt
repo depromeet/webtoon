@@ -6,6 +6,7 @@ import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.DaumWebtoonDetail
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.WebtoonWeeks
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoonlist.DaumWebtoonCrawlResult
 import com.depromeet.webtoon.core.type.WebtoonSite
+import com.depromeet.webtoon.core.type.WeekDay
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -48,16 +49,16 @@ class DaumCrawlerService(
             popular: Int
         ): WebtoonImportRequest {
 
-            fun setDayOfWeek(list: List<WebtoonWeeks>): List<DayOfWeek> {
-                val dayOfWeeks = ArrayList<DayOfWeek>()
+            fun setDayOfWeek(list: List<WebtoonWeeks>): List<WeekDay> {
+                val dayOfWeeks = ArrayList<WeekDay>()
                 list.forEach {
-                    if (it.weekDay == "mon") dayOfWeeks.add(DayOfWeek.MONDAY)
-                    if (it.weekDay == "tue") dayOfWeeks.add(DayOfWeek.TUESDAY)
-                    if (it.weekDay == "wed") dayOfWeeks.add(DayOfWeek.WEDNESDAY)
-                    if (it.weekDay == "thu") dayOfWeeks.add(DayOfWeek.THURSDAY)
-                    if (it.weekDay == "fri") dayOfWeeks.add(DayOfWeek.FRIDAY)
-                    if (it.weekDay == "sat") dayOfWeeks.add(DayOfWeek.SATURDAY)
-                    if (it.weekDay == "sun") dayOfWeeks.add(DayOfWeek.SUNDAY)
+                    if (it.weekDay == "mon") dayOfWeeks.add(WeekDay.MON)
+                    if (it.weekDay == "tue") dayOfWeeks.add(WeekDay.TUE)
+                    if (it.weekDay == "wed") dayOfWeeks.add(WeekDay.WED)
+                    if (it.weekDay == "thu") dayOfWeeks.add(WeekDay.THU)
+                    if (it.weekDay == "fri") dayOfWeeks.add(WeekDay.FRI)
+                    if (it.weekDay == "sat") dayOfWeeks.add(WeekDay.SAT)
+                    if (it.weekDay == "sun") dayOfWeeks.add(WeekDay.SUN)
                 }
                 return dayOfWeeks
             }

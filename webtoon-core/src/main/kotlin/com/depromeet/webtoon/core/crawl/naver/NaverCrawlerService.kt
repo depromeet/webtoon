@@ -3,6 +3,7 @@ package com.depromeet.webtoon.core.crawl.naver
 import com.depromeet.webtoon.core.application.imports.WebtoonImportService
 import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
 import com.depromeet.webtoon.core.type.WebtoonSite
+import com.depromeet.webtoon.core.type.WeekDay
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
@@ -26,7 +27,7 @@ class NaverCrawlerService(
                 score = it.select("dl .rating_type strong").text().toDouble(),
                 thumbnailImage = it.select(".thumb img").attr("src"),
                 url = it.select("dl dt a").attr("href"),
-                dayOfWeeks = listOf(DayOfWeek.MONDAY),
+                dayOfWeeks = listOf(WeekDay.MON),
                 site = WebtoonSite.NAVER,
                 genres = listOf(),
                 popular = index
