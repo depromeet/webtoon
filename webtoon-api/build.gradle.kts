@@ -11,11 +11,10 @@ dependencies {
 
 tasks.jar {
     enabled = true
-    archiveClassifier.set("library")
 }
 
 tasks.bootJar {
     enabled = true
-    mainClassName = "com.depromeet.webtoon.api.WebtoonApiApplicationKt"
+    mainClass.set("com.depromeet.webtoon.api.WebtoonApiApplicationKt")
     archiveFileName.set("webtoon-api.jar")
 }
