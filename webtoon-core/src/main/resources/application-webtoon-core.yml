@@ -33,7 +33,7 @@ spring.config:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/webtoon
+    url: jdbc:mariadb://localhost:3306/webtoon?useUnicode=true&characterEncoding=utf8
     username: ${WEBTOON_SERVICE_DB_USERNAME}
     password: ${WEBTOON_SERVICE_DB_PASSWORD}
   jpa:
