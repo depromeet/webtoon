@@ -5,11 +5,12 @@ spring:
     group:
       local: "webtoon-core-local"
       beta: "webtoon-core-beta"
-
   batch:
     initialize-schema: never
     job:
       names: ${job.name:NONE}
+  main:
+    web-application-type: none
 
 
 ---
