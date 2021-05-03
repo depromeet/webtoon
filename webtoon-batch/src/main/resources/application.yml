@@ -1,0 +1,21 @@
+spring:
+  config:
+    import: "classpath:/application-webtoon-core.yml"
+  profiles:
+    group:
+      local: "webtoon-core-local"
+      beta: "webtoon-core-beta"
+
+  batch:
+    initialize-schema: never
+    job:
+      names: ${job.name:NONE}
+
+
+---
+spring:
+  config:
+    activate.on-profile: local
+
+  batch:
+    initialize-schema: always
