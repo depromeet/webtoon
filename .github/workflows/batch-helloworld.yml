@@ -1,0 +1,13 @@
+name: run webtoon batch
+on:
+  push:
+    branches:
+      - 'not_available'
+jobs:
+
+  build:
+    name: run sampleJob batch
+    runs-on: [ self-hosted, linux, X64 ]
+    steps:
+      - run: |
+        java -jar -Dspring.profiles.active=beta --job.name=sampleJob /app/webtoon-batch/webtoon-batch.jar
