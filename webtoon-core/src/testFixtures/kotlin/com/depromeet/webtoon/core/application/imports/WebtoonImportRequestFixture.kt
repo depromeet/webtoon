@@ -3,13 +3,13 @@ package com.depromeet.webtoon.core.application.imports
 import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WebtoonSite.NAVER
-import java.time.DayOfWeek
+import com.depromeet.webtoon.core.type.WeekDay
 
 fun webtoonImportRequestFixture(
     title: String = "고양이 일상",
     url: String = "naver.com",
     thumbnailImage: String = "",
-    dayOfWeeks: List<DayOfWeek> = listOf(DayOfWeek.MONDAY, DayOfWeek.THURSDAY),
+    dayOfWeeks: List<WeekDay> = listOf(WeekDay.MON, WeekDay.THU),
     authors: List<String> = listOf("감자", "웅"),
     site: WebtoonSite = NAVER,
     genres: List<String> = listOf("고양이", "일상"),

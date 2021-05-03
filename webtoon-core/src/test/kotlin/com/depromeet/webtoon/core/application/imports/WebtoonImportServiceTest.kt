@@ -5,13 +5,13 @@ import com.depromeet.webtoon.core.domain.author.service.AuthorService
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
 import com.depromeet.webtoon.core.type.WebtoonSite
+import com.depromeet.webtoon.core.type.WeekDay
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import java.time.DayOfWeek
 
 class WebtoonImportServiceTest : FunSpec({
     lateinit var webtoonImportService: WebtoonImportService
@@ -30,7 +30,7 @@ class WebtoonImportServiceTest : FunSpec({
             val importRequest = webtoonImportRequestFixture(
                 title = "드래곤볼",
                 authors = listOf("토리야미 아키라"),
-                dayOfWeeks = listOf(DayOfWeek.MONDAY),
+                dayOfWeeks = listOf(WeekDay.MON),
                 site = WebtoonSite.NAVER,
                 genres = listOf("배틀"),
                 score = 4.95,

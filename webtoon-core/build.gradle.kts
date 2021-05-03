@@ -8,6 +8,7 @@ dependencies {
     implementation("org.jsoup:jsoup")
 
     runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 
     integrationTestImplementation("com.h2database:h2")
 }

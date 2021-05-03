@@ -47,6 +47,8 @@ subprojects {
             dependency("io.kotest:kotest-runner-junit5:4.4.3")
             dependency("io.kotest:kotest-extensions-spring:4.4.3")
             dependency("org.jsoup:jsoup:1.13.1")
+
+            dependency("org.mariadb.jdbc:mariadb-java-client:2.7.2")
         }
     }
 

@@ -26,3 +26,7 @@ data class Site(
         return site.hashCode()
     }
 }
+
+fun WebtoonSite.toSite(): Site {
+    return Site(this, this.thumbnail)
+}
