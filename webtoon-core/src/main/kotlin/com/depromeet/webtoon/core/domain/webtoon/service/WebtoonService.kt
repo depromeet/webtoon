@@ -6,6 +6,7 @@ import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonUpsertRequest
 import com.depromeet.webtoon.core.domain.webtoon.dto.toWebtoonCreateResponseDto
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
+import com.depromeet.webtoon.core.type.WeekDay
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,7 +14,7 @@ class WebtoonService(
     val webtoonRepository: WebtoonRepository
 ) {
 
-    fun getWeekdayWebtoons(weekDay: String): List<Webtoon>? {
+    fun getWeekdayWebtoons(weekDay: WeekDay): List<Webtoon> {
         return webtoonRepository.findAllByWeekdaysOrderByPopularityAsc(weekDay)
     }
 
@@ -37,7 +38,7 @@ class WebtoonService(
                 site = request.site
                 title = request.title
                 authors = request.authors.toMutableList()
-                weekdays = request.dayOfWeeks.map { it.name }.toMutableList()
+                weekdays = request.dayOfWeeks.toMutableList()
                 popularity = request.popularity
                 thumbnail = request.thumbnail
             }
@@ -48,7 +49,7 @@ class WebtoonService(
                 title = request.title,
                 site = request.site,
                 authors = request.authors,
-                weekdays = request.dayOfWeeks.map { it.name }.toMutableList(),
+                weekdays = request.dayOfWeeks.toMutableList(),
                 popularity = request.popularity,
                 thumbnail = request.thumbnail
             )

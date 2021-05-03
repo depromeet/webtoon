@@ -1,8 +1,8 @@
 package com.depromeet.webtoon.api.endpoint.author
 
-import com.depromeet.webtoon.core.domain.author.service.AuthorService
 import com.depromeet.webtoon.core.domain.author.dto.AuthorCreateRequestDto
 import com.depromeet.webtoon.core.domain.author.dto.AuthorCreateResponseDto
+import com.depromeet.webtoon.core.domain.author.service.AuthorService
 import com.depromeet.webtoon.core.exceptions.ApiValidationException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,8 +12,10 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import springfox.documentation.annotations.ApiIgnore
 
 @RestController
+@ApiIgnore
 class AuthorController(@Autowired val authorService: AuthorService) {
 
     private val log = LoggerFactory.getLogger(AuthorController::class.java)
