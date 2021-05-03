@@ -26,6 +26,6 @@ jobs:
           cp ./webtoon-api/build/libs/*.jar /app/webtoon-api/webtoon-api.jar
       - name: start application jar
         run: |
-          sudo nohup java -jar /app/webtoon-api/webtoon-api.jar --server.port=8080 > /dev/null 2>&1 &
+          sudo nohup java -jar /app/webtoon-api/webtoon-api.jar -Dspring.profiles.active=beta > /dev/null 2>&1 &
           sleep 3
 
