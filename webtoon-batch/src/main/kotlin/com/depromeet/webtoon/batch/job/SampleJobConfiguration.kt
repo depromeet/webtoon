@@ -1,6 +1,7 @@
 package com.depromeet.webtoon.batch.job
 
 import com.depromeet.webtoon.batch.job.SampleJobConfiguration.Companion.SAMPLE_JOB_NAME
+import com.depromeet.webtoon.batch.support.ParamCleanRunIdIncrementer
 import org.slf4j.LoggerFactory
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
@@ -24,6 +25,7 @@ class SampleJobConfiguration(
     @Bean
     fun sampleJob(): Job {
         return jobBuilderFactory.get("sampleJob")
+            .incrementer(ParamCleanRunIdIncrementer())
             .start(sampleStep(null))
             .build()
     }

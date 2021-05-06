@@ -1,11 +1,9 @@
 name: Build jar and deploy API server
 on:
-  push:
-    branches:
-      - develop
+  workflow_dispatch:
 jobs:
   build-jar:
-    runs-on: [ self-hosted, linux, X64 ]
+    runs-on: [ self-hosted, X64, linux ]
     steps:
       - run: |
           echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."

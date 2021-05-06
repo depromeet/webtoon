@@ -1,7 +1,7 @@
 name: run webtoon batch
 on:
   schedule:
-    - cron: '5 15 * * *' # 12시 정각
+    - cron: '5 15 * * *' # 12시 5분 동작
   workflow_dispatch:
     inputs:
       requestDate:
