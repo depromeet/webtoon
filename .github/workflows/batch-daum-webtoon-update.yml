@@ -1,0 +1,22 @@
+name: run daum webtoon update batch
+on:
+  #  schedule:
+  #    - cron: '5 15 * * *' # 12시 5분 동작
+  workflow_dispatch:
+    inputs:
+      requestDate:
+        description: '기준일자'
+        required: false
+        default: ''
+jobs:
+
+  build:
+    name: run sampleJob batch
+    runs-on: [ self-hosted, X64, linux ]
+    steps:
+      - shell: bash
+        env:
+          WEBTOON_SERVICE_DB_USERNAME: ${{ secrets.WEBTOON_SERVICE_DB_USERNAME }}
+          WEBTOON_SERVICE_DB_PASSWORD: ${{ secrets.WEBTOON_SERVICE_DB_PASSWORD }}
+        run: |
+          java -jar -Dspring.profiles.active=beta /app/webtoon-batch/webtoon-batch.jar --job.name=sampleJob requestDate=${{ github.event.inputs.requestDate }}

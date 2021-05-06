@@ -3,7 +3,6 @@ spring:
     database: h2
     properties.hibernate:
       show_sql: true
-      format_sql: true
     hibernate:
       ddl-auto: validate
 
