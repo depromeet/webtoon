@@ -2,7 +2,6 @@ package com.depromeet.webtoon.batch.job
 
 import com.depromeet.webtoon.batch.job.DaumWebtoonJobConfiguration.Companion.DAUM_WEBTOON_UPDATE_JOB
 import com.depromeet.webtoon.batch.support.ParamCleanRunIdIncrementer
-import com.depromeet.webtoon.batch.tasklet.UpdateDaumWebtoons
 import com.depromeet.webtoon.core.crawl.daum.DaumCrawlerService
 import org.slf4j.LoggerFactory
 import org.springframework.batch.core.Job
@@ -21,7 +20,7 @@ import org.springframework.context.annotation.Configuration
 class DaumWebtoonJobConfiguration(
     val jobBuilderFactory: JobBuilderFactory,
     val stepBuilderFactory: StepBuilderFactory,
-    val updateDaumWebtoon: UpdateDaumWebtoons
+    val daumCrawlerService: DaumCrawlerService
 ) {
     private val log = LoggerFactory.getLogger(DaumWebtoonJobConfiguration::class.java)
 
@@ -29,7 +28,7 @@ class DaumWebtoonJobConfiguration(
     fun updateDaumWebtoons(
         @Qualifier("webtoonImportStep") webtoonImportStep: Step
     ): Job {
-        return jobBuilderFactory.get("daumUpdateJob")
+        return jobBuilderFactory.get("daumWebtoonUpdateJob")
             .incrementer(ParamCleanRunIdIncrementer())
             .start(webtoonImportStep)
             .build()
@@ -38,9 +37,11 @@ class DaumWebtoonJobConfiguration(
     @Bean
     @JobScope
     fun webtoonImportStep(): Step {
-        log.info("updateDaumWebtoon step executed")
         return stepBuilderFactory.get("webtoonImportStep")
-            .tasklet(updateDaumWebtoon)
+            .tasklet { contribution, chunckContext ->
+                daumCrawlerService.updateDaumWebtoons()
+                RepeatStatus.FINISHED
+            }
             .build()
     }
 
