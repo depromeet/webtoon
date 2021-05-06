@@ -19,4 +19,4 @@ jobs:
           WEBTOON_SERVICE_DB_USERNAME: ${{ secrets.WEBTOON_SERVICE_DB_USERNAME }}
           WEBTOON_SERVICE_DB_PASSWORD: ${{ secrets.WEBTOON_SERVICE_DB_PASSWORD }}
         run: |
-          java -jar -Dspring.profiles.active=beta /app/webtoon-batch/webtoon-batch.jar --job.name=sampleJob requestDate=${{ github.event.inputs.requestDate }}
+          java -jar -Dspring.profiles.active=beta /app/webtoon-batch/webtoon-batch.jar --job.name=daumWebtoonUpdateJob requestDate=${{ github.event.inputs.requestDate }}
