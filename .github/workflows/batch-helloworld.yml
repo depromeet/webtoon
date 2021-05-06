@@ -1,13 +1,18 @@
 name: run webtoon batch
 on:
-  push:
-    branches:
-      - batch_test
+  schedule:
+    - cron: '5 15 * * *' # 12시 정각
+  workflow_dispatch:
+    inputs:
+      requestDate:
+        description: '기준일자'
+        required: false
+        default: ''
 jobs:
 
   build:
     name: run sampleJob batch
-    runs-on: [ self-hosted, linux, X64 ]
+    runs-on: [ self-hosted, X64, linux ]
     steps:
       - shell: bash
         env:
