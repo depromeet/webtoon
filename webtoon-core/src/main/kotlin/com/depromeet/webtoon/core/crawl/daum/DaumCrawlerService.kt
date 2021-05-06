@@ -30,6 +30,10 @@ class DaumCrawlerService(
     private val currentTime = Instant.now().toEpochMilli()
     private val currentWeekDay = LocalDate.now().dayOfWeek.name.toLowerCase().substring(0, 3)
 
+    fun updateDaumWebtoons2(){
+
+    }
+
     fun updateDaumWebtoons() {
         val todayWebtoonNicknamesSortedAsPopularity = getSortedNicknamesByPopularity()
         val webtoonImportRequests = getWebtoonImportRequests(todayWebtoonNicknamesSortedAsPopularity)
