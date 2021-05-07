@@ -1,7 +1,6 @@
 package com.depromeet.webtoon.batch.job
 
 import com.depromeet.webtoon.batch.job.DaumWebtoonJobConfiguration.Companion.DAUM_WEBTOON_UPDATE_JOB
-import com.depromeet.webtoon.batch.job.SampleJobConfiguration.Companion.SAMPLE_JOB_NAME
 import com.depromeet.webtoon.batch.support.ParamCleanRunIdIncrementer
 import com.depromeet.webtoon.core.crawl.daum.DaumCrawlerService
 import org.slf4j.LoggerFactory
@@ -18,7 +17,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@ConditionalOnProperty(name = ["spring.batch.job.names"], havingValue = SAMPLE_JOB_NAME)
+@ConditionalOnProperty(name = ["spring.batch.job.names"], havingValue = DAUM_WEBTOON_UPDATE_JOB)
 class DaumWebtoonJobConfiguration(
     val jobBuilderFactory: JobBuilderFactory,
     val stepBuilderFactory: StepBuilderFactory,
@@ -30,7 +29,7 @@ class DaumWebtoonJobConfiguration(
     fun updateDaumWebtoons(
         @Qualifier("webtoonImportStep") webtoonImportStep: Step
     ): Job {
-        return jobBuilderFactory.get("sampleJob")
+        return jobBuilderFactory.get("daumWebtoonUpdateJob")
             .incrementer(ParamCleanRunIdIncrementer())
             .start(webtoonImportStep)
             .build()
@@ -51,6 +50,6 @@ class DaumWebtoonJobConfiguration(
 
     companion object {
         private val log = LoggerFactory.getLogger(DaumWebtoonJobConfiguration::class.java)
-        const val DAUM_WEBTOON_UPDATE_JOB = "sampleJob"
+        const val DAUM_WEBTOON_UPDATE_JOB = "daumWebtoonUpdateJob"
     }
 }

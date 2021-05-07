@@ -1,9 +1,7 @@
-/*
 package com.depromeet.webtoon.batch.job
 
 import com.depromeet.webtoon.batch.job.SampleJobConfiguration.Companion.SAMPLE_JOB_NAME
 import com.depromeet.webtoon.batch.support.ParamCleanRunIdIncrementer
-import com.depromeet.webtoon.core.crawl.daum.DaumCrawlerService
 import org.slf4j.LoggerFactory
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
@@ -16,12 +14,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-@Configuration
+// @Configuration
 @ConditionalOnProperty(name = ["spring.batch.job.names"], havingValue = SAMPLE_JOB_NAME)
 class SampleJobConfiguration(
     val jobBuilderFactory: JobBuilderFactory,
-    val stepBuilderFactory: StepBuilderFactory,
-    val crawlerService: DaumCrawlerService
+    val stepBuilderFactory: StepBuilderFactory
 ) {
     private val log = LoggerFactory.getLogger(SampleJobConfiguration::class.java)
 
@@ -39,7 +36,6 @@ class SampleJobConfiguration(
         return stepBuilderFactory.get("sampleStep")
             .tasklet { contribution, chunckContext ->
                 log.info("helloWorld $requestDate")
-                crawlerService.updateDaumWebtoons()
                 RepeatStatus.FINISHED
             }
             .build()
@@ -50,4 +46,3 @@ class SampleJobConfiguration(
         const val SAMPLE_JOB_NAME = "sampleJob"
     }
 }
-*/
