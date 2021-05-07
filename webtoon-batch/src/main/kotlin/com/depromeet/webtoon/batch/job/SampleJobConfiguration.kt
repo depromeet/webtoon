@@ -1,3 +1,4 @@
+/*
 package com.depromeet.webtoon.batch.job
 
 import com.depromeet.webtoon.batch.job.SampleJobConfiguration.Companion.SAMPLE_JOB_NAME
@@ -49,3 +50,4 @@ class SampleJobConfiguration(
         const val SAMPLE_JOB_NAME = "sampleJob"
     }
 }
+*/
