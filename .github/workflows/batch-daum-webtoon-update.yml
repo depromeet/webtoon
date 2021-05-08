@@ -20,3 +20,12 @@ jobs:
           WEBTOON_SERVICE_DB_PASSWORD: ${{ secrets.WEBTOON_SERVICE_DB_PASSWORD }}
         run: |
           java -jar -Dspring.profiles.active=beta /app/webtoon-batch/webtoon-batch.jar --job.name=daumWebtoonUpdateJob requestDate=${{ github.event.inputs.requestDate }}
+      - name: action-slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: deploy webtoon-api / webtoon-batch
+          fields: author,eventName,workflow,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        if: always()
