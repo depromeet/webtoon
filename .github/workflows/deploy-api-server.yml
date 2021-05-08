@@ -31,3 +31,12 @@ jobs:
 
           sudo systemctl start webtoon-api.service
           sleep 3
+      - name: action-slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: deploy webtoon-api / webtoon-batch
+          fields: message,author,eventName,ref,workflow,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        if: always()
