@@ -26,6 +26,23 @@ class WebtoonImportService(
         return webtoon
     }
 
+    @Transactional(readOnly = false)
+    fun importWebtoons(importRequests: List<WebtoonImportRequest>): List<Webtoon> {
+        val authorMap = importRequests.map { it.authors }
+            .flatten()
+            .let { authorService.findOrCreateAuthors(it) }
+            .associateBy { it.name }
+
+        return importRequests
+            .map {
+                val authors = it.authors.map { rawAuthor -> authorMap.getValue(rawAuthor) }
+                toWebtoonUpsertRequest(it, authors)
+            }
+            .map {
+                webtoonService.upsertWebtoon(it)
+            }
+    }
+
     private fun toWebtoonUpsertRequest(
         importRequest: WebtoonImportRequest,
         authors: List<Author>
@@ -33,7 +50,7 @@ class WebtoonImportService(
         title = importRequest.title,
         site = importRequest.site,
         authors = authors,
-        dayOfWeeks = importRequest.dayOfWeeks,
+        dayOfWeeks = importRequest.weekdays,
         popularity = importRequest.popular,
         thumbnail = importRequest.thumbnailImage
     )

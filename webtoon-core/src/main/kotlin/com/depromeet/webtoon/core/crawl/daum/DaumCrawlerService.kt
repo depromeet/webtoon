@@ -15,11 +15,11 @@ class DaumCrawlerService(
     val fetchService: DaumCrawlerFetchService
 ) {
 
-    fun updateDaumWebtoons(){
+    fun updateDaumWebtoons() {
         val updatedWebtoons = crawlSortedWebtoonNicknames()
             .map { fetchService.crawlWebtoonDetail(it) }
 
-        val webtoonImportRequests = updatedWebtoons.mapIndexed{ idx, crawled ->
+        val webtoonImportRequests = updatedWebtoons.mapIndexed { idx, crawled ->
             WebtoonImportRequest(
                 crawled!!.data.webtoon.title,
                 "url",
@@ -29,7 +29,7 @@ class DaumCrawlerService(
                 WebtoonSite.DAUM,
                 crawled.data.webtoon.cartoon.genres.map { it.name },
                 crawled.data.webtoon.averageScore,
-                idx+1
+                idx + 1
             )
         }
 
@@ -38,7 +38,7 @@ class DaumCrawlerService(
         log.info("[DaumCrawlerService] - updateDaumWebtoons() complete")
     }
 
-    fun crawlSortedWebtoonNicknames() : List<String>{
+    fun crawlSortedWebtoonNicknames(): List<String> {
         val popularNicknames = fetchService.getPopularNicknames()
         val updatedNicknames = fetchService.getTodayUpdatedNicknames()
 

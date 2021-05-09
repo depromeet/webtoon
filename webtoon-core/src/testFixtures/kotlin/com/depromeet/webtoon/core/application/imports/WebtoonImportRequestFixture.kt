@@ -20,7 +20,7 @@ fun webtoonImportRequestFixture(
     title = title,
     url = url,
     thumbnailImage = thumbnailImage,
-    dayOfWeeks = dayOfWeeks,
+    weekdays = dayOfWeeks,
     authors = authors,
     site = site,
     genres = genres,

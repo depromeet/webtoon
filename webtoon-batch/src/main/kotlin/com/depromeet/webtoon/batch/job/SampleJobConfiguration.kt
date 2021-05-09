@@ -9,13 +9,13 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
 import org.springframework.batch.repeat.RepeatStatus
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 
 // @Configuration
-@ConditionalOnProperty(name = ["spring.batch.job.names"], havingValue = SAMPLE_JOB_NAME)
+@ConditionalOnProperty(name = ["job.name"], havingValue = SAMPLE_JOB_NAME)
 class SampleJobConfiguration(
     val jobBuilderFactory: JobBuilderFactory,
     val stepBuilderFactory: StepBuilderFactory
@@ -23,10 +23,12 @@ class SampleJobConfiguration(
     private val log = LoggerFactory.getLogger(SampleJobConfiguration::class.java)
 
     @Bean
-    fun sampleJob(): Job {
+    fun sampleJob(
+        @Qualifier("sampleStep") sampleStep: Step
+    ): Job {
         return jobBuilderFactory.get("sampleJob")
             .incrementer(ParamCleanRunIdIncrementer())
-            .start(sampleStep(null))
+            .start(sampleStep)
             .build()
     }
 
