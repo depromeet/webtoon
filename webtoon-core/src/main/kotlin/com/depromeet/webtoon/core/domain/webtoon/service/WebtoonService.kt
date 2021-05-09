@@ -52,8 +52,9 @@ class WebtoonService(
                 weekdays = request.dayOfWeeks.toMutableList(),
                 popularity = request.popularity,
                 thumbnail = request.thumbnail
-            )
-                .let { webtoonRepository.save(it) }
+            ).let {
+                webtoonRepository.save(it)
+            }
         }
     }
 }
