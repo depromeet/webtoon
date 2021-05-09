@@ -103,6 +103,10 @@ subprojects {
         }
     }
 
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+
     tasks.register<Test>("integrationTest") {
         group = JavaBasePlugin.VERIFICATION_GROUP
         description = "Runs the integration tests."

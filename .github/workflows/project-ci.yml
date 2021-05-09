@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - develop
-      - feature/add-ci
 
 jobs:
   build:
@@ -40,6 +39,7 @@ jobs:
       - name: code-coverage
         uses: codecov/codecov-action@v1
         with:
+          file: ./build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml
           verbose: true # optional (default = false)
 
       - name: action-slack
