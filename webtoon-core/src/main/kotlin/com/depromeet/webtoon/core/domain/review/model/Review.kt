@@ -34,7 +34,7 @@ class Review(
     @ManyToOne(fetch = FetchType.LAZY)
     val account: Account = account
 
-    val comment: String = comment
+    var comment: String = comment
 
     val storyScore: Double? = storyScore
 
