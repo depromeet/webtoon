@@ -10,6 +10,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     kotlin("jvm") version "1.4.31"
     kotlin("plugin.spring") version "1.4.31"
+    jacoco
 }
 
 java {
@@ -32,6 +33,7 @@ subprojects {
         plugin("org.jetbrains.kotlin.plugin.spring")
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlin.kapt")
+        plugin("jacoco")
     }
 
     dependencyManagement {
@@ -81,10 +83,6 @@ subprojects {
         }
     }
 
-    tasks.withType<Test> {
-        useJUnitPlatform()
-    }
-
     this.apply {
         // integration test 설정
         sourceSets {
@@ -104,7 +102,31 @@ subprojects {
             (configurations.testRuntimeOnly.get())
         }
     }
+
+    tasks.register<Test>("integrationTest") {
+        group = JavaBasePlugin.VERIFICATION_GROUP
+        description = "Runs the integration tests."
+        testClassesDirs = sourceSets["integration-test"].output.classesDirs
+        classpath = sourceSets["integration-test"].runtimeClasspath
+
+        extensions.configure(JacocoTaskExtension::class) {
+            setDestinationFile(file("$buildDir/jacoco/integrationTest.exec"))
+        }
+    }
 }
 
 tasks.jar { enabled = true }
 tasks.bootJar { enabled = false }
+
+tasks.register<JacocoReport>("codeCoverageReport") {
+    executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+
+    subprojects.forEach {
+        sourceSets(it.sourceSets["main"])
+    }
+
+    reports {
+        html.isEnabled = true
+        xml.isEnabled = true
+    }
+}
