@@ -17,18 +17,19 @@ class NaverCrawlerFetchAdapter() {
         val weekdays = listOf("mon", "tue", "wed", "thu", "fri", "sat", "sun")
         val titleIdRegex = "titleId=(\\d*)".toRegex()
 
-        return weekdays.map { weekday ->
-            val doc: Document = Jsoup.connect("https://comic.naver.com/webtoon/weekdayList.nhn?week=$weekday").get()
-            val webtoons: Elements = doc.select(".list_area ul li")
-            webtoons.mapIndexed { index, it ->
-                val title = it.select("dl dt a").text()
-                val url = "https://comic.naver.com" + it.select("dl dt a").attr("href")
-                val score = it.select("dl .rating_type strong").text().toDouble()
+        return weekdays
+            .map { weekday ->
+                val doc: Document = Jsoup.connect("https://comic.naver.com/webtoon/weekdayList.nhn?week=$weekday").get()
+                val webtoons: Elements = doc.select(".list_area ul li")
+                webtoons.mapIndexed { index, it ->
+                    val title = it.select("dl dt a").text()
+                    val url = "https://comic.naver.com" + it.select("dl dt a").attr("href")
+                    val score = it.select("dl .rating_type strong").text().toDouble()
 
-                val titleId = titleIdRegex.find(url)!!.groupValues[1]
-                NaverWebtoonItem(titleId.toLong(), title, weekday, score, index, url)
+                    val titleId = titleIdRegex.find(url)!!.groupValues[1]
+                    NaverWebtoonItem(titleId.toLong(), title, weekday, score, index, url)
+                }
             }
-        }
             .flatten()
             .fold(NaverWebtoonItems()) { acc, naverWebtoonItem -> acc.addItem(naverWebtoonItem); acc }
             .setDetailEach { item ->
