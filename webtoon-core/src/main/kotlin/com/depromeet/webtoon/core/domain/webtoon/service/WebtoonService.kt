@@ -41,6 +41,8 @@ class WebtoonService(
                 weekdays = request.dayOfWeeks.toMutableList()
                 popularity = request.popularity
                 thumbnail = request.thumbnail
+                summary = request.summary
+                url = request.url
             }
         }
         // 존재하지 않는 경우 새롭게 데이터를 입력한 다음 저장
@@ -51,7 +53,9 @@ class WebtoonService(
                 authors = request.authors,
                 weekdays = request.dayOfWeeks.toMutableList(),
                 popularity = request.popularity,
-                thumbnail = request.thumbnail
+                thumbnail = request.thumbnail,
+                summary = request.summary,
+                url = request.url
             ).let {
                 webtoonRepository.save(it)
             }

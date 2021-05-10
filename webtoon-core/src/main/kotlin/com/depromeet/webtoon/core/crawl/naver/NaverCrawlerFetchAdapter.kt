@@ -82,7 +82,8 @@ class NaverCrawlerFetchAdapter() {
                     },
                     site = WebtoonSite.NAVER,
                     genres = listOf(),
-                    popular = it.rank
+                    popular = it.rank,
+                    summary = "todo"
                 )
             }
         }

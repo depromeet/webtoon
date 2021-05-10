@@ -14,7 +14,8 @@ data class Webtoon(
     val cartoon: Cartoon,
     val thumbnailImage2: ThumbnailImage2,
     val webtoonWeeks: List<WebtoonWeeks>,
-    val averageScore: Double
+    val averageScore: Double,
+    val introduction: String
 )
 
 data class ThumbnailImage2(

@@ -22,14 +22,15 @@ class DaumCrawlerService(
         val webtoonImportRequests = updatedWebtoons.mapIndexed { idx, crawled ->
             WebtoonImportRequest(
                 crawled!!.data.webtoon.title,
-                "url",
+                DAUM_WEBTOON_URL+crawled.data.webtoon.nickname,
                 crawled.data.webtoon.thumbnailImage2.url,
                 setDayOfWeek(crawled.data.webtoon.webtoonWeeks),
                 crawled.data.webtoon.cartoon.artists.map { it.name }.distinct(),
                 WebtoonSite.DAUM,
                 crawled.data.webtoon.cartoon.genres.map { it.name },
                 crawled.data.webtoon.averageScore,
-                idx + 1
+                idx + 1,
+                crawled.data.webtoon.introduction
             )
         }
 
@@ -64,5 +65,6 @@ class DaumCrawlerService(
 
     companion object {
         val log = LoggerFactory.getLogger(DaumCrawlerService::class.java)
+        const val DAUM_WEBTOON_URL = "http://webtoon.daum.net/webtoon/view/"
     }
 }

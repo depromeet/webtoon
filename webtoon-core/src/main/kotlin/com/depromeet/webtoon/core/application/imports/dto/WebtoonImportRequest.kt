@@ -13,4 +13,5 @@ data class WebtoonImportRequest(
     val genres: List<String>,
     val score: Double,
     val popular: Int,
+    val summary: String
 )
