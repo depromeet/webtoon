@@ -27,10 +27,12 @@ class Webtoon constructor(
     id: Long? = null,
     title: String = "",
     site: WebtoonSite = NONE,
+    url: String = "",
     authors: List<Author> = mutableListOf(),
     weekdays: List<WeekDay> = mutableListOf(),
     popularity: Int = 0,
     thumbnail: String = "",
+    summary: String = "",
     createdAt: LocalDateTime? = null,
     modifiedAt: LocalDateTime? = null,
 ) {
@@ -48,6 +50,9 @@ class Webtoon constructor(
     @Enumerated(EnumType.STRING)
     var site: WebtoonSite = site
 
+    @Column(name = "uri")
+    var url: String = url
+
     @ManyToMany
     var authors: MutableList<Author> = authors.toMutableList()
 
@@ -61,6 +66,9 @@ class Webtoon constructor(
 
     @Column(name = "thumbnail")
     var thumbnail: String = thumbnail
+
+    @Column(name = "summary")
+    var summary: String = summary
 
     @CreatedDate
     var createdAt: LocalDateTime? = createdAt

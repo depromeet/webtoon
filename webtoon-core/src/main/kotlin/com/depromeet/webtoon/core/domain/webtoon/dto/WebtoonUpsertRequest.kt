@@ -10,5 +10,7 @@ data class WebtoonUpsertRequest(
     val authors: List<Author>,
     val dayOfWeeks: List<WeekDay>,
     val popularity: Int,
-    val thumbnail: String
+    val thumbnail: String,
+    val summary: String,
+    val url: String
 )
