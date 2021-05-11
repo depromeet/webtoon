@@ -8,9 +8,12 @@ data class WebtoonDetailResponse(
     var id: Long,
     var title: String,
     var thumbnail: String,
+    var url: String,
     var authors: MutableList<Author>,
     var site: WebtoonSite,
     var weekday: MutableList<WeekDay>,
     var summary: String,
-    // todo review 정보추가 ( storyScore, drawingScore, comment )
+    val storyScore: Double,
+    val drawingScore: Double,
+    val comments: MutableList<String>
 )

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Api("WebtoonDetailController")
 class WebtoonDetailController(
-    val webtoonDetailService: WebtoonDetailService
+    val webtoonDetailService: WebtoonDetailService,
 ) {
     private val log = LoggerFactory.getLogger(WebtoonController::class.java)
 
