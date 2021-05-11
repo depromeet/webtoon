@@ -107,12 +107,4 @@
             )
         }
     }
-
-     @GetMapping("/api/v1/webtoons/detail/{title}")
-     fun getWebtoonDetail(
-         @PathVariable title: String
-     ): String {
-
-       return "test"
-     }
  }
