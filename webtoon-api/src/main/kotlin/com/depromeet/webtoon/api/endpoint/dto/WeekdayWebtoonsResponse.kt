@@ -3,7 +3,7 @@ package com.depromeet.webtoon.api.endpoint.dto
 import com.depromeet.webtoon.core.type.WebtoonSite
 
 data class WeekdayWebtoonsResponse(
-    val sites: List<Site>,
+    val sites: List<Site> = Site.allSites(),
     val webtoons: List<WeekdayWebtoon>
 )
 
@@ -24,6 +24,10 @@ data class Site(
 
     override fun hashCode(): Int {
         return site.hashCode()
+    }
+
+    companion object {
+        fun allSites() = WebtoonSite.ALL_SITES.map { it.toSite() }
     }
 }
 

@@ -1,11 +1,18 @@
 package com.depromeet.webtoon.core.type
 
-enum class WeekDay {
-    MON,
-    TUE,
-    WED,
-    THU,
-    FRI,
-    SAT,
-    SUN
+enum class WeekDay(val str: String) {
+    MON("mon"),
+    TUE("tue"),
+    WED("wed"),
+    THU("thu"),
+    FRI("fri"),
+    SAT("sat"),
+    SUN("sun");
+
+    companion object {
+        fun parse(str: String): WeekDay {
+            return values().firstOrNull { str == it.str }
+                ?: throw IllegalArgumentException("입력 문자열과 매칭되는 요일을 찾지 못했습니다. str : $str")
+        }
+    }
 }
