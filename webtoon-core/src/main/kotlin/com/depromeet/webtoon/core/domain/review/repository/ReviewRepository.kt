@@ -1,5 +1,6 @@
 package com.depromeet.webtoon.core.domain.review.repository
 
+import com.depromeet.webtoon.core.domain.review.dto.ScoreDto
 import com.depromeet.webtoon.core.domain.review.model.Review
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import org.springframework.data.jpa.repository.JpaRepository
@@ -20,9 +21,16 @@ interface ReviewRepository : JpaRepository<Review, Long> {
     fun getAvgDrawingScore(webtoon: Webtoon): Double
 
     // select comment from review where webtoon_id = 1;
-
     @Query(
         "select r.comment from Review r where r.webtoon = :webtoon"
     )
-    fun getComments(webtoon: Webtoon): MutableList<String>
+    fun getComments(webtoon: Webtoon): List<String>
+/*
+
+ */
+    @Query(
+        "select new com.depromeet.webtoon.core.domain.review.dto.ScoreDto(avg(r.storyScore), avg(r.drawingScore)) " +
+                "from Review r where r.webtoon = :webtoon"
+    )
+    fun getScores(webtoon: Webtoon): ScoreDto
 }
