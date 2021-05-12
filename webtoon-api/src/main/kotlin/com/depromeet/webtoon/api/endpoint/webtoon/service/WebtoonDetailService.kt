@@ -2,9 +2,9 @@ package com.depromeet.webtoon.api.endpoint.webtoon.service
 
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonDetailResponse
+import com.depromeet.webtoon.api.endpoint.dto.convertToWebtoonDetailResponse
 import com.depromeet.webtoon.core.domain.review.repository.ReviewRepository
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
-import com.depromeet.webtoon.core.type.WebtoonSite
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,29 +13,16 @@ class WebtoonDetailService(
     private val reviewRepository: ReviewRepository
 ) {
 
-    fun getWebtoonDetail(site: WebtoonSite, title: String) : ApiResponse<WebtoonDetailResponse>  {
+    fun getWebtoonDetail(id: Long) : ApiResponse<WebtoonDetailResponse>  {
 
-        val foundWebtoon = webtoonRepository.findBySiteAndTitle(site, title)
+        val foundWebtoon = webtoonRepository.findById(id).get()
 
-        val drawingScore = reviewRepository.getAvgDrawingScore(foundWebtoon!!)
-        val storyScore = reviewRepository.getAvgStoryScore(foundWebtoon)
+
+        val scores = reviewRepository.getScores(foundWebtoon)
         val comments = reviewRepository.getComments(foundWebtoon)
 
+        val webtoonDetailResponse = convertToWebtoonDetailResponse(foundWebtoon, scores, comments)
 
-        val webtoonDetailResponse =
-            WebtoonDetailResponse(
-                foundWebtoon.id!!,
-                foundWebtoon.title,
-                foundWebtoon.thumbnail,
-                foundWebtoon.url,
-                foundWebtoon.authors,
-                foundWebtoon.site,
-                foundWebtoon.weekdays,
-                foundWebtoon.summary,
-                drawingScore,
-                storyScore,
-                comments
-            )
         return ApiResponse.ok(webtoonDetailResponse)
     }
 }

@@ -21,15 +21,13 @@ class WebtoonDetailController(
 
     @GetMapping("/api/v1/webtoons/detail")
     @ApiImplicitParams(
-        ApiImplicitParam(name = "title", value = "웹툰 제목", required = true),
-        ApiImplicitParam(name = "site", value = "웹툰 플랫폼", required = true)
+        ApiImplicitParam(name = "id", value = "웹툰 id", required = true)
     )
     fun getWebtoonDetail(
-        @RequestParam title: String,
-        @RequestParam site: WebtoonSite
+        @RequestParam id: Long,
     ): ApiResponse<WebtoonDetailResponse> {
 
-        val webtoonDetail = webtoonDetailService.getWebtoonDetail(site, title)
+        val webtoonDetail = webtoonDetailService.getWebtoonDetail(id)
 
         return webtoonDetail
     }
