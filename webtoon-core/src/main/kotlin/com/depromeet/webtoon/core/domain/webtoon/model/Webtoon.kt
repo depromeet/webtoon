@@ -50,7 +50,7 @@ class Webtoon constructor(
     @Enumerated(EnumType.STRING)
     var site: WebtoonSite = site
 
-    @Column(name = "uri")
+    @Column(name = "url")
     var url: String = url
 
     @ManyToMany
