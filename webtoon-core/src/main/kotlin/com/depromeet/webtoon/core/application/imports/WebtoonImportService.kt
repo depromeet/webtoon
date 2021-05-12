@@ -52,7 +52,9 @@ class WebtoonImportService(
         authors = authors,
         dayOfWeeks = importRequest.weekdays,
         popularity = importRequest.popular,
-        thumbnail = importRequest.thumbnailImage
+        thumbnail = importRequest.thumbnailImage,
+        summary = importRequest.summary,
+        url = importRequest.url
     )
 
     companion object {
