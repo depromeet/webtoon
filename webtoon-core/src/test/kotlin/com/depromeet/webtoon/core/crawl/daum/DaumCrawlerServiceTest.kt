@@ -1,28 +1,90 @@
 package com.depromeet.webtoon.core.crawl.daum
 
+import com.depromeet.webtoon.core.application.imports.WebtoonImportService
+import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
+import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.Cartoon
+import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.Data
+import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.DaumWebtoonDetailCrawlResult
+import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.ThumbnailImage2
+import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.Webtoon
+import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.WebtoonWeeks
+import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
+import com.depromeet.webtoon.core.type.WebtoonSite
+import com.depromeet.webtoon.core.type.WeekDay
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 
 class DaumCrawlerServiceTest : FunSpec({
 
-//    lateinit var webtoonImportService: WebtoonImportService
-//
-//    beforeTest {
-//        webtoonImportService = mockk()
-//    }
-//
-//    context("DaumCrawlerService") {
-//        test("updateDaumWebtoons 연관 메소드 호출 테스트") {
-//            // given
-//            val crawlService = DaumCrawlerService(webtoonImportService,)
-//            val crawledSize = crawlService.crawlSortedWebtoonNicknames()
-//
-//            every { webtoonImportService.importWebtoon(any()) } returns Webtoon()
-//
-//            // when
-//            crawlService.updateDaumWebtoons()
-//
-//            // then
-//            verify(exactly = crawledSize) { webtoonImportService.importWebtoon(any()) }
-//        }
-//    }
+    lateinit var daumCrawlerService: DaumCrawlerService
+    lateinit var webtoonImportService: WebtoonImportService
+    lateinit var fetchService: DaumCrawlerFetchService
+
+    beforeTest {
+        webtoonImportService = mockk()
+        fetchService = mockk()
+        daumCrawlerService = DaumCrawlerService(webtoonImportService, fetchService)
+    }
+
+    test("[DaumCrawlerService] - crawlSortedWebtoonNicknames()") {
+        // given
+        every { fetchService.getPopularNicknames() } returns arrayListOf("nick", "notToday")
+        every { fetchService.getTodayUpdatedNicknames() } returns arrayListOf("nick", "nick2")
+
+        // when
+        val result = daumCrawlerService.crawlSortedWebtoonNicknames()
+
+        // then
+        verify(exactly = 1) { fetchService.getPopularNicknames() }
+        verify(exactly = 1) { fetchService.getTodayUpdatedNicknames() }
+
+        result.size.shouldBe(2)
+        result[0].shouldBe("nick")
+        result[1].shouldBe("nick2")
+    }
+
+    test("[DaumCrawlerService] - updateDaumWebtoons()") {
+        // given
+
+        val detailResult =
+            DaumWebtoonDetailCrawlResult(
+                Data(
+                    Webtoon(
+                        "testTitle", "nick", Cartoon(
+                            emptyList(), emptyList()
+                        ), ThumbnailImage2("thumbnail"), listOf(WebtoonWeeks("mon")), 5.0, "줄거리"
+                    )
+                )
+            )
+
+        val webtoonImportRequest = WebtoonImportRequest(
+            "testTitle",
+            "http://webtoon.daum.net/webtoon/view/nick",
+            "thumbnail",
+            listOf(WeekDay.MON),
+            emptyList(),
+            WebtoonSite.DAUM,
+            emptyList(),
+            5.0,
+            1,
+            "줄거리"
+        )
+        every { fetchService.getPopularNicknames() } returns arrayListOf("nick")
+        every { fetchService.getTodayUpdatedNicknames() } returns arrayListOf("nick")
+        every { daumCrawlerService.crawlSortedWebtoonNicknames() } returns listOf("nick")
+        every { webtoonImportService.importWebtoon(webtoonImportRequest) } returns webtoonFixture()
+        every { fetchService.crawlWebtoonDetail(any()) } returns detailResult
+
+        // when
+        daumCrawlerService.updateDaumWebtoons()
+
+        // then
+        verify(exactly = 1) { daumCrawlerService.crawlSortedWebtoonNicknames() }
+        verify(exactly = 1) { fetchService.crawlWebtoonDetail("nick") }
+        verify(exactly = 1) { webtoonImportService.importWebtoon(webtoonImportRequest) }
+    }
+
 })
