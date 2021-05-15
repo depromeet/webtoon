@@ -1,3 +1,7 @@
+apply {
+    plugin("org.flywaydb.flyway")
+}
+
 dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     api("org.springframework.boot:spring-boot-starter-data-jpa")

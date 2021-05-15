@@ -8,6 +8,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.springframework.boot") version "2.4.4"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+    id("org.flywaydb.flyway") version "7.9.0"
     kotlin("jvm") version "1.4.31"
     kotlin("plugin.spring") version "1.4.31"
     jacoco
