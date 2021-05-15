@@ -34,7 +34,7 @@ class WebtoonDetailControllerTest(
     var authorRepository: AuthorRepository
 ) : FunSpec({
 
-    test("GET-/api/v1/webtoons/detail"){
+    test("GET  /api/v1/webtoons/detail"){
         // given
         val account = Account(null, "testDevice", null, null, null)
         accountRepository.save(account)
