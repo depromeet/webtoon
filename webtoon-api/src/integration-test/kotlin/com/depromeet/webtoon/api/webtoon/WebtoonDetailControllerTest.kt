@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 @AutoConfigureMockMvc
 @ActiveProfiles("webtoon-local-test")
 class WebtoonDetailControllerTest(
-    var webtoonDetailController: WebtoonDetailController,
     var mockMvc: MockMvc,
     var webtoonRepository: WebtoonRepository,
     var reviewRepository: ReviewRepository,
