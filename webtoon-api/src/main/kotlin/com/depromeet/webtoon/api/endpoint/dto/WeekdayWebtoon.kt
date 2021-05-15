@@ -13,7 +13,7 @@ data class WeekdayWebtoon(
     @ApiModelProperty("제목")
     var title: String,
     @ApiModelProperty("작가")
-    var author: List<String>,
+    var authors: List<AuthorResponse>,
     @ApiModelProperty("(특정요일) 인기순위")
     var popularity: Int,
     @ApiModelProperty("썸네일 이미지")
@@ -24,7 +24,7 @@ fun Webtoon.convertToWeekDayWebtoon() = WeekdayWebtoon(
     this.id!!,
     this.site.name,
     this.title,
-    this.authors.map { it.name },
+    this.authors.map { AuthorResponse(it.id!!, it.name) },
     this.popularity,
     this.thumbnail
 )
