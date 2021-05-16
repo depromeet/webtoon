@@ -10,6 +10,7 @@ import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 // 테스트를 위해 크롤링하여 데이터 삽입하는 환경 구성
 @Component
+@Profile("webtoon-local-test")
 public class SampleRunner implements ApplicationRunner {
 
     @Autowired
