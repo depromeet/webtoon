@@ -22,6 +22,20 @@ spring:
       ddl-auto: create
 
 ---
+spring.config:
+  activate:
+    on-profile: webtoon-integration-test
+
+spring:
+  jpa:
+    database: h2
+    properties.hibernate:
+      show_sql: true
+      format_sql: true
+    hibernate:
+      ddl-auto: create
+
+---
 
 spring.config:
   activate:
