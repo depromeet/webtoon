@@ -15,9 +15,7 @@ fun webtoonImportRequestFixture(
     genres: List<String> = listOf("고양이", "일상"),
     score: Double = 4.8,
     popular: Int = 2,
-    summary: String = "귀여운 고양이 이야기"
-
-
+    summary: String = "귀여운 고양이 이야기",
 ) = WebtoonImportRequest(
     title = title,
     url = url,

@@ -1,7 +1,6 @@
-package com.depromeet.webtoon.core.domain.webtoon
+package com.depromeet.webtoon.core.domain.webtoon.repository
 
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
-import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.type.WebtoonSite
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
