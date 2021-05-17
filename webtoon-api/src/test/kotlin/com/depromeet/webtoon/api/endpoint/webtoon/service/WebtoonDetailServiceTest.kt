@@ -37,7 +37,7 @@ class WebtoonDetailServiceTest : FunSpec({
             every { reviewRepository.findByWebtoon(any()) } returns Optional.of(Review(1L, webtoonFixture(), accountFixture(), "제밌다", 3.0, 5.0, LocalDateTime.now(), LocalDateTime.now()))
             every { webtoonRepository.findById(any()) } returns Optional.of(webtoonFixture())
             every { reviewRepository.getScores(any()) } returns ScoreDto(3.0, 3.5)
-            every { reviewRepository.getComments(any()) } returns listOf(CommentDto("재밌다", "tester")
+            every { reviewRepository.getComments(any()) } returns listOf(CommentDto("재밌다", "tester"))
 
             // when
             webtoonDetailService.getWebtoonDetail(id)
