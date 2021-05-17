@@ -4,7 +4,7 @@ import com.depromeet.webtoon.core.domain.author.model.Author
 import java.time.LocalDateTime
 
 fun authorFixture(
-    id: Long = 1L,
+    id: Long? = null,
     name: String = "작가",
     createAt: LocalDateTime = LocalDateTime.now(),
     modifiedAt: LocalDateTime = LocalDateTime.now()

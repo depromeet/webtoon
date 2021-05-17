@@ -3,7 +3,6 @@ package com.depromeet.webtoon.api.endpoint.webtoon
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonDetailResponse
 import com.depromeet.webtoon.api.endpoint.webtoon.service.WebtoonDetailService
-import com.depromeet.webtoon.core.type.WebtoonSite
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 class WebtoonDetailController(
     val webtoonDetailService: WebtoonDetailService,
 ) {
-    private val log = LoggerFactory.getLogger(WebtoonController::class.java)
+    private val log = LoggerFactory.getLogger(WebtoonListController::class.java)
 
     @GetMapping("/api/v1/webtoons/detail")
     @ApiImplicitParams(
@@ -26,9 +25,6 @@ class WebtoonDetailController(
     fun getWebtoonDetail(
         @RequestParam id: Long,
     ): ApiResponse<WebtoonDetailResponse> {
-
-        val webtoonDetail = webtoonDetailService.getWebtoonDetail(id)
-
-        return webtoonDetail
+        return webtoonDetailService.getWebtoonDetail(id)
     }
 }
