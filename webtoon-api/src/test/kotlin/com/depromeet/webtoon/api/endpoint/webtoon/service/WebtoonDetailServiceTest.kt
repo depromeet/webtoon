@@ -11,6 +11,7 @@ import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.exceptions.ApiValidationException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
@@ -92,8 +93,25 @@ class WebtoonDetailServiceTest : FunSpec({
             every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
             every { reviewRepository.findByWebtoon(any()) } returns null
 
-            // when & then
-            shouldThrow<ApiValidationException> { webtoonDetailService.getWebtoonDetail(1L) }
+            // when
+            val webtoonDetail = webtoonDetailService.getWebtoonDetail(1L)
+
+            // then
+            verify(exactly = 1) {
+                webtoonRepository.findById(1L)
+            }
+
+            verify(exactly = 1) {
+                reviewRepository.findByWebtoon(
+                    withArg {
+                        it shouldBe webtoon
+                    }
+                )
+            }
+
+            webtoonDetail.data!!.comments.shouldBeEmpty()
+            webtoonDetail.data!!.score.storyScore.shouldBe(0.0)
+            webtoonDetail.data!!.score.drawingScore.shouldBe(0.0)
         }
     }
 })
