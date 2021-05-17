@@ -7,6 +7,7 @@ import com.depromeet.webtoon.core.domain.account.model.Account
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
+import com.depromeet.webtoon.core.domain.review.dto.CommentDto
 import com.depromeet.webtoon.core.domain.review.model.Review
 import com.depromeet.webtoon.core.domain.review.repository.ReviewRepository
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
@@ -60,7 +61,7 @@ class WebtoonDetailControllerTest(
                         webtoon.weekdays,
                         webtoon.summary,
                         ScoreResponse(review.storyScore!!, review.drawingScore!!),
-                        listOf(review.comment)
+                        listOf(CommentDto(review.comment, account.nickname))
                     ).toString()
                 )
             }

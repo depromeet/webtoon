@@ -1,8 +1,7 @@
 package com.depromeet.webtoon.api.endpoint.dto
 
-import com.depromeet.webtoon.core.domain.author.model.Author
+import com.depromeet.webtoon.core.domain.review.dto.CommentDto
 import com.depromeet.webtoon.core.domain.review.dto.ScoreDto
-import com.depromeet.webtoon.core.domain.review.model.Review
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WeekDay
@@ -17,10 +16,10 @@ data class WebtoonDetailResponse(
     var weekday: List<WeekDay>,
     var summary: String,
     val score: ScoreResponse,
-    val comments: List<String>
+    val comments: List<CommentDto>
 )
 
-fun convertToWebtoonDetailResponse(webtoon: Webtoon, scores: ScoreDto, comments: List<String>):WebtoonDetailResponse {
+fun convertToWebtoonDetailResponse(webtoon: Webtoon, scores: ScoreDto, comments: List<CommentDto>): WebtoonDetailResponse {
     return WebtoonDetailResponse(
         webtoon.id!!,
         webtoon.title,
@@ -33,5 +32,4 @@ fun convertToWebtoonDetailResponse(webtoon: Webtoon, scores: ScoreDto, comments:
         ScoreResponse(scores.storyScore!!, scores.drawingScore!!),
         comments
     )
-
 }
