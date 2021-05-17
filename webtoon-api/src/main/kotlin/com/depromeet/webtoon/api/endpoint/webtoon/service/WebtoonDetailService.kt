@@ -13,16 +13,21 @@ class WebtoonDetailService(
     private val reviewRepository: ReviewRepository
 ) {
 
-    fun getWebtoonDetail(id: Long) : ApiResponse<WebtoonDetailResponse>  {
+    fun getWebtoonDetail(id: Long): ApiResponse<WebtoonDetailResponse> {
 
-        val foundWebtoon = webtoonRepository.findById(id).get()
-
-
-        val scores = reviewRepository.getScores(foundWebtoon)
-        val comments = reviewRepository.getComments(foundWebtoon)
-
-        val webtoonDetailResponse = convertToWebtoonDetailResponse(foundWebtoon, scores, comments)
-
-        return ApiResponse.ok(webtoonDetailResponse)
+        val foundWebtoon = webtoonRepository.findById(id)
+        return if (foundWebtoon.isEmpty) {
+            ApiResponse.emptyWebtoon(null)
+        } else {
+            val review = reviewRepository.findByWebtoon(foundWebtoon.get())
+            if (review.isEmpty) {
+                ApiResponse.emptyReview(null)
+            } else {
+                val scores = reviewRepository.getScores(foundWebtoon.get())
+                val comments = reviewRepository.getComments(foundWebtoon.get())
+                val webtoonDetailResponse = convertToWebtoonDetailResponse(foundWebtoon.get(), scores, comments)
+                ApiResponse.ok(webtoonDetailResponse)
+            }
+        }
     }
 }
