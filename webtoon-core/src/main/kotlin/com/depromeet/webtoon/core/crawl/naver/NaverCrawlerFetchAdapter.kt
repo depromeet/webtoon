@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service
 class NaverCrawlerFetchAdapter() {
     fun crawl(): List<WebtoonImportRequest> {
         // 네이버 웹툰의 정보를 긁어온다!
-        val weekdays = listOf("mon", "tue", "wed", "thu", "fri", "sat", "sun")
         val titleIdRegex = "titleId=(\\d*)".toRegex()
 
-        return weekdays
+        return WEEKDAYS
             .map { weekday ->
                 val doc: Document = Jsoup.connect("https://comic.naver.com/webtoon/weekdayList.nhn?week=$weekday").get()
                 val webtoons: Elements = doc.select(".list_area ul li")
@@ -38,8 +37,10 @@ class NaverCrawlerFetchAdapter() {
                 val webtoonDetail: Elements = doc.select(".comicinfo")
                 val authors = webtoonDetail.select("div.detail span.wrt_nm").text().split("/").map { it.trim() }
                 val thumbnailImage = webtoonDetail.select(".thumb img").attr("src")
+                val genres = webtoonDetail.select(".detail_info .genre").text().split(",").map { it.trim() }
+                val summary = webtoonDetail.select("h2").next("p").text()
 
-                item.putDetail(authors, thumbnailImage, emptyList())
+                item.putDetail(authors, thumbnailImage, genres, summary)
                 log.info("[NaverCrawlerService] $item")
             }.toWebtoonImportRequests()
     }
@@ -69,23 +70,25 @@ class NaverCrawlerFetchAdapter() {
                     thumbnailImage = it.thumbnailImage,
                     url = it.url,
                     weekdays = it.weekdays.map { str ->
-                        when (str) {
-                            "mon" -> WeekDay.MON
-                            "tue" -> WeekDay.TUE
-                            "wed" -> WeekDay.WED
-                            "thu" -> WeekDay.THU
-                            "fri" -> WeekDay.FRI
-                            "sat" -> WeekDay.SAT
-                            "sun" -> WeekDay.SUN
-                            else -> throw IllegalStateException()
-                        }
+                        convertToWeekDay(str)
                     },
                     site = WebtoonSite.NAVER,
-                    genres = listOf(),
+                    genres = it.genres,
                     popular = it.rank,
-                    summary = "todo"
+                    summary = it.summary
                 )
             }
+        }
+
+        private fun convertToWeekDay(str: String) = when (str) {
+            "mon" -> WeekDay.MON
+            "tue" -> WeekDay.TUE
+            "wed" -> WeekDay.WED
+            "thu" -> WeekDay.THU
+            "fri" -> WeekDay.FRI
+            "sat" -> WeekDay.SAT
+            "sun" -> WeekDay.SUN
+            else -> throw IllegalStateException()
         }
     }
 
@@ -101,20 +104,22 @@ class NaverCrawlerFetchAdapter() {
         lateinit var authors: List<String>
         lateinit var thumbnailImage: String
         lateinit var genres: List<String>
+        lateinit var summary: String
 
         fun addWeekday(weekdays: Set<String>) {
             this.weekdays.addAll(weekdays)
         }
 
-        fun putDetail(authors: List<String>, thumbnailImage: String, genres: List<String>) {
-
+        fun putDetail(authors: List<String>, thumbnailImage: String, genres: List<String>, summary: String) {
             this.authors = authors
             this.thumbnailImage = thumbnailImage
             this.genres = genres
+            this.summary = summary
         }
     }
 
     companion object {
         val log = LoggerFactory.getLogger(DaumCrawlerService::class.java)
+        val WEEKDAYS = listOf("mon")
     }
 }
