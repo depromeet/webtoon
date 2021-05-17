@@ -3,9 +3,8 @@ package com.depromeet.webtoon.core.domain.account
 import com.depromeet.webtoon.core.domain.account.model.Account
 import java.time.LocalDateTime
 
-
 fun accountFixture(
-    id: Long = 1L,
+    id: Long? = null,
     deviceId: String = "testDevice",
     nickname: String = "testNick",
     createdAt: LocalDateTime = LocalDateTime.now(),

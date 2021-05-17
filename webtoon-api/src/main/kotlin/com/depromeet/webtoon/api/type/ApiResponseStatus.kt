@@ -1,5 +1,7 @@
 package com.depromeet.webtoon.api.type
 
 enum class ApiResponseStatus {
-    OK
+    OK,
+    CLIENT_ERROR,
+    SERVER_ERROR
 }

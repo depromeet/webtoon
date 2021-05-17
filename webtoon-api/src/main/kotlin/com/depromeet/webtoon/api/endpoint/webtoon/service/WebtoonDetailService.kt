@@ -13,10 +13,9 @@ class WebtoonDetailService(
     private val reviewRepository: ReviewRepository
 ) {
 
-    fun getWebtoonDetail(id: Long) : ApiResponse<WebtoonDetailResponse>  {
+    fun getWebtoonDetail(id: Long): ApiResponse<WebtoonDetailResponse> {
 
         val foundWebtoon = webtoonRepository.findById(id).get()
-
 
         val scores = reviewRepository.getScores(foundWebtoon)
         val comments = reviewRepository.getComments(foundWebtoon)

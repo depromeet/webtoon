@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 @ApiModel("요일별 웹툰")
-data class WeekdayWebtoon(
+data class WebtoonResponse(
     @ApiModelProperty("웹툰ID")
     var id: Long,
     @ApiModelProperty("사이트")
@@ -14,19 +14,16 @@ data class WeekdayWebtoon(
     var title: String,
     @ApiModelProperty("작가")
     var authors: List<AuthorResponse>,
-    @ApiModelProperty("(특정요일) 인기순위")
-    var popularity: Int,
     @ApiModelProperty("썸네일 이미지")
     var thumbnail: String
 )
 
-fun Webtoon.convertToWeekDayWebtoon() = WeekdayWebtoon(
+fun Webtoon.convertToWebtoonResponse() = WebtoonResponse(
     this.id!!,
     this.site.name,
     this.title,
     this.authors.map { AuthorResponse(it.id!!, it.name) },
-    this.popularity,
     this.thumbnail
 )
 
-fun List<Webtoon>.convertToWeekDayWebtoons() = this.map { it.convertToWeekDayWebtoon() }
+fun List<Webtoon>.convertToWebtoonResponses() = this.map { it.convertToWebtoonResponse() }
