@@ -21,10 +21,7 @@ class WebtoonDetailService(
             throw ApiValidationException("잘못된 웹툰 ID 입니다")
         }
 
-        val review = reviewRepository.findByWebtoon(foundWebtoon.get())
-        if (review.isEmpty) {
-            throw ApiValidationException("해당 웹툰의 리뷰가 존재하지 않습니다")
-        }
+        reviewRepository.findByWebtoon(foundWebtoon.get()) ?: throw ApiValidationException("해당 웹툰의 리뷰가 존재하지 않습니다")
 
         val scores = reviewRepository.getScores(foundWebtoon.get())
         val comments = reviewRepository.getComments(foundWebtoon.get())
