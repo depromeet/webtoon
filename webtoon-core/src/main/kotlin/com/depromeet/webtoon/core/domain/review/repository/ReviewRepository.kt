@@ -12,7 +12,7 @@ import java.util.*
 @Repository
 interface ReviewRepository : JpaRepository<Review, Long> {
 
-    fun findByWebtoon(webtoon: Webtoon): Optional<Review>
+    fun findByWebtoon(webtoon: Webtoon): Review?
 
     @Query(
         "select avg(r.storyScore) from Review r where r.webtoon = :webtoon"
