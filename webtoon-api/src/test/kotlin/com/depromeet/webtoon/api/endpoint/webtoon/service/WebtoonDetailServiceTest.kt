@@ -39,7 +39,7 @@ class WebtoonDetailServiceTest : FunSpec({
             val review = reviewFixture(webtoon = webtoon, account = account)
 
             every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
-            every { reviewRepository.findByWebtoon(any()) } returns Optional.of(review)
+            every { reviewRepository.findByWebtoon(any()) } returns review
             every { reviewRepository.getScores(any()) } returns ScoreDto(review.storyScore, review.drawingScore)
             every { reviewRepository.getComments(any()) } returns listOf(CommentDto(review.comment, account.nickname))
 
