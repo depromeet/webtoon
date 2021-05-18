@@ -1,6 +1,7 @@
 package com.depromeet.webtoon.core;
 
 import com.depromeet.webtoon.core.crawl.daum.DaumCrawlerService;
+import com.depromeet.webtoon.core.crawl.naver.NaverCrawlerService;
 import com.depromeet.webtoon.core.domain.account.model.Account;
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository;
 import com.depromeet.webtoon.core.domain.review.model.Review;
@@ -22,6 +23,9 @@ import java.util.Optional;
 public class SampleRunner implements ApplicationRunner {
 
     @Autowired
+    NaverCrawlerService naverCrawlerService;
+
+    @Autowired
     DaumCrawlerService daumCrawlerService;
 
     @Autowired
@@ -37,6 +41,7 @@ public class SampleRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) {
 
         daumCrawlerService.updateDaumWebtoons();
+        naverCrawlerService.crawlAndUpsert();
 
         Optional<Webtoon> webtoon = webtoonRepository.findById(1l);
 
