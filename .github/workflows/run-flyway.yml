@@ -1,0 +1,30 @@
+name: ktlint / test / integration-test
+
+on:
+  workflow_dispatch:
+jobs:
+  build-jar:
+    runs-on: [ self-hosted, X64, linux ]
+    steps:
+      - run: |
+          echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+          echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - name: Build with Gradle
+        env:
+          DB_USERNAME: ${{ secrets.WEBTOON_SERVICE_DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.WEBTOON_SERVICE_DB_PASSWORD }}
+        run: |
+          ./gradlew :webtoon-core:flywayMigrate -Dflyway.configFiles=src/main/resources/flyway-beta.conf
+      - name: action-slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: run flyway
+          fields: message,author,eventName,ref,workflow,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        if: always()
