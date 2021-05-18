@@ -57,6 +57,7 @@ class WebtoonDetailControllerTest(
                         webtoon.thumbnail,
                         webtoon.url,
                         webtoon.authors.map { AuthorResponse(it.id!!, it.name) },
+                        webtoon.genres,
                         webtoon.site,
                         webtoon.weekdays,
                         webtoon.summary,
