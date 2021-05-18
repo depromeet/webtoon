@@ -54,6 +54,7 @@ class WebtoonImportService(
         popularity = importRequest.popular,
         thumbnail = importRequest.thumbnailImage,
         summary = importRequest.summary,
+        genres = importRequest.genres,
         url = importRequest.url
     )
 

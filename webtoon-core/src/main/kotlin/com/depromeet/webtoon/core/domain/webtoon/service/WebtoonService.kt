@@ -42,6 +42,7 @@ class WebtoonService(
                 popularity = request.popularity
                 thumbnail = request.thumbnail
                 summary = request.summary
+                genres = request.genres.toMutableList()
                 url = request.url
             }
         }
@@ -55,6 +56,7 @@ class WebtoonService(
                 popularity = request.popularity,
                 thumbnail = request.thumbnail,
                 summary = request.summary,
+                genres = request.genres.toMutableList(),
                 url = request.url
             ).let {
                 webtoonRepository.save(it)

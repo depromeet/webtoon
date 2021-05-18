@@ -12,5 +12,6 @@ data class WebtoonUpsertRequest(
     val popularity: Int,
     val thumbnail: String,
     val summary: String,
+    val genres: List<String>,
     val url: String
 )
