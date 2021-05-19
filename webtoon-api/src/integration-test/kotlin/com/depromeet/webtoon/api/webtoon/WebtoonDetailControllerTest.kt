@@ -7,9 +7,8 @@ import com.depromeet.webtoon.core.domain.account.model.Account
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
-import com.depromeet.webtoon.core.domain.review.dto.CommentDto
-import com.depromeet.webtoon.core.domain.review.model.Review
-import com.depromeet.webtoon.core.domain.review.repository.ReviewRepository
+import com.depromeet.webtoon.core.domain.rating.model.Rating
+import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import io.kotest.core.spec.style.FunSpec
@@ -25,7 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 class WebtoonDetailControllerTest(
     var mockMvc: MockMvc,
     var webtoonRepository: WebtoonRepository,
-    var reviewRepository: ReviewRepository,
+    var ratingRepository: RatingRepository,
     var accountRepository: AccountRepository,
     var authorRepository: AuthorRepository
 ) : FunSpec({
@@ -39,8 +38,8 @@ class WebtoonDetailControllerTest(
         val webtoon = webtoonFixture(authors = listOf(author))
         webtoonRepository.save(webtoon)
 
-        val review = Review(null, webtoon, account, "fun", 3.5, 3.5, null, null)
-        reviewRepository.save(review)
+        val rating = Rating(null, webtoon, account, 3.5, 3.5, null, null)
+        ratingRepository.save(rating)
 
         mockMvc.perform(
             MockMvcRequestBuilders
@@ -61,8 +60,7 @@ class WebtoonDetailControllerTest(
                         webtoon.site,
                         webtoon.weekdays,
                         webtoon.summary,
-                        ScoreResponse(review.storyScore!!, review.drawingScore!!),
-                        listOf(CommentDto(review.comment, account.nickname))
+                        ScoreResponse(rating.storyScore!!, rating.drawingScore!!)
                     ).toString()
                 )
             }

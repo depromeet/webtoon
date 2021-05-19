@@ -4,8 +4,10 @@ import com.depromeet.webtoon.core.crawl.daum.DaumCrawlerService;
 import com.depromeet.webtoon.core.crawl.naver.NaverCrawlerService;
 import com.depromeet.webtoon.core.domain.account.model.Account;
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository;
-import com.depromeet.webtoon.core.domain.review.model.Review;
-import com.depromeet.webtoon.core.domain.review.repository.ReviewRepository;
+import com.depromeet.webtoon.core.domain.rating.model.Rating;
+import com.depromeet.webtoon.core.domain.rating.model.WebtoonRatingAverage;
+import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository;
+import com.depromeet.webtoon.core.domain.rating.repository.WebtoonRatingAverageRepository;
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon;
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,10 @@ public class SampleRunner implements ApplicationRunner {
     AccountRepository accountRepository;
 
     @Autowired
-    ReviewRepository reviewRepository;
+    RatingRepository ratingRepository;
+
+    @Autowired
+    WebtoonRatingAverageRepository webtoonRatingAverageRepository;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -48,8 +53,14 @@ public class SampleRunner implements ApplicationRunner {
         Account account = new Account(null, "testDeviceId", "tester", LocalDateTime.now(), LocalDateTime.now());
         accountRepository.save(account);
 
-        Review review = new Review(null, webtoon.get(), account, "재밌다", 3.0, 5.0, LocalDateTime.now(), LocalDateTime.now());
-        reviewRepository.save(review);
+        Account account2 = new Account(null, "testDeviceId2", "tester2", LocalDateTime.now(), LocalDateTime.now());
+        accountRepository.save(account2);
+
+        Rating rating = new Rating(null, webtoon.get(), account, 3.0, 5.0, LocalDateTime.now(), LocalDateTime.now());
+        ratingRepository.save(rating);
+
+        WebtoonRatingAverage webtoonRatingAverage = new WebtoonRatingAverage(null, webtoon.get(), 3.0, 5.0, 1L, 3.0, 5.0, 4.0, LocalDateTime.now(), LocalDateTime.now());
+        webtoonRatingAverageRepository.save(webtoonRatingAverage);
 
     }
 }

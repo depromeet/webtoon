@@ -1,24 +1,23 @@
-package com.depromeet.webtoon.core.domain.review
+package com.depromeet.webtoon.core.domain.rating
 
 import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
-import com.depromeet.webtoon.core.domain.review.model.Review
-import com.depromeet.webtoon.core.domain.review.repository.ReviewRepository
+import com.depromeet.webtoon.core.domain.rating.model.Rating
+import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.type.WebtoonSite
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import java.time.LocalDateTime
 
 @DataJpaTest
 class ReviewCrudTest(
-    val reviewRepository: ReviewRepository,
+    val ratingRepository: RatingRepository,
     val accountRepository: AccountRepository,
     val webtoonRepository: WebtoonRepository,
     val authorRepository: AuthorRepository
@@ -30,7 +29,7 @@ class ReviewCrudTest(
         val savedAuthor = authorRepository.save(authorFixture())
         val savedWebtoon = webtoonRepository.save(webtoonFixture(1L,WebtoonSite.NAVER,"테스트작품", listOf(savedAuthor)))
 
-        val review = Review(
+        val review = Rating(
             null,
             savedWebtoon,
             savedAccount,
@@ -41,7 +40,7 @@ class ReviewCrudTest(
             LocalDateTime.now())
 
         // when
-        val savedReview = reviewRepository.save(review)
+        val savedReview = ratingRepository.save(review)
 
         // then
         savedReview.id.shouldNotBeNull()
@@ -54,7 +53,7 @@ class ReviewCrudTest(
         val savedAuthor = authorRepository.save(authorFixture())
         val savedWebtoon = webtoonRepository.save(webtoonFixture(1L,WebtoonSite.NAVER,"테스트작품", listOf(savedAuthor)))
 
-        val review = Review(
+        val review = Rating(
             null,
             savedWebtoon,
             savedAccount,
@@ -64,11 +63,11 @@ class ReviewCrudTest(
             LocalDateTime.now(),
             LocalDateTime.now())
 
-        val savedReview = reviewRepository.save(review)
+        val savedReview = ratingRepository.save(review)
 
         // when
-        reviewRepository.findById(savedReview.id!!).get().shouldNotBeNull()
-        reviewRepository.findById(savedReview.id!!).get().comment.shouldBe("재밌다")
+        ratingRepository.findById(savedReview.id!!).get().shouldNotBeNull()
+        ratingRepository.findById(savedReview.id!!).get().comment.shouldBe("재밌다")
     }
 
     test("Update Review"){
@@ -77,7 +76,7 @@ class ReviewCrudTest(
         val savedAuthor = authorRepository.save(authorFixture())
         val savedWebtoon = webtoonRepository.save(webtoonFixture(1L,WebtoonSite.NAVER,"테스트작품", listOf(savedAuthor)))
 
-        val review = Review(
+        val review = Rating(
             null,
             savedWebtoon,
             savedAccount,
@@ -87,14 +86,14 @@ class ReviewCrudTest(
             LocalDateTime.now(),
             LocalDateTime.now())
 
-        val savedReview = reviewRepository.save(review)
+        val savedReview = ratingRepository.save(review)
 
         // when
         savedReview.comment = "재미없다"
-        reviewRepository.save(savedReview)
+        ratingRepository.save(savedReview)
 
         // then
-        reviewRepository.findById(savedReview.id!!).get().comment.shouldBe("재미없다")
+        ratingRepository.findById(savedReview.id!!).get().comment.shouldBe("재미없다")
     }
 
     test("Delete Review"){
@@ -103,7 +102,7 @@ class ReviewCrudTest(
         val savedAuthor = authorRepository.save(authorFixture())
         val savedWebtoon = webtoonRepository.save(webtoonFixture(1L,WebtoonSite.NAVER,"테스트작품", listOf(savedAuthor)))
 
-        val review = Review(
+        val review = Rating(
             null,
             savedWebtoon,
             savedAccount,
@@ -113,13 +112,13 @@ class ReviewCrudTest(
             LocalDateTime.now(),
             LocalDateTime.now())
 
-        val savedReview = reviewRepository.save(review)
+        val savedReview = ratingRepository.save(review)
 
         // when
-        reviewRepository.deleteAll()
+        ratingRepository.deleteAll()
 
         // then
-        reviewRepository.findAll().shouldHaveSize(0)
+        ratingRepository.findAll().shouldHaveSize(0)
     }
 
 })

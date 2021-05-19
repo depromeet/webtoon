@@ -2,10 +2,9 @@ package com.depromeet.webtoon.api.endpoint.webtoon.service
 
 import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.author.authorFixture
-import com.depromeet.webtoon.core.domain.review.dto.CommentDto
-import com.depromeet.webtoon.core.domain.review.dto.ScoreDto
-import com.depromeet.webtoon.core.domain.review.repository.ReviewRepository
-import com.depromeet.webtoon.core.domain.review.reviewFixture
+import com.depromeet.webtoon.core.domain.rating.dto.ScoreDto
+import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository
+import com.depromeet.webtoon.core.domain.rating.reviewFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.exceptions.ApiValidationException
@@ -22,12 +21,12 @@ class WebtoonDetailServiceTest : FunSpec({
 
     lateinit var webtoonDetailService: WebtoonDetailService
     lateinit var webtoonRepository: WebtoonRepository
-    lateinit var reviewRepository: ReviewRepository
+    lateinit var ratingRepository: RatingRepository
 
     beforeTest {
         webtoonRepository = mockk()
-        reviewRepository = mockk()
-        webtoonDetailService = WebtoonDetailService(webtoonRepository, reviewRepository)
+        ratingRepository = mockk()
+        webtoonDetailService = WebtoonDetailService(webtoonRepository, ratingRepository)
     }
 
     context("WebtoonDetailService") {
@@ -40,9 +39,8 @@ class WebtoonDetailServiceTest : FunSpec({
             val review = reviewFixture(webtoon = webtoon, account = account)
 
             every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
-            every { reviewRepository.findByWebtoon(any()) } returns review
-            every { reviewRepository.getScores(any()) } returns ScoreDto(review.storyScore, review.drawingScore)
-            every { reviewRepository.getComments(any()) } returns listOf(CommentDto(review.comment, account.nickname))
+            every { ratingRepository.findByWebtoon(any()) } returns review
+            every { ratingRepository.getScores(any()) } returns ScoreDto(review.storyScore, review.drawingScore)
 
             // when
             webtoonDetailService.getWebtoonDetail(1L)
@@ -53,7 +51,7 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             verify(exactly = 1) {
-                reviewRepository.findByWebtoon(
+                ratingRepository.findByWebtoon(
                     withArg {
                         it shouldBe webtoon
                     }
@@ -61,15 +59,7 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             verify(exactly = 1) {
-                reviewRepository.getScores(
-                    withArg {
-                        it shouldBe webtoon
-                    }
-                )
-            }
-
-            verify(exactly = 1) {
-                reviewRepository.getComments(
+                ratingRepository.getScores(
                     withArg {
                         it shouldBe webtoon
                     }
@@ -91,7 +81,7 @@ class WebtoonDetailServiceTest : FunSpec({
             val webtoon = webtoonFixture(id = 1L, authors = listOf(author))
 
             every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
-            every { reviewRepository.findByWebtoon(any()) } returns null
+            every { ratingRepository.findByWebtoon(any()) } returns null
 
             // when
             val webtoonDetail = webtoonDetailService.getWebtoonDetail(1L)
@@ -102,14 +92,13 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             verify(exactly = 1) {
-                reviewRepository.findByWebtoon(
+                ratingRepository.findByWebtoon(
                     withArg {
                         it shouldBe webtoon
                     }
                 )
             }
 
-            webtoonDetail.data!!.comments.shouldBeEmpty()
             webtoonDetail.data!!.score.storyScore.shouldBe(0.0)
             webtoonDetail.data!!.score.drawingScore.shouldBe(0.0)
         }
