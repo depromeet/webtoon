@@ -33,7 +33,6 @@ class ReviewCrudTest(
             null,
             savedWebtoon,
             savedAccount,
-            "재밌다",
             3.0,
             5.0,
             LocalDateTime.now(),
@@ -57,7 +56,6 @@ class ReviewCrudTest(
             null,
             savedWebtoon,
             savedAccount,
-            "재밌다",
             3.0,
             5.0,
             LocalDateTime.now(),
@@ -67,7 +65,6 @@ class ReviewCrudTest(
 
         // when
         ratingRepository.findById(savedReview.id!!).get().shouldNotBeNull()
-        ratingRepository.findById(savedReview.id!!).get().comment.shouldBe("재밌다")
     }
 
     test("Update Review"){
@@ -80,7 +77,6 @@ class ReviewCrudTest(
             null,
             savedWebtoon,
             savedAccount,
-            "재밌다",
             3.0,
             5.0,
             LocalDateTime.now(),
@@ -89,11 +85,8 @@ class ReviewCrudTest(
         val savedReview = ratingRepository.save(review)
 
         // when
-        savedReview.comment = "재미없다"
         ratingRepository.save(savedReview)
 
-        // then
-        ratingRepository.findById(savedReview.id!!).get().comment.shouldBe("재미없다")
     }
 
     test("Delete Review"){
@@ -106,7 +99,6 @@ class ReviewCrudTest(
             null,
             savedWebtoon,
             savedAccount,
-            "재밌다",
             3.0,
             5.0,
             LocalDateTime.now(),
