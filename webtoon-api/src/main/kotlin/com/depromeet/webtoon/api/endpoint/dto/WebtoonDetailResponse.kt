@@ -1,7 +1,7 @@
 package com.depromeet.webtoon.api.endpoint.dto
 
-import com.depromeet.webtoon.core.domain.review.dto.CommentDto
-import com.depromeet.webtoon.core.domain.review.dto.ScoreDto
+import com.depromeet.webtoon.core.domain.rating.dto.CommentDto
+import com.depromeet.webtoon.core.domain.rating.dto.ScoreDto
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WeekDay
@@ -30,8 +30,6 @@ data class WebtoonDetailResponse(
     var summary: String,
     @ApiModelProperty(value = "평점")
     val score: ScoreResponse,
-    @ApiModelProperty(value = "댓글")
-    val comments: List<CommentDto>
 )
 
 fun convertToWebtoonDetailResponse(webtoon: Webtoon, scores: ScoreDto, comments: List<CommentDto>): WebtoonDetailResponse {
@@ -46,6 +44,5 @@ fun convertToWebtoonDetailResponse(webtoon: Webtoon, scores: ScoreDto, comments:
         webtoon.weekdays,
         webtoon.summary,
         ScoreResponse(scores.storyScore!!, scores.drawingScore!!),
-        comments
     )
 }

@@ -1,29 +1,29 @@
-package com.depromeet.webtoon.core.domain.review.model
+package com.depromeet.webtoon.core.domain.rating.model
 
 import com.depromeet.webtoon.core.domain.account.model.Account
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 import javax.persistence.Entity
+import javax.persistence.EntityListeners
 import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.Lob
 import javax.persistence.ManyToOne
 
 @Entity
-class Review(
+@EntityListeners(AuditingEntityListener::class)
+class Rating(
     id: Long? = null,
     webtoon: Webtoon = Webtoon(),
     account: Account = Account(),
-    comment: String = "",
     storyScore: Double? = null,
     drawingScore: Double? = null,
     createdAt: LocalDateTime? = null,
     modifiedAt: LocalDateTime? = null,
-
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,12 +35,9 @@ class Review(
     @ManyToOne(fetch = FetchType.LAZY)
     val account: Account = account
 
-    @Lob
-    var comment: String = comment
+    var storyScore: Double? = storyScore
 
-    val storyScore: Double? = storyScore
-
-    val drawingScore: Double? = drawingScore
+    var drawingScore: Double? = drawingScore
 
     @CreatedDate
     var createdAt: LocalDateTime? = createdAt

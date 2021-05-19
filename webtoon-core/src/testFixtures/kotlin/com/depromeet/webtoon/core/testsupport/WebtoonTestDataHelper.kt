@@ -4,8 +4,8 @@ import com.depromeet.webtoon.core.domain.account.model.Account
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.model.Author
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
-import com.depromeet.webtoon.core.domain.review.model.Review
-import com.depromeet.webtoon.core.domain.review.repository.ReviewRepository
+import com.depromeet.webtoon.core.domain.rating.model.Rating
+import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import org.springframework.stereotype.Component
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 @Component
 class WebtoonTestDataHelper(
     val webtoonRepository: WebtoonRepository,
-    val reviewRepository: ReviewRepository,
+    val ratingRepository: RatingRepository,
     val accountRepository: AccountRepository,
     val authorRepository: AuthorRepository
 ) {
@@ -25,12 +25,12 @@ class WebtoonTestDataHelper(
         return this.saveTestWebtoons(webtoons.toList())
     }
 
-    fun saveTestReviews(reviews: List<Review>): List<Review> {
-        return reviewRepository.saveAll(reviews)
+    fun saveTestReviews(ratings: List<Rating>): List<Rating> {
+        return ratingRepository.saveAll(ratings)
     }
 
-    fun saveTestReviews(vararg reviews: Review): List<Review> {
-        return this.saveTestReviews(reviews.toList())
+    fun saveTestReviews(vararg ratings: Rating): List<Rating> {
+        return this.saveTestReviews(ratings.toList())
     }
 
     fun saveTestAccount(accounts: List<Account>): List<Account> {

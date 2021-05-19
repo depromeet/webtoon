@@ -1,4 +1,4 @@
-package com.depromeet.webtoon.core.domain.review.dto
+package com.depromeet.webtoon.core.domain.rating.dto
 
 data class CommentDto(
     var comment: String?,
