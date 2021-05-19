@@ -50,16 +50,30 @@ CREATE TABLE webtoon_genre
     CONSTRAINT genre_webtoon_id_fk FOREIGN KEY (webtoon_id) REFERENCES webtoon (id)
 );
 
-CREATE TABLE review
+CREATE TABLE rating
 (
-    id            BIGINT      NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    account_id    BIGINT      NOT NULL,
-    webtoon_id    BIGINT      NOT NULL,
-    comment       LONGTEXT    NOT NULL,
-    drawing_score DOUBLE,
-    story_score   DOUBLE,
-    modified_at   DATETIME(6) NOT NULL,
-    created_at    DATETIME(6) NOT NULL,
-    CONSTRAINT review_account_id_fk FOREIGN KEY (account_id) REFERENCES account (id),
-    CONSTRAINT review_webtoon_id_fk FOREIGN KEY (webtoon_id) REFERENCES webtoon (id)
+    id              BIGINT      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    webtoon_id      BIGINT      NOT NULL,
+    account_id      BIGINT      NOT NULL,
+    story_score     DOUBLE,
+    drawing_score   DOUBLE,
+    created_at      DATETIME(6) NOT NULL,
+    modified_at     DATETIME(6) NOT NULL,
+    CONSTRAINT rating_webtoon_id_fk FOREIGN KEY (webtoon_id) REFERENCES webtoon (id),
+    CONSTRAINT rating_account_id_fk FOREIGN KEY (account_id) REFERENCES account (id)
+);
+
+CREATE TABLE webtoon_rating_average
+(
+    id                  BIGINT      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    webtoon_id          BIGINT      NOT NULL,
+    total_story_score   DOUBLE,
+    total_drawing_score DOUBLE,
+    votes               BIGINT,
+    story_average       DOUBLE,
+    drawing_average     DOUBLE,
+    total_average       DOUBLE,
+    created_at          DATETIME(6) NOT NULL,
+    modified_at         DATETIME(6) NOT NULL,
+    CONSTRAINT rating_average_webtoon_id_fk FOREIGN KEY (webtoon_id) REFERENCES webtoon (id)
 );
