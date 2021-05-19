@@ -1,9 +1,9 @@
-name: ktlint / test / integration-test
+name: run flyway
 
 on:
   workflow_dispatch:
 jobs:
-  build-jar:
+  run-flyway:
     runs-on: [ self-hosted, X64, linux ]
     steps:
       - run: |

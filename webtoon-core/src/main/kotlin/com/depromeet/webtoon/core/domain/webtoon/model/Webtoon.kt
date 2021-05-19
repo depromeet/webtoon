@@ -19,6 +19,8 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType.IDENTITY
 import javax.persistence.Id
 import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.Lob
 import javax.persistence.ManyToMany
 
 @Entity
@@ -55,10 +57,15 @@ class Webtoon constructor(
     var url: String = url
 
     @ManyToMany
+    @JoinTable(
+        name = "webtoon_author",
+        joinColumns = [JoinColumn(name = "webtoon_id")],
+        inverseJoinColumns = [JoinColumn(name = "author_id")]
+    )
     var authors: MutableList<Author> = authors.toMutableList()
 
     @ElementCollection
-    @CollectionTable(name = "week_day", joinColumns = [JoinColumn(name = "id")])
+    @CollectionTable(name = "webtoon_week_day", joinColumns = [JoinColumn(name = "webtoon_id")])
     @Enumerated(EnumType.STRING)
     var weekdays: MutableList<WeekDay> = weekdays.toMutableList()
 
@@ -68,11 +75,12 @@ class Webtoon constructor(
     @Column(name = "thumbnail")
     var thumbnail: String = thumbnail
 
+    @Lob
     @Column(name = "summary")
     var summary: String = summary
 
     @ElementCollection
-    @CollectionTable(name = "genre", joinColumns = [JoinColumn(name = "id")])
+    @CollectionTable(name = "webtoon_genre", joinColumns = [JoinColumn(name = "webtoon_id")])
     @Column(name = "genre")
     var genres: MutableList<String> = genres as MutableList<String>
 
