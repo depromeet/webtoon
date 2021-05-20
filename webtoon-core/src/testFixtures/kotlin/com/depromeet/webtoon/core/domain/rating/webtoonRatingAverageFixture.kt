@@ -8,12 +8,12 @@ import java.time.LocalDateTime
 fun webtoonRatingAverageFixture(
     id: Long? = null,
     webtoon: Webtoon = webtoonFixture(),
-    totalStoryScore: Double? = null,
-    totalDrawingScore: Double? = null,
-    votes: Long? = null,
-    storyAverage: Double? = null,
-    drawingAverage: Double? = null,
-    totalAverage: Double? = null,
+    totalStoryScore: Double? = 3.0,
+    totalDrawingScore: Double? = 5.0,
+    votes: Long? = 1,
+    storyAverage: Double? = 3.0,
+    drawingAverage: Double? = 5.0,
+    totalAverage: Double? = 4.0,
     createdAt: LocalDateTime = LocalDateTime.now(),
     modifiedAt: LocalDateTime = LocalDateTime.now()
 

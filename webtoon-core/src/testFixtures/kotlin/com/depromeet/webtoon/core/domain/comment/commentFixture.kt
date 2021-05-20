@@ -1,26 +1,26 @@
-package com.depromeet.webtoon.core.domain.rating
+package com.depromeet.webtoon.core.domain.comment
 
 import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.model.Account
-import com.depromeet.webtoon.core.domain.rating.model.Rating
+import com.depromeet.webtoon.core.domain.comment.model.Comment
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import java.time.LocalDateTime
 
-fun reviewFixture(
+fun commentFixture(
     id: Long? = null,
-    webtoon: Webtoon = webtoonFixture(),
-    account: Account = accountFixture(),
-    storyScore: Double = 3.0,
-    drawingScore: Double = 5.0,
+    content: String? = "testComment",
+    account: Account = accountFixture(1L),
+    webtoon: Webtoon = webtoonFixture(1L),
+    nickname: String = account.nickname!!,
     createdAt: LocalDateTime = LocalDateTime.now(),
     modifiedAt: LocalDateTime = LocalDateTime.now()
-) = Rating(
+) = Comment(
     id = id,
-    webtoon = webtoon,
+    content = content,
     account = account,
-    storyScore = storyScore,
-    drawingScore = drawingScore,
+    webtoon = webtoon,
+    nickname = nickname,
     createdAt = createdAt,
     modifiedAt = modifiedAt
 )
