@@ -3,36 +3,65 @@ package com.depromeet.webtoon.api.endpoint.webtoon.service
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonDetailResponse
 import com.depromeet.webtoon.api.endpoint.dto.convertToWebtoonDetailResponse
+import com.depromeet.webtoon.core.application.imports.WebtoonImportService
+import com.depromeet.webtoon.core.domain.comment.repository.CommentRepository
+import com.depromeet.webtoon.core.domain.rating.dto.CommentDto
 import com.depromeet.webtoon.core.domain.rating.dto.ScoreDto
-import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository
+import com.depromeet.webtoon.core.domain.rating.repository.WebtoonRatingAverageRepository
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.exceptions.ApiValidationException
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class WebtoonDetailService(
     private val webtoonRepository: WebtoonRepository,
-    private val ratingRepository: RatingRepository
+    private val webtoonRatingAverageRepository: WebtoonRatingAverageRepository,
+    private val commentRepository: CommentRepository
 ) {
 
     fun getWebtoonDetail(id: Long): ApiResponse<WebtoonDetailResponse> {
 
         val foundWebtoon = webtoonRepository.findById(id)
         if (foundWebtoon.isEmpty) {
+            log.info("[WebtoonDetailService - getWebtoonDetail] wrong webtoonID -> ${id}")
             throw ApiValidationException("잘못된 웹툰 ID 입니다")
         }
 
-        val review = ratingRepository.findByWebtoon(foundWebtoon.get())
+        val ratingInfo = webtoonRatingAverageRepository.findByWebtoonId(id)
 
-        val webtoonDetailResponse: WebtoonDetailResponse
+        val commentInfo = commentRepository.findAllByWebtoonId(id)
 
-        return if (review == null) {
-            webtoonDetailResponse = convertToWebtoonDetailResponse(foundWebtoon.get(), ScoreDto(0.0, 0.0), emptyList())
-            ApiResponse.ok(webtoonDetailResponse)
+        if (ratingInfo != null) {
+            val webtoonDetailResponse = convertToWebtoonDetailResponse(
+                foundWebtoon.get(),
+                ScoreDto(
+                    ratingInfo.totalAverage,
+                    ratingInfo.storyAverage,
+                    ratingInfo.drawingAverage
+                ),
+                commentInfo!!.map { CommentDto(it.content, it.nickname) }
+            )
+            log.info("[WebtoonDetailService - getWebtoonDetail] webtoon[${id}] rating not exist")
+            return ApiResponse.ok(webtoonDetailResponse)
         } else {
-            val scores = ratingRepository.getScores(foundWebtoon.get())
-            webtoonDetailResponse = convertToWebtoonDetailResponse(foundWebtoon.get(), scores, emptyList())
-            ApiResponse.ok(webtoonDetailResponse)
+            val webtoonDetailResponse = convertToWebtoonDetailResponse(
+                foundWebtoon.get(),
+                ScoreDto(
+                    0.0,
+                    0.0,
+                    0.0
+                ),
+                commentInfo!!.map { CommentDto(it.content, it.nickname) }
+            )
+            log.info("[WebtoonDetailService - getWebtoonDetail] webtoon[${id}] rating exist")
+            return ApiResponse.ok(webtoonDetailResponse)
         }
+
+    }
+
+    companion object {
+        val log = LoggerFactory.getLogger(WebtoonImportService::class.java)
     }
 }
+

@@ -27,9 +27,5 @@ interface RatingRepository : JpaRepository<Rating, Long> {
     )
     fun getAvgDrawingScore(webtoon: Webtoon): Double
 
-    @Query(
-        "select new com.depromeet.webtoon.core.domain.rating.dto.ScoreDto(avg(r.storyScore), avg(r.drawingScore)) " +
-            "from Rating r where r.webtoon = :webtoon"
-    )
-    fun getScores(webtoon: Webtoon): ScoreDto
+
 }
