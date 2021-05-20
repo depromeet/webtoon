@@ -37,20 +37,20 @@ class CommentImportService(
             }
             return ApiResponse.ok(
                 CommentUpsertResponse(
-                    optionalComment.account.id!!,
-                    optionalComment.webtoon.id!!,
-                    optionalComment.content!!,
-                    optionalComment.nickname!!
+                    accountId = optionalComment.account.id!!,
+                    webtoonId = optionalComment.webtoon.id!!,
+                    content = optionalComment.content!!,
+                    nickname = optionalComment.nickname!!
                 )
             )
         } else {                        // 생성
             val newComment = convertRequestToComment(commentRequest).let { commentRepository.save(it) }
             return ApiResponse.ok(
                 CommentUpsertResponse(
-                    newComment.account.id!!,
-                    newComment.webtoon.id!!,
-                    newComment.content!!,
-                    newComment.nickname!!
+                    accountId = newComment.account.id!!,
+                    webtoonId = newComment.webtoon.id!!,
+                    content = newComment.content!!,
+                    nickname = newComment.nickname!!
                 )
             )
         }
