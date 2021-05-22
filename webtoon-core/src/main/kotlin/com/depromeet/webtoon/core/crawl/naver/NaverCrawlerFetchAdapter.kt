@@ -2,6 +2,7 @@ package com.depromeet.webtoon.core.crawl.naver
 
 import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
 import com.depromeet.webtoon.core.crawl.daum.DaumCrawlerService
+import com.depromeet.webtoon.core.type.BackgroundColor
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WeekDay
 import org.jsoup.Jsoup
@@ -75,8 +76,11 @@ class NaverCrawlerFetchAdapter() {
                     site = WebtoonSite.NAVER,
                     genres = it.genres,
                     popular = it.rank,
-                    summary = it.summary
-                )
+                    summary = it.summary,
+                    // todo 백그라운드 색상, 연재중
+                    backgroundColor = BackgroundColor.NONE,
+                    isComplete = false,
+                 )
             }
         }
 

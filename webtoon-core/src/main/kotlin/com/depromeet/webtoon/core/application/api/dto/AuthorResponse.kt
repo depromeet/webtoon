@@ -1,4 +1,4 @@
-package com.depromeet.webtoon.api.endpoint.dto
+package com.depromeet.webtoon.core.application.api.dto
 
 data class AuthorResponse(
     var id: Long,

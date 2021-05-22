@@ -3,6 +3,7 @@ package com.depromeet.webtoon.core.crawl.daum
 import com.depromeet.webtoon.core.application.imports.WebtoonImportService
 import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.WebtoonWeeks
+import com.depromeet.webtoon.core.type.BackgroundColor
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WeekDay
 import org.slf4j.LoggerFactory
@@ -30,7 +31,10 @@ class DaumCrawlerService(
                 crawled.data.webtoon.cartoon.genres.map { it.name },
                 crawled.data.webtoon.averageScore,
                 idx + 1,
-                crawled.data.webtoon.introduction
+                crawled.data.webtoon.introduction,
+                // todo 배경화면, 연재중 확인할 것
+                BackgroundColor.NONE,
+                isComplete = false,
             )
         }
 

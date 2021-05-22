@@ -10,6 +10,7 @@ dependencies {
     // TODO 크롤러는 별도로 분리할것??!!
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.jsoup:jsoup")
+    implementation("io.swagger:swagger-annotations:1.5.20")
 
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")

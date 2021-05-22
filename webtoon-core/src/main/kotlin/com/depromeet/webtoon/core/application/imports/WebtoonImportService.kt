@@ -55,7 +55,10 @@ class WebtoonImportService(
         thumbnail = importRequest.thumbnailImage,
         summary = importRequest.summary,
         genres = importRequest.genres,
-        url = importRequest.url
+        url = importRequest.url,
+        score = importRequest.score,
+        backgroundColor = importRequest.backgroundColor,
+        isComplete = importRequest.isComplete,
     )
 
     companion object {

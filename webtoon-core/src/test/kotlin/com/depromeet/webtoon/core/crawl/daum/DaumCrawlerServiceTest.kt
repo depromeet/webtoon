@@ -9,6 +9,7 @@ import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.ThumbnailImage2
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.Webtoon
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.WebtoonWeeks
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
+import com.depromeet.webtoon.core.type.BackgroundColor
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WeekDay
 import io.kotest.core.spec.style.FunSpec
@@ -70,7 +71,9 @@ class DaumCrawlerServiceTest : FunSpec({
             emptyList(),
             5.0,
             1,
-            "줄거리"
+            "줄거리",
+            BackgroundColor.NONE,
+            false,
         )
         every { fetchService.getPopularNicknames() } returns arrayListOf("nick")
         every { fetchService.getTodayUpdatedNicknames() } returns arrayListOf("nick")

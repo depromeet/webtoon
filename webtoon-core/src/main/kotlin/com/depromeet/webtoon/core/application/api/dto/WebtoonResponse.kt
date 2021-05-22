@@ -1,6 +1,7 @@
-package com.depromeet.webtoon.api.endpoint.dto
+package com.depromeet.webtoon.core.application.api.dto
 
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
+import com.depromeet.webtoon.core.type.BackgroundColor
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
@@ -15,7 +16,15 @@ data class WebtoonResponse(
     @ApiModelProperty("작가")
     var authors: List<AuthorResponse>,
     @ApiModelProperty("썸네일 이미지")
-    var thumbnail: String
+    var thumbnail: String,
+    @ApiModelProperty("플랫폼 평점")
+    var score: Double,
+    @ApiModelProperty("웹툰 장르")
+    var genres: List<String>,
+    @ApiModelProperty("웹툰 배경화면")
+    var backgroundColor: BackgroundColor,
+    @ApiModelProperty("웹툰 연재중 여부")
+    var isComplete: Boolean,
 )
 
 fun Webtoon.convertToWebtoonResponse() = WebtoonResponse(
@@ -23,7 +32,11 @@ fun Webtoon.convertToWebtoonResponse() = WebtoonResponse(
     this.site.name,
     this.title,
     this.authors.map { AuthorResponse(it.id!!, it.name) },
-    this.thumbnail
+    this.thumbnail,
+    this.score,
+    this.genres,
+    this.backgroudColor,
+    this.isComplete!!,
 )
 
 fun List<Webtoon>.convertToWebtoonResponses() = this.map { it.convertToWebtoonResponse() }

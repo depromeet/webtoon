@@ -1,6 +1,7 @@
 package com.depromeet.webtoon.core.domain.webtoon.dto
 
 import com.depromeet.webtoon.core.domain.author.model.Author
+import com.depromeet.webtoon.core.type.BackgroundColor
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WeekDay
 
@@ -13,5 +14,8 @@ data class WebtoonUpsertRequest(
     val thumbnail: String,
     val summary: String,
     val genres: List<String>,
-    val url: String
+    val url: String,
+    val score: Double,
+    val backgroundColor: BackgroundColor,
+    val isComplete: Boolean,
 )

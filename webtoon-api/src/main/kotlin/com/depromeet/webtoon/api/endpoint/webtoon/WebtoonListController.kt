@@ -4,7 +4,7 @@ import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse.Companion.ok
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonSearchResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonWeekDayResponse
-import com.depromeet.webtoon.api.endpoint.dto.convertToWebtoonResponses
+import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonSearchService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
 import com.depromeet.webtoon.core.type.WeekDay

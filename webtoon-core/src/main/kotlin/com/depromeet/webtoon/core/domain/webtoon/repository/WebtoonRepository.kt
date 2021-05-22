@@ -25,4 +25,30 @@ interface WebtoonRepository : JpaRepository<Webtoon, Long> {
           order by w.id desc"""
     )
     fun searchByQuery(text: String): List<Webtoon>
+
+
+    @Query(
+        """
+        select * from webtoon w
+            left outer join webtoon_genre g on w.id=g.webtoon_id
+        where( g.genre in (?) )
+        and w.score>9
+        and w.site = 'DAUM'
+        limit ?,1
+        """, nativeQuery = true)
+    fun daumGenreRecommendQuery(genres: String, randomRow: Int): List<Webtoon>
+
+    @Query(
+        """
+        select * from webtoon w
+            left outer join webtoon_genre g on w.id=g.webtoon_id
+        where( g.genre in (?) )
+        and w.score>9
+        and w.site = 'NAVER'
+        limit ?,1
+        """, nativeQuery = true)
+    fun naverGenreRecommendQuery(genre: String, randomRow: Int): List<Webtoon>
+
+
+    fun findTop5ByGenresInAndScoreGreaterThanAndSite(genres: List<String>, score: Double, site: WebtoonSite): List<Webtoon>
 }

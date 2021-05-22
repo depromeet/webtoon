@@ -1,6 +1,7 @@
 package com.depromeet.webtoon.core.application.imports
 
 import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
+import com.depromeet.webtoon.core.type.BackgroundColor
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WebtoonSite.NAVER
 import com.depromeet.webtoon.core.type.WeekDay
@@ -16,6 +17,8 @@ fun webtoonImportRequestFixture(
     score: Double = 4.8,
     popular: Int = 2,
     summary: String = "귀여운 고양이 이야기",
+    backgroundColor: BackgroundColor = BackgroundColor.NONE,
+    isComplete: Boolean = false,
 ) = WebtoonImportRequest(
     title = title,
     url = url,
@@ -26,5 +29,7 @@ fun webtoonImportRequestFixture(
     genres = genres,
     score = score,
     popular = popular,
-    summary = summary
+    summary = summary,
+    backgroundColor = backgroundColor,
+    isComplete = isComplete,
 )

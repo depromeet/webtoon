@@ -44,6 +44,9 @@ class WebtoonService(
                 summary = request.summary
                 genres = request.genres.toMutableList()
                 url = request.url
+                score = request.score
+                backgroudColor = request.backgroundColor
+                isComplete = request.isComplete
             }
         }
         // 존재하지 않는 경우 새롭게 데이터를 입력한 다음 저장
@@ -57,7 +60,10 @@ class WebtoonService(
                 thumbnail = request.thumbnail,
                 summary = request.summary,
                 genres = request.genres.toMutableList(),
-                url = request.url
+                url = request.url,
+                score = request.score,
+                backgroundColor = request.backgroundColor,
+                isComplete = request.isComplete,
             ).let {
                 webtoonRepository.save(it)
             }
