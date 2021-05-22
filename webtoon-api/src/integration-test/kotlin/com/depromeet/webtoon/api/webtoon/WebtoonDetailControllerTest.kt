@@ -3,12 +3,18 @@ package com.depromeet.webtoon.api.webtoon
 import com.depromeet.webtoon.api.endpoint.dto.ScoreResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonDetailResponse
 import com.depromeet.webtoon.core.application.api.dto.AuthorResponse
+import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.model.Account
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
+import com.depromeet.webtoon.core.domain.comment.commentFixture
+import com.depromeet.webtoon.core.domain.comment.repository.CommentRepository
+import com.depromeet.webtoon.core.domain.rating.dto.CommentDto
 import com.depromeet.webtoon.core.domain.rating.model.Rating
 import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository
+import com.depromeet.webtoon.core.domain.rating.repository.WebtoonRatingAverageRepository
+import com.depromeet.webtoon.core.domain.rating.webtoonRatingAverageFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import io.kotest.core.spec.style.FunSpec
@@ -24,22 +30,24 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 class WebtoonDetailControllerTest(
     var mockMvc: MockMvc,
     var webtoonRepository: WebtoonRepository,
-    var ratingRepository: RatingRepository,
+    var webtoonRatingAverageRepository: WebtoonRatingAverageRepository,
+    var commentRepository: CommentRepository,
     var accountRepository: AccountRepository,
     var authorRepository: AuthorRepository
 ) : FunSpec({
 
     test("GET  /api/v1/webtoons/detail") {
         // given
-        val account = Account(null, "testDevice", null, null, null)
+        val account = accountFixture(1L)
         accountRepository.save(account)
         val author = authorFixture()
         authorRepository.save(author)
         val webtoon = webtoonFixture(authors = listOf(author))
         webtoonRepository.save(webtoon)
-
-        val rating = Rating(null, webtoon, account, 3.5, 3.5, null, null)
-        ratingRepository.save(rating)
+        val webtoonRatingAvg = webtoonRatingAverageFixture(1L, webtoon = webtoon)
+        webtoonRatingAverageRepository.save(webtoonRatingAvg)
+        val comment = commentFixture(1L, account = account, webtoon = webtoon)
+        commentRepository.save(comment)
 
         mockMvc.perform(
             MockMvcRequestBuilders
@@ -60,7 +68,8 @@ class WebtoonDetailControllerTest(
                         webtoon.site,
                         webtoon.weekdays,
                         webtoon.summary,
-                        ScoreResponse(rating.storyScore!!, rating.drawingScore!!)
+                        ScoreResponse(webtoonRatingAvg.totalAverage!!, webtoonRatingAvg.totalStoryScore!!, webtoonRatingAvg.drawingAverage!!),
+                        comments = listOf(CommentDto(comment.content, comment.nickname))
                     ).toString()
                 )
             }

@@ -124,6 +124,6 @@ class NaverCrawlerFetchAdapter() {
 
     companion object {
         val log = LoggerFactory.getLogger(DaumCrawlerService::class.java)
-        val WEEKDAYS = listOf("mon")
+        val WEEKDAYS = listOf("mon", "tue", "wed", "thu", "fri", "sat", "sun")
     }
 }

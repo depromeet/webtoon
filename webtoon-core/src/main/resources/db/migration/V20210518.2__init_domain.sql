@@ -77,3 +77,16 @@ CREATE TABLE webtoon_rating_average
     modified_at         DATETIME(6) NOT NULL,
     CONSTRAINT rating_average_webtoon_id_fk FOREIGN KEY (webtoon_id) REFERENCES webtoon (id)
 );
+
+CREATE TABLE comment
+(
+    id              BIGINT          NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+    account_id      BIGINT          NOT NULL,
+    webtoon_id      BIGINT          NOT NULL,
+    content         LONGTEXT,
+    nickname        VARCHAR(255)    NOT NULL,
+    created_at      DATETIME(6)     NOT NULL,
+    modified_at     DATETIME(6)     NOT NULL,
+    CONSTRAINT content_account_id_fk FOREIGN KEY (account_id) REFERENCES account(id),
+    CONSTRAINT content_webtoon_id_fk FOREIGN KEY (webtoon_id) REFERENCES webtoon(id)
+);

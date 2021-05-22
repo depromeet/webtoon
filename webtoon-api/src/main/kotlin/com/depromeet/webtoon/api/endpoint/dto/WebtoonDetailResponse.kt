@@ -31,6 +31,8 @@ data class WebtoonDetailResponse(
     var summary: String,
     @ApiModelProperty(value = "toonietoonie평점")
     val score: ScoreResponse,
+    @ApiModelProperty(value = "댓글")
+    val comments: List<CommentDto>
 )
 
 fun convertToWebtoonDetailResponse(webtoon: Webtoon, scores: ScoreDto, comments: List<CommentDto>): WebtoonDetailResponse {
@@ -44,6 +46,7 @@ fun convertToWebtoonDetailResponse(webtoon: Webtoon, scores: ScoreDto, comments:
         webtoon.site,
         webtoon.weekdays,
         webtoon.summary,
-        ScoreResponse(scores.storyScore!!, scores.drawingScore!!),
+        ScoreResponse(scores.totalScore!!, scores.storyScore!!, scores.drawingScore!!),
+        comments = comments
     )
 }
