@@ -17,15 +17,18 @@ CREATE TABLE author
 
 CREATE TABLE webtoon
 (
-    id          BIGINT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    popularity  INT,
-    site        VARCHAR(255) NOT NULL,
-    summary     LONGTEXT,
-    thumbnail   VARCHAR(255) NOT NULL,
-    title       VARCHAR(255) NOT NULL,
-    url         VARCHAR(255) NOT NULL,
-    created_at  DATETIME(6),
-    modified_at DATETIME(6)
+    id                  BIGINT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    popularity          INT,
+    site                VARCHAR(255) NOT NULL,
+    summary             LONGTEXT,
+    score               DOUBLE,
+    thumbnail           VARCHAR(255) NOT NULL,
+    title               VARCHAR(255) NOT NULL,
+    url                 VARCHAR(255) NOT NULL,
+    is_complete         BOOLEAN      NOT NULL,
+    background_color    VARCHAR(255) NOT NULL,
+    created_at          DATETIME(6),
+    modified_at         DATETIME(6)
 );
 
 CREATE TABLE webtoon_author

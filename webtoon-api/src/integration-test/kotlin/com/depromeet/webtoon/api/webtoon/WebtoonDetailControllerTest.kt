@@ -4,15 +4,12 @@ import com.depromeet.webtoon.api.endpoint.dto.ScoreResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonDetailResponse
 import com.depromeet.webtoon.core.application.api.dto.AuthorResponse
 import com.depromeet.webtoon.core.domain.account.accountFixture
-import com.depromeet.webtoon.core.domain.account.model.Account
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
 import com.depromeet.webtoon.core.domain.comment.commentFixture
 import com.depromeet.webtoon.core.domain.comment.repository.CommentRepository
 import com.depromeet.webtoon.core.domain.rating.dto.CommentDto
-import com.depromeet.webtoon.core.domain.rating.model.Rating
-import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository
 import com.depromeet.webtoon.core.domain.rating.repository.WebtoonRatingAverageRepository
 import com.depromeet.webtoon.core.domain.rating.webtoonRatingAverageFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
