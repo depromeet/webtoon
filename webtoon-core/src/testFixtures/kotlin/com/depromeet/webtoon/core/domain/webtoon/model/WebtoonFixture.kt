@@ -2,6 +2,7 @@ package com.depromeet.webtoon.core.domain.webtoon.model
 
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.model.Author
+import com.depromeet.webtoon.core.type.BackgroundColor
 import com.depromeet.webtoon.core.type.WebtoonSite
 import java.time.LocalDateTime
 
@@ -10,6 +11,9 @@ fun webtoonFixture(
     site: WebtoonSite = WebtoonSite.NAVER,
     title: String = "테스트작품",
     authors: List<Author> = listOf(authorFixture(1L, "테스트 작가")),
+    score: Double = 9.5,
+    isComplete: Boolean = false,
+    backgroundColor: BackgroundColor = BackgroundColor.NONE,
     createdAt: LocalDateTime = LocalDateTime.now(),
     modifiedAt: LocalDateTime = LocalDateTime.now(),
 ) = Webtoon(
@@ -17,6 +21,9 @@ fun webtoonFixture(
     site = site,
     title = title,
     authors = authors,
+    score = score,
+    isComplete = isComplete,
+    backgroundColor = backgroundColor,
     createdAt = createdAt,
     modifiedAt = modifiedAt
 )
