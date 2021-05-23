@@ -9,11 +9,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface WebtoonRepository : JpaRepository<Webtoon, Long> {
-
-
-    fun findByAuthors(author: Author): List<Webtoon>
-
+interface WebtoonRepository : JpaRepository<Webtoon, Long>, WebtoonCustomRepository {
     fun findBySiteAndTitle(site: WebtoonSite, title: String): Webtoon?
     fun findAllBySiteAndTitleIn(site: WebtoonSite, titles: List<String>): List<Webtoon>
 
@@ -40,7 +36,9 @@ interface WebtoonRepository : JpaRepository<Webtoon, Long> {
         and w.score>9
         and w.site = 'DAUM'
         limit ?,1
-        """, nativeQuery = true)
+        """,
+        nativeQuery = true
+    )
     fun daumGenreRecommendQuery(genres: String, randomRow: Int): List<Webtoon>
 
     @Query(
@@ -51,9 +49,14 @@ interface WebtoonRepository : JpaRepository<Webtoon, Long> {
         and w.score>9
         and w.site = 'NAVER'
         limit ?,1
-        """, nativeQuery = true)
+        """,
+        nativeQuery = true
+    )
     fun naverGenreRecommendQuery(genre: String, randomRow: Int): List<Webtoon>
 
-
-    fun findTop5ByGenresInAndScoreGreaterThanAndSite(genres: List<String>, score: Double, site: WebtoonSite): List<Webtoon>
+    fun findTop5ByGenresInAndScoreGreaterThanAndSite(
+        genres: List<String>,
+        score: Double,
+        site: WebtoonSite
+    ): List<Webtoon>
 }
