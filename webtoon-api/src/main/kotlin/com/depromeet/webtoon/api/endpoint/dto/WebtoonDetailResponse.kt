@@ -4,6 +4,7 @@ import com.depromeet.webtoon.core.application.api.dto.AuthorResponse
 import com.depromeet.webtoon.core.domain.rating.dto.CommentDto
 import com.depromeet.webtoon.core.domain.rating.dto.ScoreDto
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
+import com.depromeet.webtoon.core.type.BackgroundColor
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WeekDay
 import io.swagger.annotations.ApiModel
@@ -29,8 +30,14 @@ data class WebtoonDetailResponse(
     var weekday: List<WeekDay>,
     @ApiModelProperty(value = "줄거리")
     var summary: String,
+    @ApiModelProperty(value = "배경화면 색")
+    var backgroundColor: BackgroundColor,
+    @ApiModelProperty(value = "완결여부")
+    var isComplete: Boolean,
+    @ApiModelProperty(value = "플랫폼 평점")
+    var score : Double,
     @ApiModelProperty(value = "toonietoonie평점")
-    val score: ScoreResponse,
+    val toonieScore: ScoreResponse,
     @ApiModelProperty(value = "댓글")
     val comments: List<CommentDto>
 )
@@ -46,6 +53,9 @@ fun convertToWebtoonDetailResponse(webtoon: Webtoon, scores: ScoreDto, comments:
         webtoon.site,
         webtoon.weekdays,
         webtoon.summary,
+        webtoon.backgroudColor,
+        webtoon.isComplete!!,
+        webtoon.score,
         ScoreResponse(scores.totalScore!!, scores.storyScore!!, scores.drawingScore!!),
         comments = comments
     )
