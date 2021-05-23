@@ -67,9 +67,9 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             webtoonDetail.status.shouldBe(ApiResponseStatus.OK)
-            webtoonDetail.data!!.score.totalScore.shouldBe(ratingAverage.totalAverage)
-            webtoonDetail.data!!.score.storyScore.shouldBe(ratingAverage.storyAverage)
-            webtoonDetail.data!!.score.drawingScore.shouldBe(ratingAverage.drawingAverage)
+            webtoonDetail.data!!.toonieScore.totalScore.shouldBe(ratingAverage.totalAverage)
+            webtoonDetail.data!!.toonieScore.storyScore.shouldBe(ratingAverage.storyAverage)
+            webtoonDetail.data!!.toonieScore.drawingScore.shouldBe(ratingAverage.drawingAverage)
             webtoonDetail.data!!.authors.size.shouldBe(1)
             webtoonDetail.data!!.comments.size.shouldBe(1)
         }
@@ -109,9 +109,9 @@ class WebtoonDetailServiceTest : FunSpec({
                 commentRepository.findAllByWebtoonId(1L)
             }
 
-            webtoonDetail.data!!.score.totalScore.shouldBe(0.0)
-            webtoonDetail.data!!.score.storyScore.shouldBe(0.0)
-            webtoonDetail.data!!.score.drawingScore.shouldBe(0.0)
+            webtoonDetail.data!!.toonieScore.totalScore.shouldBe(0.0)
+            webtoonDetail.data!!.toonieScore.storyScore.shouldBe(0.0)
+            webtoonDetail.data!!.toonieScore.drawingScore.shouldBe(0.0)
             webtoonDetail.data!!.comments.size.shouldBe(1)
         }
 
@@ -141,9 +141,9 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             webtoonDetail.status.shouldBe(ApiResponseStatus.OK)
-            webtoonDetail.data!!.score.totalScore.shouldBe(ratingAverage.totalAverage)
-            webtoonDetail.data!!.score.storyScore.shouldBe(ratingAverage.storyAverage)
-            webtoonDetail.data!!.score.drawingScore.shouldBe(ratingAverage.drawingAverage)
+            webtoonDetail.data!!.toonieScore.totalScore.shouldBe(ratingAverage.totalAverage)
+            webtoonDetail.data!!.toonieScore.storyScore.shouldBe(ratingAverage.storyAverage)
+            webtoonDetail.data!!.toonieScore.drawingScore.shouldBe(ratingAverage.drawingAverage)
             webtoonDetail.data!!.authors.size.shouldBe(1)
             webtoonDetail.data!!.comments.size.shouldBe(0)
 
