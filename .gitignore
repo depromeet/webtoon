@@ -35,3 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
+
+/webtoon-admin/src/main/resources/static
