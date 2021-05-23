@@ -10,6 +10,7 @@ import com.depromeet.webtoon.core.domain.rating.webtoonRatingAverageFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.exceptions.ApiValidationException
+import com.depromeet.webtoon.core.type.BackgroundColor
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -67,6 +68,9 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             webtoonDetail.status.shouldBe(ApiResponseStatus.OK)
+            webtoonDetail.data!!.backgroundColor.shouldBe(webtoonFixture().backgroudColor)
+            webtoonDetail.data!!.score.shouldBe(webtoonFixture().score)
+            webtoonDetail.data!!.isComplete.shouldBe(webtoonFixture().isComplete)
             webtoonDetail.data!!.toonieScore.totalScore.shouldBe(ratingAverage.totalAverage)
             webtoonDetail.data!!.toonieScore.storyScore.shouldBe(ratingAverage.storyAverage)
             webtoonDetail.data!!.toonieScore.drawingScore.shouldBe(ratingAverage.drawingAverage)

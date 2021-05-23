@@ -65,6 +65,9 @@ class WebtoonDetailControllerTest(
                         webtoon.site,
                         webtoon.weekdays,
                         webtoon.summary,
+                        webtoon.backgroudColor,
+                        webtoon.isComplete!!,
+                        webtoon.score,
                         ScoreResponse(webtoonRatingAvg.totalAverage!!, webtoonRatingAvg.totalStoryScore!!, webtoonRatingAvg.drawingAverage!!),
                         comments = listOf(CommentDto(comment.content, comment.nickname))
                     ).toString()
