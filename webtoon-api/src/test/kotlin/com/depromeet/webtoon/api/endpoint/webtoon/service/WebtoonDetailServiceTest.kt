@@ -47,8 +47,8 @@ class WebtoonDetailServiceTest : FunSpec({
 
 
             every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
-            every { webtoonRatingAverageRepository.findByWebtoonId(any()) } returns ratingAverage
-            every { commentRepository.findAllByWebtoonId(any()) } returns listOf(comment)
+            every { webtoonRatingAverageRepository.findByWebtoon(any()) } returns ratingAverage
+            every { commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(any()) } returns listOf(comment)
 
 
             // when
@@ -60,11 +60,11 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             verify(exactly = 1) {
-                webtoonRatingAverageRepository.findByWebtoonId(1L)
+                webtoonRatingAverageRepository.findByWebtoon(webtoon)
             }
 
             verify(exactly = 1) {
-                commentRepository.findAllByWebtoonId(1L)
+                commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(webtoon)
             }
 
             webtoonDetail.status.shouldBe(ApiResponseStatus.OK)
