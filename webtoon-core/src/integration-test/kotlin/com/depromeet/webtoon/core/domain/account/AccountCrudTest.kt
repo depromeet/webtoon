@@ -10,11 +10,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import java.time.LocalDateTime
 
 @DataJpaTest
-class AccountCrudTest (
+class AccountCrudTest(
     val accountRepository: AccountRepository
-        ) : FunSpec ({
+) : FunSpec({
 
-    test("Create Account"){
+    test("Create Account") {
         // given
         val account = Account(
             null,
@@ -42,7 +42,6 @@ class AccountCrudTest (
         )
         val savedAccount = accountRepository.save(account)
 
-
         // when
         val foundAccount = accountRepository.findById(savedAccount.id!!)
 
@@ -51,7 +50,7 @@ class AccountCrudTest (
         foundAccount.get().nickname!!.shouldBeEqualComparingTo(account.nickname!!)
     }
 
-    test("Update Account"){
+    test("Update Account") {
         // given
         val account = Account(
             null,
@@ -93,5 +92,4 @@ class AccountCrudTest (
         // then
         accountRepository.findAll().shouldHaveSize(0)
     }
-
 })
