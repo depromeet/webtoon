@@ -1,4 +1,4 @@
-name: run naver webtoon update batch
+name: "[BATCH] 네이버 웹툰 크롤링"
 on:
   #  schedule:
   #    - cron: '5 15 * * *' # 12시 5분 동작

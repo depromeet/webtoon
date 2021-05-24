@@ -1,4 +1,4 @@
-name: Build jar and deploy API server
+name: "[DEPLOY] API 서버 및 BATCH 파일 배포"
 on:
   workflow_dispatch:
 jobs:
