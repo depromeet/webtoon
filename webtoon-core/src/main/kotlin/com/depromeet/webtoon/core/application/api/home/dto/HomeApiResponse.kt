@@ -1,13 +1,14 @@
-package com.depromeet.webtoon.api.endpoint.home.dto
+package com.depromeet.webtoon.core.application.api.home.dto
 
 import com.depromeet.webtoon.core.application.api.dto.WebtoonResponse
+import com.depromeet.webtoon.core.application.common.dto.BannerResponse
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 @ApiModel("홈화면 반환 데이터")
 data class HomeApiResponse(
     @ApiModelProperty(value = "상단 배너")
-    val topBanner: List<TopBannerItem>,
+    val mainBanner: List<BannerResponse>,
     @ApiModelProperty(value = "요일별 웹툰 리스트")
     val weekdayWebtoons: List<WebtoonResponse>,
     @ApiModelProperty(value = "인기급상승 웹툰 리스트")

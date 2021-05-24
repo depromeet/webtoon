@@ -1,32 +1,26 @@
 package com.depromeet.webtoon.api.endpoint.home
 
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
-import com.depromeet.webtoon.api.endpoint.home.dto.HomeApiResponse
-import com.depromeet.webtoon.api.endpoint.home.dto.TopBannerItem
-import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
-import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
-import com.depromeet.webtoon.core.type.WeekDay
+import com.depromeet.webtoon.core.application.api.home.HomeApiService
+import com.depromeet.webtoon.core.application.api.home.dto.HomeApiRequest
+import com.depromeet.webtoon.core.application.api.home.dto.HomeApiResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("api/v1")
-class HomeController(val webtoonService: WebtoonService) {
+class HomeController(val homeApiService: HomeApiService) {
 
     @GetMapping("/home")
-    fun home(): ApiResponse<HomeApiResponse> {
-        val sampleWebtoons = webtoonService.getWeekdayWebtoons(WeekDay.MON)
-            .take(3)
-            .convertToWebtoonResponses()
-
-        val homeApiResponse = HomeApiResponse(
-            topBanner = sampleWebtoons.map { TopBannerItem(it, "드라마 원작 웹툰") },
-            weekdayWebtoons = sampleWebtoons,
-            trendingWebttons = sampleWebtoons,
-            genreWebtoons = sampleWebtoons,
-            bingeWatchableWebtoons = sampleWebtoons,
-        )
+    fun home(
+        @RequestParam(name = "baseDateTime", required = false)
+        baseDateTime: LocalDateTime?
+    ): ApiResponse<HomeApiResponse> {
+        val homeApiRequest = HomeApiRequest(baseDateTime = baseDateTime ?: LocalDateTime.now())
+        val homeApiResponse = homeApiService.fetchHome(homeApiRequest)
 
         return ApiResponse.ok(homeApiResponse)
     }
