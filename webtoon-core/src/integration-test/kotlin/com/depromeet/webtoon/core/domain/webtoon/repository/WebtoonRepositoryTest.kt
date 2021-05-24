@@ -13,7 +13,9 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.transaction.annotation.Transactional
 
+@Transactional
 @SpringBootTest
 class WebtoonRepositoryTest constructor(
     var webtoonRepository: WebtoonRepository

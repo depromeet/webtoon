@@ -2,10 +2,8 @@ package com.depromeet.webtoon.core.domain.webtoon.service
 
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
-import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.testsupport.AuthorTestDataHelper.Companion.save
 import com.depromeet.webtoon.core.testsupport.AuthorTestDataHelper.Companion.saveAll
-import com.depromeet.webtoon.core.testsupport.WebtoonTestDataHelper
 import com.depromeet.webtoon.core.testsupport.WebtoonTestDataHelper.Companion.saveAll
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
@@ -16,9 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 @SpringBootTest
 class WebtoonSearchServiceIntegrationTest constructor(
-    val webtoonTestDataHelper: WebtoonTestDataHelper,
     val webtoonSearchService: WebtoonSearchService,
-    val webtoonRepository: WebtoonRepository,
 ) : FunSpec({
 
     context("텍스트 기준 웹툰 조회") {
