@@ -8,7 +8,7 @@ import javax.persistence.EntityManager
 @Transactional
 class WebtoonCustomRepositoryImpl(val entityManager: EntityManager) : WebtoonCustomRepository {
 
-    override fun findAllForAdmin(page: Int, pageSize: Int): List<Webtoon> {
+    override fun fetchForAdmin(page: Int, pageSize: Int): List<Webtoon> {
         return entityManager.createQuery("SELECT w FROM Webtoon AS w ORDER BY w.id DESC", Webtoon::class.java)
             .setMaxResults(pageSize)
             .setFirstResult((page - 1) * pageSize)
@@ -17,5 +17,10 @@ class WebtoonCustomRepositoryImpl(val entityManager: EntityManager) : WebtoonCus
                 Hibernate.initialize(it.authors)
                 Hibernate.initialize(it.genres)
             }
+    }
+
+    override fun fetchCountForAdmin(): Long {
+        return entityManager.createQuery("SELECT count(w) FROM Webtoon AS w", Long::class.javaObjectType)
+            .singleResult
     }
 }
