@@ -18,11 +18,11 @@ data class BannerDetailResponse(
     val modifiedAt: LocalDateTime,
 ) {
     companion object {
-        fun List<Banner>.convertToBannerAdminResponses(): List<BannerDetailResponse> {
-            return this.map { it.convertToBannerAdminResponse() }
+        fun List<Banner>.convertToBannerDetailResponses(): List<BannerDetailResponse> {
+            return this.map { it.convertToBannerDetailResponse() }
         }
 
-        fun Banner.convertToBannerAdminResponse(): BannerDetailResponse {
+        fun Banner.convertToBannerDetailResponse(): BannerDetailResponse {
             return BannerDetailResponse(
                 id = id!!,
                 bannerType = bannerType,

@@ -3,8 +3,8 @@ package com.depromeet.webtoon.core.application.admin.banner
 import com.depromeet.webtoon.core.application.admin.banner.dto.BannerCreateAdminRequest
 import com.depromeet.webtoon.core.application.admin.common.AdminListFetchResult
 import com.depromeet.webtoon.core.application.common.dto.BannerDetailResponse
-import com.depromeet.webtoon.core.application.common.dto.BannerDetailResponse.Companion.convertToBannerAdminResponse
-import com.depromeet.webtoon.core.application.common.dto.BannerDetailResponse.Companion.convertToBannerAdminResponses
+import com.depromeet.webtoon.core.application.common.dto.BannerDetailResponse.Companion.convertToBannerDetailResponse
+import com.depromeet.webtoon.core.application.common.dto.BannerDetailResponse.Companion.convertToBannerDetailResponses
 import com.depromeet.webtoon.core.domain.banner.dto.BannerCreateRequest
 import com.depromeet.webtoon.core.domain.banner.service.BannerService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
@@ -30,12 +30,12 @@ class BannerAdminService(
 
         return bannerService
             .createBanner(bannerCreateRequest)
-            .convertToBannerAdminResponse()
+            .convertToBannerDetailResponse()
     }
 
     fun fetchBanners(page: Int, pageSize: Int): AdminListFetchResult<BannerDetailResponse> {
         val bannerRepository = bannerService.bannerRepository
-        val result = bannerRepository.fetchForAdmin(page, pageSize).convertToBannerAdminResponses()
+        val result = bannerRepository.fetchForAdmin(page, pageSize).convertToBannerDetailResponses()
         val total = bannerRepository.fetchCountForAdmin()
 
         return AdminListFetchResult(result, total)
