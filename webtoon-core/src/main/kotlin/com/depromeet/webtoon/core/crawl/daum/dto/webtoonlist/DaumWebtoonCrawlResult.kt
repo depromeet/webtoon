@@ -20,7 +20,7 @@ data class Data(
     val webtoonTotalCount: Int
 )
 
-data class Webtoons(
+data class  Webtoons(
 
     val id: Int,
     val nickname: String,

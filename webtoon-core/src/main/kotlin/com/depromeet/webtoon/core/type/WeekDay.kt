@@ -7,7 +7,8 @@ enum class WeekDay(val str: String) {
     THU("thu"),
     FRI("fri"),
     SAT("sat"),
-    SUN("sun");
+    SUN("sun"),
+    NONE("none");
 
     companion object {
         fun parse(str: String): WeekDay {
