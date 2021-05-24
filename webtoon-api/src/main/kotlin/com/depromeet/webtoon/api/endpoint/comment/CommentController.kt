@@ -6,10 +6,12 @@ import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import io.swagger.annotations.Api
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @Api("commentController")
-@RestController("/api/v1/comment")
+@RestController
+@RequestMapping("/api/v1/comment")
 class CommentController(
     val commentImportService: CommentImportService
 ) {
@@ -21,13 +23,4 @@ class CommentController(
 
         return ApiResponse.ok("todo")
     }
-
-    /*@GetMapping("/lists")
-    @ApiImplicitParams(
-        ApiImplicitParam(name = "id", value = "웹툰 id", required = true)
-    )
-    fun getComments(@RequestParam id: Long):  {
-
-    }*/
-
 }
