@@ -3,7 +3,10 @@ package com.depromeet.webtoon.core.domain.webtoon.service
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
+import com.depromeet.webtoon.core.testsupport.AuthorTestDataHelper.Companion.save
+import com.depromeet.webtoon.core.testsupport.AuthorTestDataHelper.Companion.saveAll
 import com.depromeet.webtoon.core.testsupport.WebtoonTestDataHelper
+import com.depromeet.webtoon.core.testsupport.WebtoonTestDataHelper.Companion.saveAll
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
@@ -22,13 +25,13 @@ class WebtoonSearchServiceIntegrationTest constructor(
         test("제목 매칭 테스트") {
             // given
             val testAuthor = authorFixture(id = 1L, name = "작가")
-                .apply { webtoonTestDataHelper.saveTestAuthor(this) }
+                .save()
 
             listOf(
                 webtoonFixture(id = 1L, title = "테스트1", authors = listOf(testAuthor)),
                 webtoonFixture(id = 2L, title = "테스트2", authors = listOf(testAuthor)),
                 webtoonFixture(id = 3L, title = "안녕", authors = listOf(testAuthor))
-            ).apply { webtoonTestDataHelper.saveTestWebtoons(this) }
+            ).saveAll()
 
             // when
             val searchResults = webtoonSearchService.searchByQueryStr("테스트")
@@ -42,13 +45,13 @@ class WebtoonSearchServiceIntegrationTest constructor(
             val testAuthors = listOf(
                 authorFixture(name = "승진"),
                 authorFixture(name = "지윤")
-            ).apply { webtoonTestDataHelper.saveTestAuthor(this) }
+            ).saveAll()
 
             listOf(
                 webtoonFixture(id = 1L, title = "테스트1", authors = listOf(testAuthors[0])),
                 webtoonFixture(id = 2L, title = "테스트2", authors = listOf(testAuthors[1])),
                 webtoonFixture(id = 3L, title = "안녕", authors = listOf(testAuthors[0]))
-            ).apply { webtoonTestDataHelper.saveTestWebtoons(this) }
+            ).saveAll()
 
             // when
             val searchResults = webtoonSearchService.searchByQueryStr("승진")

@@ -1,8 +1,8 @@
-package com.depromeet.webtoon.admin.api.webtoon
+package com.depromeet.webtoon.admin.api.banner
 
+import com.depromeet.webtoon.core.application.admin.banner.BannerAdminService
 import com.depromeet.webtoon.core.application.admin.common.AdminListFetchResult
-import com.depromeet.webtoon.core.application.admin.webtoon.WebtoonAdminService
-import com.depromeet.webtoon.core.application.api.dto.WebtoonResponse
+import com.depromeet.webtoon.core.application.common.dto.BannerDetailResponse
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-@RequestMapping("api/webtoons")
-class WebtoonAdminController(
-    val webtoonAdminService: WebtoonAdminService
+@RequestMapping("api/banners")
+class BannerAdminController(
+    val bannerAdminService: BannerAdminService
 ) {
     @Transactional(readOnly = true)
     @GetMapping("")
@@ -21,7 +21,7 @@ class WebtoonAdminController(
         @RequestParam(required = false, defaultValue = "0") page: Int?,
         @RequestParam(required = false, defaultValue = "25") pageSize: Int?,
         httpServletResponse: HttpServletResponse
-    ): AdminListFetchResult<WebtoonResponse> {
-        return webtoonAdminService.fetchWebtoons(page!!, pageSize!!)
+    ): AdminListFetchResult<BannerDetailResponse> {
+        return bannerAdminService.fetchBanners(page!!, pageSize!!)
     }
 }

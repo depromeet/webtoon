@@ -14,6 +14,11 @@ class WebtoonService(
     val webtoonRepository: WebtoonRepository
 ) {
 
+    fun findById(id: Long): Webtoon {
+        return webtoonRepository.findById(id)
+            .orElseThrow { IllegalArgumentException("매칭되는 webtoon을 찾지 못했습니다. id: $id") }
+    }
+
     fun getWeekdayWebtoons(weekDay: WeekDay): List<Webtoon> {
         return webtoonRepository.findAllByWeekdaysOrderByPopularityAsc(weekDay)
     }
