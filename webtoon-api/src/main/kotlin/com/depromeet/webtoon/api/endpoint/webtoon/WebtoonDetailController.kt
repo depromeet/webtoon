@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@Api("WebtoonDetailController")
+@Api(value = "WebtoonDetailController")
 class WebtoonDetailController(
     val webtoonDetailService: WebtoonDetailService,
 ) {
