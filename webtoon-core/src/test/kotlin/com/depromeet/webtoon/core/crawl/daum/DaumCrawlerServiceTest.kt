@@ -30,6 +30,47 @@ class DaumCrawlerServiceTest : FunSpec({
         daumCrawlerService = DaumCrawlerService(webtoonImportService, fetchService)
     }
 
+    test("[DaumCrawlerService] - updateCompletedDaumWebtoons()") {
+        // given
+        val detailResult =
+            DaumWebtoonDetailCrawlResult(
+                Data(
+                    Webtoon(
+                        "testTitle", "nick", Cartoon(
+                            emptyList(), emptyList()
+                        ), ThumbnailImage2("thumbnail"), listOf(WebtoonWeeks("mon")), 5.0, "줄거리"
+                    )
+                )
+            )
+        val webtoonImportRequest =
+            WebtoonImportRequest(
+                title = detailResult.data.webtoon.title,
+                url = "http://webtoon.daum.net/webtoon/view/${detailResult.data.webtoon.nickname}",
+                thumbnailImage = detailResult.data.webtoon.thumbnailImage2.url,
+                weekdays = listOf(WeekDay.NONE),
+                authors = emptyList(),
+                site = WebtoonSite.DAUM,
+                genres = emptyList(),
+                score = detailResult.data.webtoon.averageScore,
+                summary = detailResult.data.webtoon.introduction,
+                popular = 0,
+                backgroundColor = BackgroundColor.NONE,
+                isComplete = true
+            )
+        every { fetchService.crawlCompletedWebtoonNicknames() } returns listOf(detailResult.data.webtoon.title)
+        every { fetchService.crawlCompletedWebtoonDetail(any()) } returns detailResult
+        every { webtoonImportService.importWebtoon(any()) } returns webtoonFixture()
+
+        // when
+        daumCrawlerService.updateCompletedDaumWebtoons()
+
+        // then
+        verify(exactly = 1) { fetchService.crawlCompletedWebtoonNicknames() }
+        verify(exactly = 1) { fetchService.crawlCompletedWebtoonDetail(detailResult.data.webtoon.title)}
+        verify(exactly = 1) { webtoonImportService.importWebtoon(webtoonImportRequest) }
+
+    }
+
     test("[DaumCrawlerService] - crawlSortedWebtoonNicknames()") {
         // given
         every { fetchService.getPopularNicknames() } returns arrayListOf("nick", "notToday")

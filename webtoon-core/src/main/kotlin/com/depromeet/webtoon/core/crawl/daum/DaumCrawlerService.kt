@@ -16,6 +16,32 @@ class DaumCrawlerService(
     val fetchService: DaumCrawlerFetchService
 ) {
 
+    fun updateCompletedDaumWebtoons(){
+        val completedWebtoons = fetchService.crawlCompletedWebtoonNicknames()
+            .map { fetchService.crawlCompletedWebtoonDetail(it) }
+
+        val completeWebtoonImportRequests = completedWebtoons.map {
+            WebtoonImportRequest(
+                title = it!!.data.webtoon.title,
+                url = DAUM_WEBTOON_URL + it.data.webtoon.nickname,
+                thumbnailImage = it.data.webtoon.thumbnailImage2.url,
+                weekdays = listOf(WeekDay.NONE),
+                authors = it.data.webtoon.cartoon.artists.map { it.name }.distinct(),
+                site = WebtoonSite.DAUM,
+                popular = 0,
+                summary = it.data.webtoon.introduction,
+                genres = it.data.webtoon.cartoon.genres.map { it.name },
+                score = it.data.webtoon.averageScore,
+                backgroundColor = BackgroundColor.NONE,
+                isComplete = true
+            )
+        }
+
+        completeWebtoonImportRequests.map { webtoonImportService.importWebtoon(it) }
+
+
+    }
+
     fun updateDaumWebtoons() {
         val updatedWebtoons = crawlSortedWebtoonNicknames()
             .map { fetchService.crawlWebtoonDetail(it) }
@@ -25,7 +51,7 @@ class DaumCrawlerService(
                 crawled!!.data.webtoon.title,
                 DAUM_WEBTOON_URL+crawled.data.webtoon.nickname,
                 crawled.data.webtoon.thumbnailImage2.url,
-                setDayOfWeek(crawled.data.webtoon.webtoonWeeks),
+                setDayOfWeek(crawled.data.webtoon.webtoonWeeks!!),
                 crawled.data.webtoon.cartoon.artists.map { it.name }.distinct(),
                 WebtoonSite.DAUM,
                 crawled.data.webtoon.cartoon.genres.map { it.name },
