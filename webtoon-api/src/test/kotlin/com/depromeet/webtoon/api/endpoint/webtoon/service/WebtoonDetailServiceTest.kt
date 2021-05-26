@@ -47,8 +47,8 @@ class WebtoonDetailServiceTest : FunSpec({
 
 
             every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
-            every { webtoonRatingAverageRepository.findByWebtoonId(any()) } returns ratingAverage
-            every { commentRepository.findAllByWebtoonId(any()) } returns listOf(comment)
+            every { webtoonRatingAverageRepository.findByWebtoon(any()) } returns ratingAverage
+            every { commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(any()) } returns listOf(comment)
 
 
             // when
@@ -60,11 +60,11 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             verify(exactly = 1) {
-                webtoonRatingAverageRepository.findByWebtoonId(1L)
+                webtoonRatingAverageRepository.findByWebtoon(webtoon)
             }
 
             verify(exactly = 1) {
-                commentRepository.findAllByWebtoonId(1L)
+                commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(webtoon)
             }
 
             webtoonDetail.status.shouldBe(ApiResponseStatus.OK)
@@ -94,8 +94,8 @@ class WebtoonDetailServiceTest : FunSpec({
             val comment = commentFixture(1L, webtoon = webtoon, account = account)
 
             every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
-            every { webtoonRatingAverageRepository.findByWebtoonId(any()) } returns null
-            every { commentRepository.findAllByWebtoonId(any()) } returns listOf(comment)
+            every { webtoonRatingAverageRepository.findByWebtoon(any()) } returns null
+            every { commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(any()) } returns listOf(comment)
 
             // when
             val webtoonDetail = webtoonDetailService.getWebtoonDetail(1L)
@@ -106,11 +106,11 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             verify(exactly = 1) {
-                webtoonRatingAverageRepository.findByWebtoonId(1L)
+                webtoonRatingAverageRepository.findByWebtoon(webtoon)
             }
 
             verify(exactly = 1) {
-                commentRepository.findAllByWebtoonId(1L)
+                commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(webtoon)
             }
 
             webtoonDetail.data!!.toonieScore.totalScore.shouldBe(0.0)
@@ -126,8 +126,8 @@ class WebtoonDetailServiceTest : FunSpec({
             val ratingAverage = webtoonRatingAverageFixture(id = 1L, webtoon = webtoon)
 
             every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
-            every { webtoonRatingAverageRepository.findByWebtoonId(any()) } returns ratingAverage
-            every { commentRepository.findAllByWebtoonId(any()) } returns emptyList()
+            every { webtoonRatingAverageRepository.findByWebtoon(any()) } returns ratingAverage
+            every { commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(any()) } returns emptyList()
 
             val webtoonDetail = webtoonDetailService.getWebtoonDetail(1L)
 
@@ -137,11 +137,11 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             verify(exactly = 1) {
-                webtoonRatingAverageRepository.findByWebtoonId(1L)
+                webtoonRatingAverageRepository.findByWebtoon(webtoon)
             }
 
             verify(exactly = 1) {
-                commentRepository.findAllByWebtoonId(1L)
+                commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(webtoon)
             }
 
             webtoonDetail.status.shouldBe(ApiResponseStatus.OK)

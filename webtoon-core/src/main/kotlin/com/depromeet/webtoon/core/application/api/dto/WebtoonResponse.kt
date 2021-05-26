@@ -6,7 +6,8 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 @ApiModel("요일별 웹툰")
-data class WebtoonResponse(
+data class
+WebtoonResponse(
     @ApiModelProperty("웹툰ID")
     var id: Long,
     @ApiModelProperty("사이트")

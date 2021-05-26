@@ -4,6 +4,8 @@ import com.depromeet.webtoon.core.crawl.daum.DaumCrawlerService;
 import com.depromeet.webtoon.core.crawl.naver.NaverCrawlerService;
 import com.depromeet.webtoon.core.domain.account.model.Account;
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository;
+import com.depromeet.webtoon.core.domain.comment.model.Comment;
+import com.depromeet.webtoon.core.domain.comment.repository.CommentRepository;
 import com.depromeet.webtoon.core.domain.rating.model.Rating;
 import com.depromeet.webtoon.core.domain.rating.model.WebtoonRatingAverage;
 import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository;
@@ -42,13 +44,16 @@ public class SampleRunner implements ApplicationRunner {
     RatingRepository ratingRepository;
 
     @Autowired
+    CommentRepository commentRepository;
+
+    @Autowired
     WebtoonRatingAverageRepository webtoonRatingAverageRepository;
 
     @Override
-    public void run(ApplicationArguments args) {
+    public void run(ApplicationArguments args) throws InterruptedException {
 
         daumCrawlerService.updateDaumWebtoons();
-        naverCrawlerService.crawlAndUpsert();
+        // naverCrawlerService.crawlAndUpsert();
 
         Optional<Webtoon> webtoon = webtoonRepository.findById(1l);
 
@@ -58,8 +63,44 @@ public class SampleRunner implements ApplicationRunner {
         Account account2 = new Account(null, "testDeviceId2", "tester2", LocalDateTime.now(), LocalDateTime.now());
         accountRepository.save(account2);
 
+        Account account3 = new Account(null, "testDeviceId3", "tester3", LocalDateTime.now(), LocalDateTime.now());
+        accountRepository.save(account3);
+
+        Account account4 = new Account(null, "testDeviceId4", "tester4", LocalDateTime.now(), LocalDateTime.now());
+        accountRepository.save(account4);
+
+        Account account5 = new Account(null, "testDeviceId5", "tester5", LocalDateTime.now(), LocalDateTime.now());
+        accountRepository.save(account5);
+
+        Account account6 = new Account(null, "testDeviceId6", "tester6", LocalDateTime.now(), LocalDateTime.now());
+        accountRepository.save(account6);
+
+
         Rating rating = new Rating(null, webtoon.get(), account, 3.0, 5.0, LocalDateTime.now(), LocalDateTime.now());
         ratingRepository.save(rating);
+
+
+        Comment comment = new Comment(null, "재밌네요", account, webtoon.get(), account.getNickname(), LocalDateTime.now(), LocalDateTime.now());
+        commentRepository.save(comment);
+
+
+        Thread.sleep(1000);
+        Comment comment2 = new Comment(null, "재밌네요2", account2, webtoon.get(), account.getNickname(), LocalDateTime.now(), LocalDateTime.now());
+        commentRepository.save(comment2);
+        Thread.sleep(1000);
+        Comment comment3 = new Comment(null, "재밌네요3", account3, webtoon.get(), account.getNickname(), LocalDateTime.now(), LocalDateTime.now());
+        commentRepository.save(comment3);
+        Thread.sleep(1000);
+        Comment comment4 = new Comment(null, "재밌네요4", account4, webtoon.get(), account.getNickname(), LocalDateTime.now(), LocalDateTime.now());
+        commentRepository.save(comment4);
+        Thread.sleep(1000);
+        Comment comment5 = new Comment(null, "재밌네요5", account5, webtoon.get(), account.getNickname(), LocalDateTime.now(), LocalDateTime.now());
+        commentRepository.save(comment5);
+        Thread.sleep(1000);
+        Comment comment6 = new Comment(null, "재밌네요6", account6, webtoon.get(), account.getNickname(), LocalDateTime.now(), LocalDateTime.now());
+        commentRepository.save(comment6);
+
+
 
         WebtoonRatingAverage webtoonRatingAverage = new WebtoonRatingAverage(null, webtoon.get(), 3.0, 5.0, 1L, 3.0, 5.0, 4.0, LocalDateTime.now(), LocalDateTime.now());
         webtoonRatingAverageRepository.save(webtoonRatingAverage);

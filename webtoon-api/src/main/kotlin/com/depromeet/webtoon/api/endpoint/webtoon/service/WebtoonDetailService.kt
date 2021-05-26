@@ -28,9 +28,9 @@ class WebtoonDetailService(
             throw ApiValidationException("잘못된 웹툰 ID 입니다")
         }
 
-        val ratingInfo = webtoonRatingAverageRepository.findByWebtoonId(id)
+        val ratingInfo = webtoonRatingAverageRepository.findByWebtoon(foundWebtoon.get())
 
-        val commentInfo = commentRepository.findAllByWebtoonId(id)
+        val commentInfo = commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(foundWebtoon.get())
 
         if (ratingInfo != null) {
             val webtoonDetailResponse = convertToWebtoonDetailResponse(
