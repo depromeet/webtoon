@@ -1,5 +1,6 @@
 package com.depromeet.webtoon.core.domain.webtoon.repository
 
+import com.depromeet.webtoon.core.domain.author.model.Author
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.type.WebtoonSite
 import com.depromeet.webtoon.core.type.WeekDay
@@ -9,6 +10,10 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface WebtoonRepository : JpaRepository<Webtoon, Long> {
+
+
+    fun findByAuthors(author: Author): List<Webtoon>
+
     fun findBySiteAndTitle(site: WebtoonSite, title: String): Webtoon?
     fun findAllBySiteAndTitleIn(site: WebtoonSite, titles: List<String>): List<Webtoon>
 

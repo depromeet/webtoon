@@ -4,6 +4,8 @@ import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse.Companion.ok
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonSearchResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonWeekDayResponse
+import com.depromeet.webtoon.api.endpoint.webtoon.dto.AuthorWebtoonResponse
+import com.depromeet.webtoon.api.endpoint.webtoon.service.AuthorWebtoonService
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonSearchService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
@@ -22,9 +24,20 @@ import org.springframework.web.bind.annotation.RestController
 @Api("WebtoonListController")
 class WebtoonListController(
     val webtoonService: WebtoonService,
+    val authorWebtoonService: AuthorWebtoonService,
     val webtoonSearchService: WebtoonSearchService,
 ) {
     private val log = LoggerFactory.getLogger(WebtoonListController::class.java)
+
+    @GetMapping("/author/{authorName}")
+    fun findAuthorWebtoons(
+        @ApiParam("작가이름", required = true, example = "조석")
+        @PathVariable(name = "authorName")
+        authorName: String
+    ): ApiResponse<AuthorWebtoonResponse> {
+        log.info("[WebtoonListController] 작가별 작품 조회 작가명 $authorName")
+        return authorWebtoonService.getAuthorWebtoons(authorName)
+    }
 
     @GetMapping("/weekday/{weekDay}")
     fun findWeekDayWebtoons(

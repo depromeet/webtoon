@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface AuthorRepository : JpaRepository<Author, Long> {
     fun findAllByNameIn(names: List<String>): List<Author>
+    fun findByName(authorName: String): Author?
 }
