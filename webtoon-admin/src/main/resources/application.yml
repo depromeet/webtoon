@@ -1,0 +1,25 @@
+spring:
+  config:
+    import: "classpath:/application-webtoon-core.yml"
+  profiles:
+    group:
+      local: "webtoon-core-local"
+      beta: "webtoon-core-beta"
+
+---
+spring:
+  config:
+    activate.on-profile: local
+
+server.port: 8081
+
+---
+spring:
+  config:
+    activate.on-profile: beta
+
+server.port: 8081
+
+logging:
+  config: classpath:logback-beta.xml
+
