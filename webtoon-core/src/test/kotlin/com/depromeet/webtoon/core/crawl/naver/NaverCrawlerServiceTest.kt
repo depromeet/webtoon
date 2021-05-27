@@ -1,6 +1,10 @@
 package com.depromeet.webtoon.core.crawl.naver
 
 import com.depromeet.webtoon.core.application.imports.WebtoonImportService
+import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
+import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
+import com.depromeet.webtoon.core.type.BackgroundColor
+import com.depromeet.webtoon.core.type.WebtoonSite
 import io.kotest.core.spec.style.FunSpec
 import io.mockk.every
 import io.mockk.mockk
@@ -19,15 +23,16 @@ internal class NaverCrawlerServiceTest : FunSpec({
 
     test("import 호출 확인") {
         // given
-        every { naverCrawlerFetchAdapter.crawl() } returns emptyList()
-        every { webtoonImportService.importWebtoons(any()) } returns emptyList()
+        every { naverCrawlerFetchAdapter.crawl() } returns listOf(WebtoonImportRequest("test", "test.url", "test.thumbnail", emptyList(), emptyList(), WebtoonSite.NAVER, emptyList(),0.0,1,"",
+        BackgroundColor.NONE,true))
+        every { webtoonImportService.importWebtoon(any()) } returns Webtoon()
 
         // when
         naverCrawlerService.crawlAndUpsert()
 
         // then
         verify(atLeast = 1) {
-            webtoonImportService.importWebtoons(any())
+            webtoonImportService.importWebtoon(any())
         }
     }
 })

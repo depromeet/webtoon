@@ -12,7 +12,9 @@ class NaverCrawlerService(
 ) {
     fun crawlAndUpsert() {
         val naverWebtoons = naverCrawlerFetchAdapter.crawl()
-        webtoonImportService.importWebtoons(naverWebtoons)
+        // todo 개선사항: 한번에 Insert 하되 중복문제 해결 할 것
+        naverWebtoons.map { webtoonImportService.importWebtoon(it) }
+        //webtoonImportService.importWebtoons(naverWebtoons)
     }
 
     companion object {
