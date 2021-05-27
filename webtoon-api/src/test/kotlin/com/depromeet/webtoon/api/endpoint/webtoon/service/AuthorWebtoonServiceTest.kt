@@ -8,6 +8,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import java.util.*
 
 class AuthorWebtoonServiceTest: FunSpec({
 
@@ -26,15 +27,15 @@ class AuthorWebtoonServiceTest: FunSpec({
 
             // given
             val author = authorFixture(id= 1L, name = "test")
-            every { authorRepository.findByName(any()) } returns author
+            every { authorRepository.findById(any()) } returns Optional.of(author)
             every { webtoonRepository.findByAuthors(any()) } returns listOf(webtoonFixture(id= 1L, authors = listOf(
                 author)))
 
             // when
-            authorWebtoonService.getAuthorWebtoons("test")
+            authorWebtoonService.getAuthorWebtoons(1)
 
             // then
-            verify(exactly = 1) { authorRepository.findByName(author.name) }
+            verify(exactly = 1) { authorRepository.findById(author.id!!) }
             verify(exactly = 1) { webtoonRepository.findByAuthors(author)  }
 
         }

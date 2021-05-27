@@ -13,10 +13,12 @@ class AuthorWebtoonService(
     val authorRepository: AuthorRepository,
     val webtoonRepository: WebtoonRepository)
 {
-    fun getAuthorWebtoons(authorName: String): ApiResponse<AuthorWebtoonResponse> {
-        val optionalAuthor = authorRepository.findByName(authorName) ?: throw ApiValidationException("잘못된 작가명 입니다.")
-        val webtoons = webtoonRepository.findByAuthors(optionalAuthor)
-        val authorWebtoonResponse = convertToAuthorWebtoonResponse(authorName, webtoons)
+    fun getAuthorWebtoons(authorId: Long): ApiResponse<AuthorWebtoonResponse> {
+        val optionalAuthor = authorRepository.findById(authorId)
+        optionalAuthor.orElseThrow { ApiValidationException("잘못된 작가 ID 입니다") }
+        val author = optionalAuthor.get()
+        val webtoons = webtoonRepository.findByAuthors(author)
+        val authorWebtoonResponse = convertToAuthorWebtoonResponse(author.name, webtoons)
         return ApiResponse.ok(authorWebtoonResponse)
 
     }
