@@ -29,14 +29,14 @@ class WebtoonListController(
 ) {
     private val log = LoggerFactory.getLogger(WebtoonListController::class.java)
 
-    @GetMapping("/author/{authorName}")
+    @GetMapping("/author/{authorId}")
     fun findAuthorWebtoons(
-        @ApiParam("작가이름", required = true, example = "조석")
-        @PathVariable(name = "authorName")
-        authorName: String
+        @ApiParam("작가Id", required = true, example = "1")
+        @PathVariable(name = "authorId")
+        authorId: Long
     ): ApiResponse<AuthorWebtoonResponse> {
-        log.info("[WebtoonListController] 작가별 작품 조회 작가명 $authorName")
-        return authorWebtoonService.getAuthorWebtoons(authorName)
+        log.info("[WebtoonListController] 작가별 작품 조회 작가id $authorId")
+        return authorWebtoonService.getAuthorWebtoons(authorId)
     }
 
     @GetMapping("/weekday/{weekDay}")
