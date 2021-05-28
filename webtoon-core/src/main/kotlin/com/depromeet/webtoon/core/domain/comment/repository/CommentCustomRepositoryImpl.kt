@@ -15,7 +15,7 @@ class CommentCustomRepositoryImpl(@Autowired private val entityManger: EntityMan
     private val query = JPAQueryFactory(entityManger)
 
 
-    override fun getComments(commentId: Long?, pageSize: Long): List<Comment> {
+    override fun getComments(webtoonId: Long, commentId: Long?, pageSize: Long): List<Comment> {
         val dynamicLtId = BooleanBuilder()
 
         if (commentId != null) {
@@ -25,7 +25,7 @@ class CommentCustomRepositoryImpl(@Autowired private val entityManger: EntityMan
         return query
             .select(comment)
             .from(comment)
-            .where(dynamicLtId)
+            .where(dynamicLtId.and(comment.webtoon.id.eq(webtoonId)))
             .orderBy(comment.id.desc())
             .limit(pageSize)
             .fetch()

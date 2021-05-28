@@ -26,11 +26,12 @@ class CommentController(
 
     @GetMapping("/list")
     @ApiImplicitParams(
+        ApiImplicitParam(name = "webtoonId", value = "웹툰id", required = true),
         ApiImplicitParam(name = "commentId", value = "댓글id", required = false),
         ApiImplicitParam(name = "pageSize", value = "페이지 크기", required = true)
     )
-    fun getComments(@RequestParam commentId: Long?, pageSize: Long): ApiResponse<CommentsResponse>{
-        return commentService.getComments(commentId, pageSize)
+    fun getComments(@RequestParam webtoonId: Long, commentId: Long?, pageSize: Long): ApiResponse<CommentsResponse>{
+        return commentService.getComments(webtoonId, commentId, pageSize)
     }
 
     @PostMapping("/post")

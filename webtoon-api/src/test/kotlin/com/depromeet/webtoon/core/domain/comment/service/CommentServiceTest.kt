@@ -34,12 +34,12 @@ class CommentServiceTest: FunSpec ({
 
         test("getComments"){
             //given
-            every { commentRepository.getComments(any(), any()) }.returns(listOf(commentFixture(id=4L), commentFixture(id = 3L)))
+            every { commentRepository.getComments(any(), any(), any()) }.returns(listOf(commentFixture(id=4L), commentFixture(id = 3L)))
 
             //when
-            commentService.getComments(5L, 2)
+            commentService.getComments(1L, 5L, 2)
 
-            verify(exactly = 1) { commentRepository.getComments(5L, 2) }
+            verify(exactly = 1) { commentRepository.getComments(1L, 5L, 2) }
         }
     }
 

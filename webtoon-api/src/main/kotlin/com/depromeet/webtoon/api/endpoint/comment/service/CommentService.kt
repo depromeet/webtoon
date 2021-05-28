@@ -14,8 +14,8 @@ class CommentService (val commentRepository: CommentRepository) {
         commentRepository.deleteById(id)
     }
 
-    fun getComments(commentId: Long?, pageSize: Long): ApiResponse<CommentsResponse>{
-        val comments = commentRepository.getComments(commentId, pageSize)
+    fun getComments(webtoonId: Long, commentId: Long?, pageSize: Long): ApiResponse<CommentsResponse>{
+        val comments = commentRepository.getComments(webtoonId, commentId, pageSize)
         return if(comments[comments.size-1].id == 1L){
             ApiResponse.ok(convertToCommentsResponse(comments, null))
         } else{
