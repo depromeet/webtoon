@@ -17,7 +17,8 @@ import javax.persistence.ManyToOne
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
-class Comment(
+class
+Comment(
     id: Long? = null,
     content: String? = "",
     account: Account = Account(),

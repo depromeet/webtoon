@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface CommentRepository : JpaRepository<Comment, Long> {
+interface CommentRepository : JpaRepository<Comment, Long>, CommentCustomRepository {
 
     @Query("select c from Comment c where c.webtoon.id = :webtoonId and c.account.id = :accountId")
     fun findByWebtoonIdAndAccountId(webtoonId: Long, accountId: Long): Comment?
