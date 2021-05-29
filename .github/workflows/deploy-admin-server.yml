@@ -1,0 +1,37 @@
+name: "[DEPLOY] ADMIN 서버 배포"
+on:
+  workflow_dispatch:
+jobs:
+  build-and-deploy-admin-jar:
+    runs-on: [ self-hosted, X64, linux ]
+    steps:
+      - run: |
+          echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+          echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - name: Build with Gradle
+        run: |
+          ./gradlew clean :webtoon-admin:buildFront :webtoon-admin:bootJar
+
+      - name: restart webtoon-admin service
+        run: |
+          sudo systemctl stop webtoon-admin.service
+          sleep 5
+
+          rm -f /app/webtoon-admin/webtoon-admin.jar
+          cp ./webtoon-admin/build/libs/*.jar /app/webtoon-admin/webtoon-admin.jar
+
+          sudo systemctl start webtoon-admin.service
+          sleep 3
+      - name: action-slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: deploy webtoon-admin
+          fields: message,author,eventName,ref,workflow,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        if: always()
