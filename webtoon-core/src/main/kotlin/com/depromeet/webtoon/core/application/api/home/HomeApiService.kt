@@ -28,7 +28,7 @@ class HomeApiService(
         return HomeApiResponse(
             mainBanner = homeMainBanners,
             weekdayWebtoons = sampleWebtoons,
-            trendingWebttons = sampleWebtoons,
+            trendingWebtons = sampleWebtoons,
             genreWebtoons = sampleWebtoons,
             bingeWatchableWebtoons = sampleWebtoons,
         )

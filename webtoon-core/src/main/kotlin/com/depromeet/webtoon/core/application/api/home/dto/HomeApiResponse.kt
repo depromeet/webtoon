@@ -12,7 +12,7 @@ data class HomeApiResponse(
     @ApiModelProperty(value = "요일별 웹툰 리스트")
     val weekdayWebtoons: List<WebtoonResponse>,
     @ApiModelProperty(value = "인기급상승 웹툰 리스트")
-    val trendingWebttons: List<WebtoonResponse>,
+    val trendingWebtons: List<WebtoonResponse>,
     @ApiModelProperty(value = "장르별 웹툰 리스트")
     val genreWebtoons: List<WebtoonResponse>,
     @ApiModelProperty(value = "몰아보기 좋은 웹툰 리스트")
