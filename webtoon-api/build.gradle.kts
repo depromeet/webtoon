@@ -3,9 +3,13 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    //security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+
+
     // jwt
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.auth0:java-jwt:3.16.0")
 
     // swagger
@@ -13,6 +17,10 @@ dependencies {
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
     integrationTestImplementation("com.h2database:h2")
     testImplementation(testFixtures(project(":webtoon-core")))
+
+    // securty
+    testImplementation("org.springframework.security:spring-security-test")
+
 }
 
 tasks.jar {

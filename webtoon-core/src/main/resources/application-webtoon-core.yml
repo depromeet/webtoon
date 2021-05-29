@@ -45,6 +45,12 @@ spring:
     hibernate:
       ddl-auto: create
 
+json:
+  token:
+    subject: jwt
+    expiredTime: 1800000
+    secure: test
+
 ---
 
 spring.config:
