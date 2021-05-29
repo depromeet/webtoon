@@ -3,9 +3,9 @@ package com.depromeet.webtoon.core.domain.banner.service
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.banner.bannerFixture
 import com.depromeet.webtoon.core.domain.banner.dto.SearchBannerRequest
-import com.depromeet.webtoon.core.domain.banner.model.BannerType
-import com.depromeet.webtoon.core.domain.banner.model.BannerType.HOME_MAIN
-import com.depromeet.webtoon.core.domain.banner.model.BannerType.NONE
+import com.depromeet.webtoon.core.domain.banner.model.BannerInventory
+import com.depromeet.webtoon.core.domain.banner.model.BannerInventory.HOME_MAIN
+import com.depromeet.webtoon.core.domain.banner.model.BannerInventory.NONE
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.testsupport.AuthorTestDataHelper.Companion.save
@@ -30,12 +30,12 @@ class BannerServiceIntegrationTest(
 
         fun testBanner(
             webtoon: Webtoon,
-            bannerType: BannerType = HOME_MAIN,
+            bannerInventory: BannerInventory = HOME_MAIN,
             beginDateTime: LocalDateTime = baseDateTime.minusDays(1),
             endDateTime: LocalDateTime = baseDateTime.plusDays(1),
             priority: Int = 0,
         ) = bannerFixture(
-            bannerType = bannerType,
+            bannerInventory = bannerInventory,
             webtoon = webtoon,
             displayBeginDateTime = beginDateTime,
             displayEndDateTime = endDateTime,

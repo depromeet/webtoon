@@ -1,7 +1,7 @@
 package com.depromeet.webtoon.core.domain.banner.service
 
 import com.depromeet.webtoon.core.domain.banner.dto.BannerCreateRequest
-import com.depromeet.webtoon.core.domain.banner.model.BannerType
+import com.depromeet.webtoon.core.domain.banner.model.BannerInventory
 import com.depromeet.webtoon.core.domain.banner.repository.BannerRepository
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import io.kotest.core.spec.style.FunSpec
@@ -24,7 +24,7 @@ class BannerServiceTest : FunSpec({
             // given
             val baseDateTime = LocalDateTime.now()
             val createRequest = BannerCreateRequest(
-                bannerType = BannerType.HOME_MAIN,
+                bannerInventory = BannerInventory.HOME_MAIN,
                 caption = "테스트 캡숀",
                 webtoon = webtoonFixture(id = 1L),
                 priority = 1,
@@ -39,7 +39,7 @@ class BannerServiceTest : FunSpec({
 
             // then
             with(createdBanner) {
-                bannerType shouldBe createRequest.bannerType
+                bannerInventory shouldBe createRequest.bannerInventory
                 caption shouldBe createRequest.caption
                 webtoon shouldBe createRequest.webtoon
                 priority shouldBe createRequest.priority

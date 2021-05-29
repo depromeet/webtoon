@@ -5,7 +5,7 @@ import com.depromeet.webtoon.core.application.api.home.dto.HomeApiRequest
 import com.depromeet.webtoon.core.application.api.home.dto.HomeApiResponse
 import com.depromeet.webtoon.core.application.common.dto.BannerResponse.Companion.convertToBannerResponses
 import com.depromeet.webtoon.core.domain.banner.dto.SearchBannerRequest
-import com.depromeet.webtoon.core.domain.banner.model.BannerType
+import com.depromeet.webtoon.core.domain.banner.model.BannerInventory
 import com.depromeet.webtoon.core.domain.banner.service.BannerService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
 import com.depromeet.webtoon.core.type.WeekDay
@@ -21,7 +21,7 @@ class HomeApiService(
             .take(3)
             .convertToWebtoonResponses()
 
-        val homeMainBanners = SearchBannerRequest(BannerType.HOME_MAIN, homeApiRequest.baseDateTime).let {
+        val homeMainBanners = SearchBannerRequest(BannerInventory.HOME_MAIN, homeApiRequest.baseDateTime).let {
             bannerService.searchBanners(it).convertToBannerResponses()
         }
 

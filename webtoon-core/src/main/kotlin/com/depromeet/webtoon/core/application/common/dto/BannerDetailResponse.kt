@@ -3,12 +3,12 @@ package com.depromeet.webtoon.core.application.common.dto
 import com.depromeet.webtoon.core.application.api.dto.WebtoonResponse
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponse
 import com.depromeet.webtoon.core.domain.banner.model.Banner
-import com.depromeet.webtoon.core.domain.banner.model.BannerType
+import com.depromeet.webtoon.core.domain.banner.model.BannerInventory
 import java.time.LocalDateTime
 
 data class BannerDetailResponse(
     val id: Long,
-    val bannerType: BannerType,
+    val bannerInventory: BannerInventory,
     val caption: String,
     val webtoon: WebtoonResponse,
     val priority: Int,
@@ -25,7 +25,7 @@ data class BannerDetailResponse(
         fun Banner.convertToBannerDetailResponse(): BannerDetailResponse {
             return BannerDetailResponse(
                 id = id!!,
-                bannerType = bannerType,
+                bannerInventory = bannerInventory,
                 caption = caption,
                 webtoon = webtoon.convertToWebtoonResponse(),
                 priority = priority,

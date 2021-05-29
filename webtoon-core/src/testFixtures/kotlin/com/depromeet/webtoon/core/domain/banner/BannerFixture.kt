@@ -1,14 +1,14 @@
 package com.depromeet.webtoon.core.domain.banner
 
 import com.depromeet.webtoon.core.domain.banner.model.Banner
-import com.depromeet.webtoon.core.domain.banner.model.BannerType
+import com.depromeet.webtoon.core.domain.banner.model.BannerInventory
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import java.time.LocalDateTime
 
 fun bannerFixture(
     id: Long? = null,
-    bannerType: BannerType = BannerType.HOME_MAIN,
+    bannerInventory: BannerInventory = BannerInventory.HOME_MAIN,
     caption: String = "테스트 캡션",
     webtoon: Webtoon = webtoonFixture(),
     priority: Int = 0,
@@ -16,7 +16,7 @@ fun bannerFixture(
     displayEndDateTime: LocalDateTime = LocalDateTime.now().plusYears(1)
 ) = Banner(
     id = id,
-    bannerType = bannerType,
+    bannerInventory = bannerInventory,
     caption = caption,
     webtoon = webtoon,
     priority = priority,

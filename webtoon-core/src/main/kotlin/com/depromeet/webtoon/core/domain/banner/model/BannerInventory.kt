@@ -1,6 +1,6 @@
 package com.depromeet.webtoon.core.domain.banner.model
 
-enum class BannerType {
+enum class BannerInventory {
     HOME_MAIN,
     NONE
 }

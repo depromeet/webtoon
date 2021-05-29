@@ -3,9 +3,11 @@ package com.depromeet.webtoon.core.domain.banner.model
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EntityListeners
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
@@ -15,9 +17,10 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity
+@EntityListeners(AuditingEntityListener::class)
 class Banner(
     id: Long? = null,
-    bannerType: BannerType = BannerType.NONE,
+    bannerInventory: BannerInventory = BannerInventory.NONE,
     caption: String = "",
     webtoon: Webtoon = Webtoon(),
     priority: Int = 0,
@@ -33,7 +36,7 @@ class Banner(
 
     @Enumerated(EnumType.STRING)
     @Column(name = "banner_type")
-    var bannerType: BannerType = bannerType
+    var bannerInventory: BannerInventory = bannerInventory
 
     @Column(name = "caption")
     var caption: String = caption

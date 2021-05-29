@@ -22,13 +22,12 @@ tasks.jar {
 }
 
 tasks.bootJar {
-    dependsOn("buildFront")
-
     enabled = true
     mainClass.set("com.depromeet.webtoon.admin.WebtoonAdminApplicationKt")
     archiveFileName.set("webtoon-admin.jar")
 }
 
+// TODO bootjar 구성시 함께 돌릴수 있도록 할것
 tasks.register<YarnTask>("buildFront") {
     workingDir.set(file("src/front"))
     yarnCommand.set(listOf("build"))
