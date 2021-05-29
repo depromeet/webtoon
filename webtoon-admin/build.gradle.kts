@@ -17,6 +17,12 @@ dependencies {
     testImplementation(testFixtures(project(":webtoon-core")))
 }
 
+node {
+    download.set(true)
+    version.set("14.17.0")
+    nodeProjectDir.set(file("${project.projectDir}/src/front"))
+}
+
 tasks.jar {
     enabled = true
 }
@@ -28,7 +34,11 @@ tasks.bootJar {
 }
 
 // TODO bootjar 구성시 함께 돌릴수 있도록 할것
+tasks.register<YarnTask>("yarnUpgrade") {
+    yarnCommand.set(listOf("upgrade"))
+}
+
 tasks.register<YarnTask>("buildFront") {
-    workingDir.set(file("src/front"))
+    dependsOn("yarnUpgrade")
     yarnCommand.set(listOf("build"))
 }
