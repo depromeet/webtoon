@@ -24,6 +24,13 @@ spring:
     hibernate:
       ddl-auto: create
 
+json:
+  token:
+    subject: jwt
+    expiredTime: 1800000
+    secure: test
+
+
 ---
 spring.config:
   activate:
@@ -69,4 +76,3 @@ spring:
     password: ${WEBTOON_SERVICE_DB_PASSWORD}
   jpa:
     database: mysql
-

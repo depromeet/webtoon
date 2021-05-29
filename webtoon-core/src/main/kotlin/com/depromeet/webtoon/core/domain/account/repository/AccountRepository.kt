@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface AccountRepository : JpaRepository<Account, Long> {
+
+    fun findByDeviceId(deviceId: String): Account?
 }
