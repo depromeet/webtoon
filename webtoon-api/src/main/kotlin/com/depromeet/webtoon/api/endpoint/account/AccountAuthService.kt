@@ -24,7 +24,7 @@ class AccountAuthService(
         val token = JWT.create()
             .withSubject(jsonWebToken.subject)
             .withExpiresAt(Date(System.currentTimeMillis() + jsonWebToken.expiredTime))
-            .withClaim("id", account.id)
+            .withClaim("deviceId", account.deviceId)
             .withClaim("nickname", account.nickname)
             .sign(Algorithm.HMAC512(jsonWebToken.secure))
 

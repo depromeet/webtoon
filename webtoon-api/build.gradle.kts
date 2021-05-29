@@ -5,7 +5,7 @@ dependencies {
 
     // jwt
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    // implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.auth0:java-jwt:3.16.0")
 
     // swagger
