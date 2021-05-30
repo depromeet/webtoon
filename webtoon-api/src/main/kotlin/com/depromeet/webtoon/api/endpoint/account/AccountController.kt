@@ -1,6 +1,6 @@
 package com.depromeet.webtoon.api.endpoint.account
 
-import com.depromeet.webtoon.api.endpoint.dto.JwtDto
+import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController
 class AccountController(
     private val accountAuthService: AccountAuthService
 ) {
-    @GetMapping("/api/v1/token")
+    @GetMapping("/api/v1/enroll")
     @ApiImplicitParams(
         ApiImplicitParam(name = "deviceId", value = "deviceId", required = true)
     )
-    fun getJwtToken(@RequestParam deviceId: String):JwtDto{
-        return accountAuthService.getJwtToken(deviceId)
+    fun getJwtToken(@RequestParam deviceId: String):ApiResponse<String>{
+        return accountAuthService.enrollAccount(deviceId)
     }
 }
