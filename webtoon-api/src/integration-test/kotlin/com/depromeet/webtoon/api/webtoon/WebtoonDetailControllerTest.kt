@@ -3,6 +3,7 @@ package com.depromeet.webtoon.api.webtoon
 import com.depromeet.webtoon.api.endpoint.dto.ScoreResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonDetailResponse
 import com.depromeet.webtoon.core.application.api.dto.AuthorResponse
+import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponse
 import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
@@ -56,18 +57,7 @@ class WebtoonDetailControllerTest(
                 MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON)
                 MockMvcResultMatchers.content().json(
                     WebtoonDetailResponse(
-                        1L,
-                        webtoon.title,
-                        webtoon.thumbnail,
-                        webtoon.url,
-                        webtoon.authors.map { AuthorResponse(it.id!!, it.name) },
-                        webtoon.genres,
-                        webtoon.site,
-                        webtoon.weekdays,
-                        webtoon.summary,
-                        webtoon.backgroudColor,
-                        webtoon.isComplete!!,
-                        webtoon.score,
+                        webtoon.convertToWebtoonResponse(),
                         ScoreResponse(webtoonRatingAvg.totalAverage!!, webtoonRatingAvg.totalStoryScore!!, webtoonRatingAvg.drawingAverage!!),
                         comments = listOf(CommentDto(comment.content, comment.nickname))
                     ).toString()
