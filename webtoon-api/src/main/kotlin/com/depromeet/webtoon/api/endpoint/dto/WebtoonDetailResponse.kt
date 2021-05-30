@@ -1,61 +1,24 @@
 package com.depromeet.webtoon.api.endpoint.dto
 
-import com.depromeet.webtoon.core.application.api.dto.AuthorResponse
+import com.depromeet.webtoon.core.application.api.dto.WebtoonResponse
 import com.depromeet.webtoon.core.domain.rating.dto.CommentDto
 import com.depromeet.webtoon.core.domain.rating.dto.ScoreDto
-import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
-import com.depromeet.webtoon.core.type.BackgroundColor
-import com.depromeet.webtoon.core.type.WebtoonSite
-import com.depromeet.webtoon.core.type.WeekDay
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 @ApiModel("웹툰 상세")
 data class WebtoonDetailResponse(
-    @ApiModelProperty(value = "웹툰ID")
-    var id: Long,
-    @ApiModelProperty(value = "제목")
-    var title: String,
-    @ApiModelProperty(value = "썸네일 이미지")
-    var thumbnail: String,
-    @ApiModelProperty(value = "웹툰 url")
-    var url: String,
-    @ApiModelProperty(value = "작가")
-    var authors: List<AuthorResponse>,
-    @ApiModelProperty(value = "장르")
-    var genres: List<String>,
-    @ApiModelProperty(value = "사이트")
-    var site: WebtoonSite,
-    @ApiModelProperty(value = "날짜")
-    var weekday: List<WeekDay>,
-    @ApiModelProperty(value = "줄거리")
-    var summary: String,
-    @ApiModelProperty(value = "배경화면 색")
-    var backgroundColor: BackgroundColor,
-    @ApiModelProperty(value = "완결여부")
-    var isComplete: Boolean,
-    @ApiModelProperty(value = "플랫폼 평점")
-    var score : Double,
+    @ApiModelProperty("웹툰 기본정보")
+    val webtoon: WebtoonResponse,
     @ApiModelProperty(value = "toonietoonie평점")
     val toonieScore: ScoreResponse,
     @ApiModelProperty(value = "댓글")
     val comments: List<CommentDto>
 )
 
-fun convertToWebtoonDetailResponse(webtoon: Webtoon, scores: ScoreDto, comments: List<CommentDto>): WebtoonDetailResponse {
+fun convertToWebtoonDetailResponse(webtoon: WebtoonResponse, scores: ScoreDto, comments: List<CommentDto>): WebtoonDetailResponse {
     return WebtoonDetailResponse(
-        webtoon.id!!,
-        webtoon.title,
-        webtoon.thumbnail,
-        webtoon.url,
-        webtoon.authors.map { AuthorResponse(it.id!!, it.name) },
-        webtoon.genres,
-        webtoon.site,
-        webtoon.weekdays,
-        webtoon.summary,
-        webtoon.backgroudColor,
-        webtoon.isComplete!!,
-        webtoon.score,
+        webtoon = webtoon,
         ScoreResponse(scores.totalScore!!, scores.storyScore!!, scores.drawingScore!!),
         comments = comments
     )

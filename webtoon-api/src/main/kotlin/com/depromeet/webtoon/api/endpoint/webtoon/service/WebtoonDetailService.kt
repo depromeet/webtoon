@@ -3,6 +3,7 @@ package com.depromeet.webtoon.api.endpoint.webtoon.service
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonDetailResponse
 import com.depromeet.webtoon.api.endpoint.dto.convertToWebtoonDetailResponse
+import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponse
 import com.depromeet.webtoon.core.application.imports.WebtoonImportService
 import com.depromeet.webtoon.core.domain.comment.repository.CommentRepository
 import com.depromeet.webtoon.core.domain.rating.dto.CommentDto
@@ -34,7 +35,7 @@ class WebtoonDetailService(
 
         if (ratingInfo != null) {
             val webtoonDetailResponse = convertToWebtoonDetailResponse(
-                foundWebtoon.get(),
+                foundWebtoon.get().convertToWebtoonResponse(),
                 ScoreDto(
                     ratingInfo.totalAverage,
                     ratingInfo.storyAverage,
@@ -46,7 +47,7 @@ class WebtoonDetailService(
             return ApiResponse.ok(webtoonDetailResponse)
         } else {
             val webtoonDetailResponse = convertToWebtoonDetailResponse(
-                foundWebtoon.get(),
+                foundWebtoon.get().convertToWebtoonResponse(),
                 ScoreDto(
                     0.0,
                     0.0,

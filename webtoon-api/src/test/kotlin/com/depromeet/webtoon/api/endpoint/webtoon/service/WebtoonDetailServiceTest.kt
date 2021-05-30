@@ -68,13 +68,13 @@ class WebtoonDetailServiceTest : FunSpec({
             }
 
             webtoonDetail.status.shouldBe(ApiResponseStatus.OK)
-            webtoonDetail.data!!.backgroundColor.shouldBe(webtoonFixture().backgroudColor)
-            webtoonDetail.data!!.score.shouldBe(webtoonFixture().score)
-            webtoonDetail.data!!.isComplete.shouldBe(webtoonFixture().isComplete)
+            webtoonDetail.data!!.webtoon.backgroundColor.shouldBe(webtoonFixture().backgroudColor)
+            webtoonDetail.data!!.webtoon.score.shouldBe(webtoonFixture().score)
+            webtoonDetail.data!!.webtoon.isComplete.shouldBe(webtoonFixture().isComplete)
             webtoonDetail.data!!.toonieScore.totalScore.shouldBe(ratingAverage.totalAverage)
             webtoonDetail.data!!.toonieScore.storyScore.shouldBe(ratingAverage.storyAverage)
             webtoonDetail.data!!.toonieScore.drawingScore.shouldBe(ratingAverage.drawingAverage)
-            webtoonDetail.data!!.authors.size.shouldBe(1)
+            webtoonDetail.data!!.webtoon.authors.size.shouldBe(1)
             webtoonDetail.data!!.comments.size.shouldBe(1)
         }
 
@@ -148,7 +148,7 @@ class WebtoonDetailServiceTest : FunSpec({
             webtoonDetail.data!!.toonieScore.totalScore.shouldBe(ratingAverage.totalAverage)
             webtoonDetail.data!!.toonieScore.storyScore.shouldBe(ratingAverage.storyAverage)
             webtoonDetail.data!!.toonieScore.drawingScore.shouldBe(ratingAverage.drawingAverage)
-            webtoonDetail.data!!.authors.size.shouldBe(1)
+            webtoonDetail.data!!.webtoon.authors.size.shouldBe(1)
             webtoonDetail.data!!.comments.size.shouldBe(0)
 
         }
