@@ -35,7 +35,7 @@ class Banner(
     var id: Long? = id
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "banner_type")
+    @Column(name = "banner_inventory")
     var bannerInventory: BannerInventory = bannerInventory
 
     @Column(name = "caption")

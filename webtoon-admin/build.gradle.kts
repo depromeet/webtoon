@@ -12,7 +12,9 @@ dependencies {
     implementation(project(":webtoon-core"))
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.boot:spring-boot-starter-web")
-//    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 
     testImplementation(testFixtures(project(":webtoon-core")))
 }
