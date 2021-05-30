@@ -12,7 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(val jsonWebToken: JsonWebToken, val accountRepository: AccountRepository): WebSecurityConfigurerAdapter() {
+class SecurityConfig(val accountRepository: AccountRepository): WebSecurityConfigurerAdapter() {
 
 
     override fun configure(http: HttpSecurity) {
@@ -21,7 +21,7 @@ class SecurityConfig(val jsonWebToken: JsonWebToken, val accountRepository: Acco
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http.formLogin().disable()
         http.httpBasic().disable()
-        http.addFilter(JwtAuthorizationFilter(authenticationManager(),jsonWebToken,accountRepository))
+        http.addFilter(JwtAuthorizationFilter(authenticationManager(),accountRepository))
         http.authorizeRequests()
             .mvcMatchers("/api/v1/comment/list").authenticated()
             .anyRequest().permitAll()
