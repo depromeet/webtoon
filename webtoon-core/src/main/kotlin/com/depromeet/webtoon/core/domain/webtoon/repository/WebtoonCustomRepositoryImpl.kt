@@ -17,6 +17,27 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
 
     private val query = JPAQueryFactory(entityManger)
 
+
+    override fun get_Top10_Naver_Webtoons_ByGenre(genre: String): List<Webtoon> {
+        return query
+            .selectFrom(webtoon)
+            .where(webtoonGenreEq(genre), webtoon.site.eq(WebtoonSite.NAVER))
+            .orderBy(webtoon.score.desc())
+            .offset(1L)
+            .limit(10)
+            .fetch()
+    }
+
+    override fun get_Top10_Daum_Webtoons_ByGenre(genre: String): List<Webtoon> {
+        return query
+            .selectFrom(webtoon)
+            .where(webtoonGenreEq(genre), webtoon.site.eq(WebtoonSite.DAUM))
+            .orderBy(webtoon.score.desc())
+            .offset(1L)
+            .limit(10)
+            .fetch()
+    }
+
     override fun genreRecommendWebtoon(random: Long, genres: String):Webtoon? {
         val dynamicSite = BooleanBuilder()
         // 두가지 사이트를 섞어서 보여주기 위함
