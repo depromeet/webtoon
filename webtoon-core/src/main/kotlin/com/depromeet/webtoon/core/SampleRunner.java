@@ -54,7 +54,7 @@ public class SampleRunner implements ApplicationRunner {
 
         // daumCrawlerService.updateCompletedDaumWebtoons();
         daumCrawlerService.updateDaumWebtoons();
-        // naverCrawlerService.crawlAndUpsert();
+        naverCrawlerService.crawlAndUpsert();
 
         Optional<Webtoon> webtoon = webtoonRepository.findById(1l);
 
@@ -108,32 +108,34 @@ public class SampleRunner implements ApplicationRunner {
 
 
         System.out.println("=====");
-        int randomNumber = (int) (Math.random() * 5);
+        int randomNumber = (int) (Math.random() * 10);
         // 장르 리스트에서
 
-        List<Webtoon> webtoons = genreRecommend("드라마", randomNumber);
-        webtoons.stream().forEach(w -> System.out.println(w.getTitle()));
+        // Webtoon webtoonR = genreRecommend("드라마", randomNumber);
+        // System.out.println(webtoonR.getTitle());
         System.out.println("=====");
-        webtoonRepository.findTop5ByGenresInAndScoreGreaterThanAndSite(List.of("드라마"), 9, WebtoonSite.NAVER).stream().forEach(w -> System.out.println(w.getTitle()));
-        webtoonRepository.findTop5ByGenresInAndScoreGreaterThanAndSite(List.of("드라마"), 9, WebtoonSite.DAUM).stream().forEach(w -> System.out.println(w.getTitle()));
+        webtoonRepository.findTop10ByGenresInAndSiteOrderByScoreDesc(List.of("드라마"),  WebtoonSite.NAVER).stream().forEach(w -> System.out.println(w.getTitle()));
+        webtoonRepository.findTop10ByGenresInAndSiteOrderByScoreDesc(List.of("드라마"),  WebtoonSite.DAUM).stream().forEach(w -> System.out.println(w.getTitle()));
 
     }
 
-    private List<Webtoon> genreRecommend(String genre, int radomNumber) {
+    /*private Webtoon genreRecommend(String genre, int radomNumber) {
+        System.out.println("========");
+        System.out.println(radomNumber);
         if(radomNumber % 2 == 1){
             switch (genre) {
                 case "드라마":
                     return webtoonRepository.daumGenreRecommendQuery(genre, radomNumber);
                 default:
-                    return List.of(new Webtoon());
+                    return null;
             }
         } else {
             switch (genre) {
                 case "드라마":
                     return webtoonRepository.naverGenreRecommendQuery(genre, radomNumber);
                 default:
-                    return List.of(new Webtoon());
+                    return null;
             }
         }
-    }
+    }*/
 }

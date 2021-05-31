@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service
 class HomeApiService(
     val webtoonService: WebtoonService,
     val bannerService: BannerService,
+    val genreRecommendService: GenreRecommendService,
 ) {
     fun fetchHome(homeApiRequest: HomeApiRequest): HomeApiResponse {
         val sampleWebtoons = webtoonService.getWeekdayWebtoons(WeekDay.MON)
@@ -25,11 +26,15 @@ class HomeApiService(
             bannerService.searchBanners(it).convertToBannerResponses()
         }
 
+        val genreWebtoons = genreRecommendService.getRecommendWebtoonByGenre()
+            .convertToWebtoonResponses()
+
+
         return HomeApiResponse(
             mainBanner = homeMainBanners,
             weekdayWebtoons = sampleWebtoons,
             trendingWebtons = sampleWebtoons,
-            genreWebtoons = sampleWebtoons,
+            genreWebtoons = genreWebtoons,
             bingeWatchableWebtoons = sampleWebtoons,
         )
     }

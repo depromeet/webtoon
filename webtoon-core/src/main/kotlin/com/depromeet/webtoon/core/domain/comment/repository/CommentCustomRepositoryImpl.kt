@@ -15,6 +15,7 @@ class CommentCustomRepositoryImpl(@Autowired private val entityManger: EntityMan
     private val query = JPAQueryFactory(entityManger)
 
 
+
     override fun getComments(webtoonId: Long, commentId: Long?, pageSize: Long): List<Comment> {
         val dynamicLtId = BooleanBuilder()
 
