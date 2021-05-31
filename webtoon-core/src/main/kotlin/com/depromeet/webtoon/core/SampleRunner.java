@@ -111,31 +111,10 @@ public class SampleRunner implements ApplicationRunner {
         int randomNumber = (int) (Math.random() * 10);
         // 장르 리스트에서
 
-        // Webtoon webtoonR = genreRecommend("드라마", randomNumber);
-        // System.out.println(webtoonR.getTitle());
         System.out.println("=====");
         webtoonRepository.findTop10ByGenresInAndSiteOrderByScoreDesc(List.of("드라마"),  WebtoonSite.NAVER).stream().forEach(w -> System.out.println(w.getTitle()));
         webtoonRepository.findTop10ByGenresInAndSiteOrderByScoreDesc(List.of("드라마"),  WebtoonSite.DAUM).stream().forEach(w -> System.out.println(w.getTitle()));
 
     }
 
-    /*private Webtoon genreRecommend(String genre, int radomNumber) {
-        System.out.println("========");
-        System.out.println(radomNumber);
-        if(radomNumber % 2 == 1){
-            switch (genre) {
-                case "드라마":
-                    return webtoonRepository.daumGenreRecommendQuery(genre, radomNumber);
-                default:
-                    return null;
-            }
-        } else {
-            switch (genre) {
-                case "드라마":
-                    return webtoonRepository.naverGenreRecommendQuery(genre, radomNumber);
-                default:
-                    return null;
-            }
-        }
-    }*/
 }
