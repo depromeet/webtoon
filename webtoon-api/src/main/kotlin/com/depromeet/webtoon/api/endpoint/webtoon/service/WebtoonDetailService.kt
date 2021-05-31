@@ -33,6 +33,8 @@ class WebtoonDetailService(
 
         val commentInfo = commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(foundWebtoon.get())
 
+        val randomWebtoons = webtoonRepository.findRandomWebtoons()
+
         if (ratingInfo != null) {
             val webtoonDetailResponse = convertToWebtoonDetailResponse(
                 foundWebtoon.get().convertToWebtoonResponse(),
@@ -41,7 +43,8 @@ class WebtoonDetailService(
                     ratingInfo.storyAverage,
                     ratingInfo.drawingAverage
                 ),
-                commentInfo!!.map { CommentDto(it.content, it.nickname) }
+                commentInfo!!.map { CommentDto(it.content, it.nickname) },
+                randomWebtoons
             )
             log.info("[WebtoonDetailService - getWebtoonDetail] webtoon[${id}] rating not exist")
             return ApiResponse.ok(webtoonDetailResponse)
@@ -53,7 +56,8 @@ class WebtoonDetailService(
                     0.0,
                     0.0
                 ),
-                commentInfo!!.map { CommentDto(it.content, it.nickname) }
+                commentInfo!!.map { CommentDto(it.content, it.nickname) },
+                randomWebtoons
             )
             log.info("[WebtoonDetailService - getWebtoonDetail] webtoon[${id}] rating exist")
             return ApiResponse.ok(webtoonDetailResponse)

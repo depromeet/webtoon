@@ -27,6 +27,7 @@ class WebtoonDetailServiceTest : FunSpec({
     lateinit var commentRepository: CommentRepository
 
 
+    //todo RandomWebtoon
 
     beforeTest {
         webtoonRepository = mockk()
