@@ -1,18 +1,34 @@
 package com.depromeet.webtoon.core.domain.webtoon.service
 
+import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponse
+import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateRequest
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateResponseDto
+import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonTop20Response
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonUpsertRequest
 import com.depromeet.webtoon.core.domain.webtoon.dto.toWebtoonCreateResponseDto
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.type.WeekDay
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class WebtoonService(
     val webtoonRepository: WebtoonRepository
 ) {
+    private val log = LoggerFactory.getLogger(WebtoonService::class.java)
+
+    fun getTop20WebtoonsByGenre(genre: String): WebtoonTop20Response {
+        log.info("$genre service")
+        val top20 = mutableListOf<Webtoon>()
+        top20.addAll(webtoonRepository.get_Top10_Naver_Webtoons_ByGenre(genre))
+        top20.addAll(webtoonRepository.get_Top10_Daum_Webtoons_ByGenre(genre))
+        return WebtoonTop20Response(
+            genre = genre,
+            top20Webtoons = top20.convertToWebtoonResponses()
+        )
+    }
 
     fun findById(id: Long): Webtoon {
         return webtoonRepository.findById(id)
@@ -74,4 +90,6 @@ class WebtoonService(
             }
         }
     }
+
+
 }

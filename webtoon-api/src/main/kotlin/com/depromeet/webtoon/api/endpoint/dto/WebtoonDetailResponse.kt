@@ -1,8 +1,10 @@
 package com.depromeet.webtoon.api.endpoint.dto
 
 import com.depromeet.webtoon.core.application.api.dto.WebtoonResponse
+import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
 import com.depromeet.webtoon.core.domain.rating.dto.CommentDto
 import com.depromeet.webtoon.core.domain.rating.dto.ScoreDto
+import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
@@ -13,13 +15,17 @@ data class WebtoonDetailResponse(
     @ApiModelProperty(value = "toonietoonie평점")
     val toonieScore: ScoreResponse,
     @ApiModelProperty(value = "댓글")
-    val comments: List<CommentDto>
+    val comments: List<CommentDto>,
+    @ApiModelProperty(value = "랜덤 추천")
+    val randomRecommendWebtoons: List<WebtoonResponse>,
+
 )
 
-fun convertToWebtoonDetailResponse(webtoon: WebtoonResponse, scores: ScoreDto, comments: List<CommentDto>): WebtoonDetailResponse {
+fun convertToWebtoonDetailResponse(webtoon: WebtoonResponse, scores: ScoreDto, comments: List<CommentDto>, randomWebtoons: List<Webtoon>): WebtoonDetailResponse {
     return WebtoonDetailResponse(
         webtoon = webtoon,
         ScoreResponse(scores.totalScore!!, scores.storyScore!!, scores.drawingScore!!),
-        comments = comments
+        comments = comments,
+        randomRecommendWebtoons = randomWebtoons.convertToWebtoonResponses()
     )
 }

@@ -59,7 +59,8 @@ class WebtoonDetailControllerTest(
                     WebtoonDetailResponse(
                         webtoon.convertToWebtoonResponse(),
                         ScoreResponse(webtoonRatingAvg.totalAverage!!, webtoonRatingAvg.totalStoryScore!!, webtoonRatingAvg.drawingAverage!!),
-                        comments = listOf(CommentDto(comment.content, comment.nickname))
+                        comments = listOf(CommentDto(comment.content, comment.nickname)),
+                        randomRecommendWebtoons = listOf(webtoon.convertToWebtoonResponse())
                     ).toString()
                 )
             }

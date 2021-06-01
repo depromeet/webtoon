@@ -6,7 +6,9 @@ import com.depromeet.webtoon.api.endpoint.dto.WebtoonSearchResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonWeekDayResponse
 import com.depromeet.webtoon.api.endpoint.webtoon.dto.AuthorWebtoonResponse
 import com.depromeet.webtoon.api.endpoint.webtoon.service.AuthorWebtoonService
+import com.depromeet.webtoon.core.application.api.dto.WebtoonResponse
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
+import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonTop20Response
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonSearchService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
 import com.depromeet.webtoon.core.type.WeekDay
@@ -28,6 +30,17 @@ class WebtoonListController(
     val webtoonSearchService: WebtoonSearchService,
 ) {
     private val log = LoggerFactory.getLogger(WebtoonListController::class.java)
+
+    @GetMapping("/{genre}")
+    fun findGenreTop20Webtoons(
+        @ApiParam("장르", required = true, example = "드라마")
+        @PathVariable(name = "genre")
+        genre: String
+    ): ApiResponse<WebtoonTop20Response> {
+        log.info("$genre 컨트롤러")
+        val top20 = webtoonService.getTop20WebtoonsByGenre(genre)
+        return ok(top20)
+    }
 
     @GetMapping("/author/{authorId}")
     fun findAuthorWebtoons(
