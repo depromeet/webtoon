@@ -11,6 +11,7 @@ import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
 import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -36,8 +37,8 @@ class DaumCompletedWebtoonJobConfiguration(
 
     @Bean
     @JobScope
-    fun daumCompletedWebtoonImportStep(): Step {
-        return stepBuilderFactory.get(this::daumCrawlerService.name)
+    fun daumCompletedWebtoonImportStep(@Value("#{jobParameters[requestDate]}")requestDate: String?  ): Step {
+        return stepBuilderFactory.get("daumCompletedWebtoonImportStep")
             .tasklet { contribution, chunckContext ->
                 log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@STEP@@@@@@@")
                 daumCrawlerService.updateCompletedDaumWebtoons()
