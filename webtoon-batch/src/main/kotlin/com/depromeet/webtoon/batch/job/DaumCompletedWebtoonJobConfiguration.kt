@@ -26,18 +26,16 @@ class DaumCompletedWebtoonJobConfiguration(
     private val log = LoggerFactory.getLogger(DaumCompletedWebtoonJobConfiguration::class.java)
 
     @Bean
-    fun updateDaumCompletedWebtoons(
-        @Qualifier("daumCompletedWebtoonImportStep") webtoonImportStep: Step
-    ): Job {
+    fun updateDaumCompletedWebtoons(): Job {
         return jobBuilderFactory.get("daumCompletedWebtoonImportStep")
             .incrementer(ParamCleanRunIdIncrementer())
-            .start(webtoonImportStep)
+            .start(daumCompletedWebtoonImportStep())
             .build()
     }
 
     @Bean
     @JobScope
-    fun daumCompletedWebtoonImportStep(@Value("#{jobParameters[requestDate]}")requestDate: String?  ): Step {
+    fun daumCompletedWebtoonImportStep(): Step {
         return stepBuilderFactory.get("daumCompletedWebtoonImportStep")
             .tasklet { contribution, chunckContext ->
                 log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@STEP@@@@@@@")
