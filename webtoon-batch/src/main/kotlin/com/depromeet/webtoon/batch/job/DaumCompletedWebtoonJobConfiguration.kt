@@ -25,7 +25,7 @@ class DaumCompletedWebtoonJobConfiguration(
     private val log = LoggerFactory.getLogger(DaumCompletedWebtoonJobConfiguration::class.java)
 
     @Bean
-    fun updateNaverWebtoons(
+    fun updateDaumCompletedWebtoons(
         @Qualifier("daumCompletedWebtoonImportStep") webtoonImportStep: Step
     ): Job {
         return jobBuilderFactory.get("daumCompletedWebtoonImportStep")
