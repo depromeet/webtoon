@@ -27,7 +27,7 @@ class DaumCompletedWebtoonJobConfiguration(
 
     @Bean
     fun updateDaumCompletedWebtoons(): Job {
-        return jobBuilderFactory.get("daumCompletedWebtoonImportStep")
+        return jobBuilderFactory.get("daumCompletedWebtoonUpdateJob")
             .incrementer(ParamCleanRunIdIncrementer())
             .start(daumCompletedWebtoonImportStep())
             .build()
