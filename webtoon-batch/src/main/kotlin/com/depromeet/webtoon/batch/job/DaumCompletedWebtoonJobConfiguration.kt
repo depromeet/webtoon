@@ -39,7 +39,9 @@ class DaumCompletedWebtoonJobConfiguration(
     fun daumCompletedWebtoonImportStep(): Step {
         return stepBuilderFactory.get(this::daumCrawlerService.name)
             .tasklet { contribution, chunckContext ->
+                log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@STEP@@@@@@@")
                 daumCrawlerService.updateCompletedDaumWebtoons()
+                log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@STEP@@@@@@@")
                 RepeatStatus.FINISHED
             }
             .build()
