@@ -1,7 +1,7 @@
 name: "[BATCH] 다음 연재중 웹툰 크롤링"
 on:
-  #  schedule:
-  #    - cron: '5 15 * * *' # 12시 5분 동작
+    schedule:
+      - cron: '5 15 * * *' # 12시 5분 동작
   workflow_dispatch:
     inputs:
       requestDate:
