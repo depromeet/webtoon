@@ -1,1 +1,14 @@
 GET localhost:8081
+
+###
+GET localhost:8080/api/v1/enroll?deviceId=123
+
+###
+GET localhost:8080/api/v1/webtoons/detail?id=1
+Authorization: Bearer 111
+
+###
+POST localhost:8080/api/v1/login
+Content-Type: application/json
+
+{"loginToken":"123"}

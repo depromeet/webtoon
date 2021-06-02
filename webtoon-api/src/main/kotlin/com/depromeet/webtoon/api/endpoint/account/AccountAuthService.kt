@@ -1,6 +1,8 @@
 package com.depromeet.webtoon.api.endpoint.account
 
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
+import com.depromeet.webtoon.core.domain.account.AccountLoginResult
+import com.depromeet.webtoon.core.domain.account.convertToAccountLoginResult
 import com.depromeet.webtoon.core.domain.account.model.Account
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import org.springframework.stereotype.Service
@@ -9,15 +11,16 @@ import org.springframework.stereotype.Service
 class AccountAuthService(
     val accountRepository: AccountRepository,
 ) {
-    fun enrollAccount(deviceId: String):ApiResponse<String> {
-        createOrFindAccount(deviceId)
-        return ApiResponse.ok("ready")
+    fun loginAccount(loginToken: String):ApiResponse<AccountLoginResult> {
+
+        // todo nickname 랜덤 생성구현
+        return ApiResponse.ok(createOrFindAccount(loginToken).convertToAccountLoginResult())
     }
 
-    private fun createOrFindAccount(deviceId: String): Account {
-        var optionalAccount = accountRepository.findByDeviceId(deviceId)
+    private fun createOrFindAccount(loginToken: String): Account {
+        var optionalAccount = accountRepository.findByDeviceId(loginToken)
         if(optionalAccount == null){
-            optionalAccount = createAccount(deviceId)
+            optionalAccount = createAccount(loginToken)
         }
         return optionalAccount
     }

@@ -12,30 +12,32 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-class JwtAuthorizationFilter(
+class CustomAuthorizationFilter(
     authenticationManager: AuthenticationManager,
     private val accountRepository: AccountRepository
 ) : BasicAuthenticationFilter(authenticationManager) {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
-        val jwtHeader = request.getHeader("Authorization")
+        val header = request.getHeader("Authorization")
 
         // header 가 있는지 확인
-        if (jwtHeader == null || !jwtHeader.startsWith("Bearer")) {
+        if (header == null || !header.startsWith("Bearer")) {
             chain.doFilter(request, response)
             return
         }
 
-        val deviceId = request.getHeader("Authorization").replace("Bearer ", "")
+        val token = request.getHeader("Authorization").replace("Bearer ", "")
+        val account = accountRepository.findByDeviceId(token)
 
-            val account = accountRepository.findByDeviceId(deviceId)
-            if(account != null){
+        if(account != null) {
             val currentUser =  CurrentUser(account.deviceId, "", emptyList(), account.nickname)
             val authentication: Authentication = UsernamePasswordAuthenticationToken(currentUser, null, emptyList())
-
             SecurityContextHolder.getContext().authentication = authentication
         }
 
         chain.doFilter(request, response)
     }
+
+
+
 }
