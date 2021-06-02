@@ -5,13 +5,13 @@ import java.time.LocalDateTime
 
 fun accountFixture(
     id: Long? = null,
-    deviceId: String = "testDevice",
+    authToken: String = "testToken",
     nickname: String = "testNick",
     createdAt: LocalDateTime = LocalDateTime.now(),
     modifiedAt: LocalDateTime = LocalDateTime.now()
 ) = Account(
     id = id,
-    deviceId = deviceId,
+    authToken = authToken,
     nickname = nickname,
     createdAt = createdAt,
     modifiedAt = modifiedAt

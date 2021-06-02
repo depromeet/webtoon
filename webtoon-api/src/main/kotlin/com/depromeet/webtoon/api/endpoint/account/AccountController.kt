@@ -1,9 +1,9 @@
 package com.depromeet.webtoon.api.endpoint.account
 
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
-import com.depromeet.webtoon.core.domain.account.AccountLoginResult
+import com.depromeet.webtoon.core.domain.account.dto.AccountLoginRequest
+import com.depromeet.webtoon.core.domain.account.dto.AccountLoginResult
 import io.swagger.annotations.Api
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -15,7 +15,7 @@ class AccountController(
     AccountAuthService
 ) {
     @PostMapping("/api/v1/login")
-    fun loginWithToken(@RequestBody loginToken: String):ApiResponse<AccountLoginResult>{
-        return accountAuthService.loginAccount(loginToken)
+    fun loginWithToken(@RequestBody loginRequest: AccountLoginRequest):ApiResponse<AccountLoginResult>{
+        return accountAuthService.loginAccount(loginRequest.loginToken)
     }
 }

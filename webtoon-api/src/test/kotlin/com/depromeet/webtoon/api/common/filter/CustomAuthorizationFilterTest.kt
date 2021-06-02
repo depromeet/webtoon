@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-class CustomAuthorizationFilterTest(): FunSpec ({
+class CustomAuthorizationFilterTest : FunSpec({
 
     lateinit var authenticationManager: AuthenticationManager
     lateinit var accountRepository: AccountRepository
@@ -18,11 +18,12 @@ class CustomAuthorizationFilterTest(): FunSpec ({
     lateinit var customAuthorizationFilter: CustomAuthorizationFilter
 
     beforeTest {
+
         customAuthorizationFilter = CustomAuthorizationFilter(authenticationManager, accountRepository)
     }
 
-    context("CustomAuthorizationFilterTest"){
-        test("doFilterInternal"){
+    context("CustomAuthorizationFilterTest") {
+        test("doFilterInternal") {
 
         }
     }

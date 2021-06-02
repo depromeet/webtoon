@@ -27,10 +27,10 @@ class CustomAuthorizationFilter(
         }
 
         val token = request.getHeader("Authorization").replace("Bearer ", "")
-        val account = accountRepository.findByDeviceId(token)
+        val account = accountRepository.findByAuthToken(token)
 
         if(account != null) {
-            val currentUser =  CurrentUser(account.deviceId, "", emptyList(), account.nickname)
+            val currentUser =  CurrentUser(account.authToken, "", emptyList(), account.nickname)
             val authentication: Authentication = UsernamePasswordAuthenticationToken(currentUser, null, emptyList())
             SecurityContextHolder.getContext().authentication = authentication
         }

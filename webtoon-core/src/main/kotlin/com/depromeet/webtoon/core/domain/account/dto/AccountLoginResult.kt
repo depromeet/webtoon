@@ -1,4 +1,4 @@
-package com.depromeet.webtoon.core.domain.account
+package com.depromeet.webtoon.core.domain.account.dto
 
 import com.depromeet.webtoon.core.domain.account.model.Account
 import io.swagger.annotations.ApiModel
