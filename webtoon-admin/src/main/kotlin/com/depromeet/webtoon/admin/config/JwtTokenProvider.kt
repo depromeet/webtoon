@@ -3,13 +3,17 @@ package com.depromeet.webtoon.admin.config
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.util.*
 import java.util.function.Function
 
 @Component
-class JwtTokenProvider(val secret: String = "javatechie") {
+class JwtTokenProvider(
+    @Value("\${webtoon.admin.jwt-signing-key}")
+    val secret: String
+) {
 
     fun extractUsername(token: String?): String {
         return extractClaim(token) { obj: Claims -> obj.subject }

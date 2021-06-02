@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
 import javax.persistence.GeneratedValue
@@ -23,6 +24,7 @@ class AdminUser(name: String = "", username: String = "", password: String = "")
     var name: String = name
 
     @NotBlank
+    @Column(name = "username", unique = true)
     @Size(max = 15)
     // 테스트 짜기 귀찮다...
     @Pattern(regexp = "^[a-z0-9_]+$")
