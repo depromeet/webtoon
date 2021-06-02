@@ -15,7 +15,6 @@ jobs:
       - name: Build with Gradle
         run: |
           ./gradlew clean :webtoon-admin:buildFront :webtoon-admin:bootJar
-
       - name: restart webtoon-admin service
         run: |
           sudo systemctl stop webtoon-admin.service

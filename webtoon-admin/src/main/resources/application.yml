@@ -6,6 +6,10 @@ spring:
       local: "webtoon-core-local"
       beta: "webtoon-core-beta"
 
+webtoon:
+  admin:
+    jwt-signing-key: p@55w0rd
+
 ---
 spring:
   config:
@@ -19,6 +23,10 @@ spring:
     activate.on-profile: beta
 
 server.port: 8081
+
+webtoon:
+  admin:
+    jwt-signing-key: ${WEBTOON_ADMIN_SIGNING_KEY}
 
 logging:
   config: classpath:logback-beta.xml

@@ -18,7 +18,7 @@ class WebtoonAdminController(
     @Transactional(readOnly = true)
     @GetMapping("")
     fun webtoonList(
-        @RequestParam(required = false, defaultValue = "0") page: Int?,
+        @RequestParam(required = false, defaultValue = "1") page: Int?,
         @RequestParam(required = false, defaultValue = "25") pageSize: Int?,
         httpServletResponse: HttpServletResponse
     ): AdminListFetchResult<WebtoonResponse> {

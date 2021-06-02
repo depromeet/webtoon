@@ -22,7 +22,7 @@ class BannerAdminController(
 ) {
     @GetMapping("")
     fun getBannerList(
-        @RequestParam(required = false, defaultValue = "0") page: Int?,
+        @RequestParam(required = false, defaultValue = "1") page: Int?,
         @RequestParam(required = false, defaultValue = "25") pageSize: Int?,
         httpServletResponse: HttpServletResponse
     ): AdminListFetchResult<BannerDetailResponse> {
