@@ -29,11 +29,10 @@ class HomeApiService(
         val genreWebtoons = genreRecommendService.getRecommendWebtoonByGenre()
             .convertToWebtoonResponses()
 
-
         return HomeApiResponse(
             mainBanner = homeMainBanners,
             weekdayWebtoons = sampleWebtoons,
-            trendingWebtons = sampleWebtoons,
+            trendingWebtoons = sampleWebtoons,
             genreWebtoons = genreWebtoons,
             bingeWatchableWebtoons = sampleWebtoons,
         )
