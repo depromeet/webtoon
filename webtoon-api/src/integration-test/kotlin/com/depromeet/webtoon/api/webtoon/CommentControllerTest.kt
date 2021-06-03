@@ -2,27 +2,24 @@ package com.depromeet.webtoon.api.webtoon
 
 import com.depromeet.webtoon.api.endpoint.comment.dto.CommentInfo
 import com.depromeet.webtoon.api.endpoint.comment.dto.CommentsResponse
-import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
 import com.depromeet.webtoon.core.domain.comment.commentFixture
 import com.depromeet.webtoon.core.domain.comment.repository.CommentRepository
-import com.depromeet.webtoon.core.domain.rating.webtoonRatingAverageFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import io.kotest.core.spec.style.FunSpec
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser(username = "tester")
 class CommentControllerTest(
     var mockMvc: MockMvc,
     var webtoonRepository: WebtoonRepository,
@@ -46,9 +43,12 @@ class CommentControllerTest(
             mockMvc.perform(
                 MockMvcRequestBuilders
                     .get("/api/v1/comment/list")
+                    .with(user("jaden"))
                     .param("webtoonId", webtoon.id.toString())
                     .param("commentId", null)
                     .param("pageSize", "2")
+
+
             ).andExpect {
                 MockMvcResultMatchers.status().isOk
                 MockMvcResultMatchers.content().json(

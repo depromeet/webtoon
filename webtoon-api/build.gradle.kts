@@ -5,6 +5,8 @@ dependencies {
 
     //security
     implementation("org.springframework.boot:spring-boot-starter-security")
+    // securty
+    testImplementation("org.springframework.security:spring-security-test")
 
 
 
@@ -17,9 +19,6 @@ dependencies {
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
     integrationTestImplementation("com.h2database:h2")
     testImplementation(testFixtures(project(":webtoon-core")))
-
-    // securty
-    testImplementation("org.springframework.security:spring-security-test")
 
 }
 
