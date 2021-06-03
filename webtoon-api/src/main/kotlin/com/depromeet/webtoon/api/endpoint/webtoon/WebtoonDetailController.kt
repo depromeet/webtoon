@@ -20,7 +20,15 @@ class WebtoonDetailController(
 
     @GetMapping("/api/v1/webtoons/detail")
     @ApiImplicitParams(
-        ApiImplicitParam(name = "id", value = "웹툰 id", required = true)
+        ApiImplicitParam(name = "id", value = "웹툰 id", required = true),
+        ApiImplicitParam(
+            name = "Authorization",
+            value = "authorization header",
+            required = true,
+            dataType = "string",
+            paramType = "header",
+            defaultValue = "Bearer testToken"
+        )
     )
     fun getWebtoonDetail(
         @RequestParam id: Long,

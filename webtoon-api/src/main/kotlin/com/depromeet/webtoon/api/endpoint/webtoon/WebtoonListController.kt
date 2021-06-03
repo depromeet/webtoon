@@ -13,6 +13,8 @@ import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonSearchService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
 import com.depromeet.webtoon.core.type.WeekDay
 import io.swagger.annotations.Api
+import io.swagger.annotations.ApiImplicitParam
+import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiParam
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
@@ -32,6 +34,13 @@ class WebtoonListController(
     private val log = LoggerFactory.getLogger(WebtoonListController::class.java)
 
     @GetMapping("/{genre}")
+    @ApiImplicitParams(
+        ApiImplicitParam(name = "Authorization",
+            value = "authorization header",
+            required = true,
+            dataType = "string",
+            paramType = "header",
+            defaultValue = "Bearer testToken"))
     fun findGenreTop20Webtoons(
         @ApiParam("장르", required = true, example = "드라마")
         @PathVariable(name = "genre")
@@ -43,6 +52,13 @@ class WebtoonListController(
     }
 
     @GetMapping("/author/{authorId}")
+    @ApiImplicitParams(
+        ApiImplicitParam(name = "Authorization",
+            value = "authorization header",
+            required = true,
+            dataType = "string",
+            paramType = "header",
+            defaultValue = "Bearer testToken"))
     fun findAuthorWebtoons(
         @ApiParam("작가Id", required = true, example = "1")
         @PathVariable(name = "authorId")
@@ -53,6 +69,13 @@ class WebtoonListController(
     }
 
     @GetMapping("/weekday/{weekDay}")
+    @ApiImplicitParams(
+        ApiImplicitParam(name = "Authorization",
+            value = "authorization header",
+            required = true,
+            dataType = "string",
+            paramType = "header",
+            defaultValue = "Bearer testToken"))
     fun findWeekDayWebtoons(
         @ApiParam("요일", required = true, example = "mon")
         @PathVariable(name = "weekDay")
@@ -66,6 +89,13 @@ class WebtoonListController(
     }
 
     @GetMapping("/search")
+    @ApiImplicitParams(
+        ApiImplicitParam(name = "Authorization",
+            value = "authorization header",
+            required = true,
+            dataType = "string",
+            paramType = "header",
+            defaultValue = "Bearer testToken"))
     fun searchWebtoons(
         @ApiParam("검색어", required = true, example = "조석")
         @RequestParam("query")

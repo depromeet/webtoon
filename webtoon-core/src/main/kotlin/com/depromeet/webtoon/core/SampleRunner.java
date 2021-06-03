@@ -54,7 +54,7 @@ public class SampleRunner implements ApplicationRunner {
 
         // daumCrawlerService.updateCompletedDaumWebtoons();
         daumCrawlerService.updateDaumWebtoons();
-        naverCrawlerService.crawlAndUpsert();
+        // naverCrawlerService.crawlAndUpsert();
 
         Optional<Webtoon> webtoon = webtoonRepository.findById(1l);
 
