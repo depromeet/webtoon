@@ -14,19 +14,19 @@ import javax.persistence.Id
 @EntityListeners(AuditingEntityListener::class)
 class Account(
     id: Long? = null,
-    deviceId: String = "",
-    nickname: String? = null,
+    authToken: String = "",
+    nickname: String = "",
     createdAt: LocalDateTime? = null,
     modifiedAt: LocalDateTime? = null,
 
-) {
+    ) {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     var id: Long? = id
 
-    var deviceId: String = deviceId
+    var authToken: String = authToken
 
-    var nickname: String? = nickname
+    var nickname: String = nickname
 
     @CreatedDate
     var createdAt: LocalDateTime? = createdAt

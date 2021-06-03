@@ -1,0 +1,5 @@
+json:
+  token:
+    subject: jwtToken
+    expiredTime: 1800000
+    secure: test

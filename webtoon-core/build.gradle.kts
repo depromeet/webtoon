@@ -9,6 +9,10 @@ dependencies {
     api("com.querydsl:querydsl-jpa")
     kapt("com.querydsl:querydsl-apt::jpa")
 
+    /*implementation("org.springframework.boot:spring-boot-starter-security")
+    //jwt
+    implementation("com.auth0:java-jwt:3.16.0")*/
+
     // TODO 크롤러는 별도로 분리할것??!!
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.jsoup:jsoup")

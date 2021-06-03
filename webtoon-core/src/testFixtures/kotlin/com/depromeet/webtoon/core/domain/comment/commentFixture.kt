@@ -12,7 +12,7 @@ fun commentFixture(
     content: String? = "testComment",
     account: Account = accountFixture(1L),
     webtoon: Webtoon = webtoonFixture(1L),
-    nickname: String = account.nickname!!,
+    nickname: String = account.nickname,
     createdAt: LocalDateTime = LocalDateTime.now(),
     modifiedAt: LocalDateTime = LocalDateTime.now()
 ) = Comment(

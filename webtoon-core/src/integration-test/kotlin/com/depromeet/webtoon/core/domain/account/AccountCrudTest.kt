@@ -46,7 +46,7 @@ class AccountCrudTest(
         val foundAccount = accountRepository.findById(savedAccount.id!!)
 
         // then
-        foundAccount.get().deviceId.shouldBeEqualComparingTo(account.deviceId)
+        foundAccount.get().authToken.shouldBeEqualComparingTo(account.authToken)
         foundAccount.get().nickname!!.shouldBeEqualComparingTo(account.nickname!!)
     }
 

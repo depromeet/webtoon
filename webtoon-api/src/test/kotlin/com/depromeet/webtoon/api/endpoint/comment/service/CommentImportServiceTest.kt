@@ -50,7 +50,7 @@ class CommentImportServiceTest: FunSpec({
                 content = commentRequest.content,
                 account = account,
                 webtoon = webtoon,
-                nickname = account.nickname!!
+                nickname = account.nickname
             )
 
             // when
