@@ -1,11 +1,14 @@
 package com.depromeet.webtoon.api.common.filter
 
-import com.depromeet.webtoon.api.common.CurrentUser
+import com.depromeet.webtoon.core.domain.account.model.Account
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
@@ -30,14 +33,29 @@ class CustomAuthorizationFilter(
         val account = accountRepository.findByAuthToken(token)
 
         if(account != null) {
-            val currentUser =  CurrentUser(account.authToken, "", emptyList(), account.nickname)
-            val authentication: Authentication = UsernamePasswordAuthenticationToken(currentUser, null, emptyList())
-            SecurityContextHolder.getContext().authentication = authentication
+            setSecurityContextWithAccount(account)
         }
 
         chain.doFilter(request, response)
     }
 
+
+    private fun setSecurityContextWithAccount(account: Account) {
+        val currentUser = createCurrentUser(account)
+        val authentication = createAuthentication(currentUser, account)
+        SecurityContextHolder.getContext().authentication = authentication
+    }
+
+    private fun createAuthentication(
+        currentUser: UserDetails,
+        account: Account
+    ): Authentication {
+        return UsernamePasswordAuthenticationToken(currentUser, null, listOf(SimpleGrantedAuthority(account.authToken)))
+    }
+
+    private fun createCurrentUser(account: Account): UserDetails {
+        return User.builder().username(account.id!!.toString()).password("").authorities(emptyList()).build()
+    }
 
 
 }
