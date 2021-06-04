@@ -70,6 +70,7 @@ class CommentImportService(
 
     private fun getAccount(): Account{
         val authentication = SecurityContextHolder.getContext().authentication
+
         val accountId = authentication.name
         return accountRepository.findById(accountId.toLong()).orElseThrow { ApiValidationException("서버오류") }
     }
