@@ -29,7 +29,7 @@ class SecurityConfig(val accountRepository: AccountRepository): WebSecurityConfi
         return ToonietoonieAuthenticationEntryPoint()
     }
 
-    //todo 왜 filter 에 걸리는지 확인.. 필터는 걸리는데 에러는 안떨어지네?
+    //todo swagger 접속시 왜 exceptionHandling 에 걸리는지 확인.. 필터는 걸리는데 에러는 안떨어지네?
     override fun configure(web: WebSecurity) {
         web.ignoring().mvcMatchers("/favicon.ico")
         web.ignoring().antMatchers("/v2/api-docs",

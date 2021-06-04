@@ -1,6 +1,6 @@
-package com.depromeet.webtoon.api.endpoint.comment.service
-
-import com.depromeet.webtoon.api.endpoint.comment.dto.CommentRequest
+import com.depromeet.webtoon.api.endpoint.comment.dto.CreateCommentRequest
+import com.depromeet.webtoon.api.endpoint.comment.dto.UpdateCommentRequest
+import com.depromeet.webtoon.api.endpoint.comment.service.CommentImportService
 import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.comment.commentFixture
@@ -10,11 +10,15 @@ import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.exceptions.ApiValidationException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken
+import java.time.LocalDateTime
 import java.util.*
+
 
 class CommentImportServiceTest: FunSpec({
 
@@ -24,63 +28,111 @@ class CommentImportServiceTest: FunSpec({
     lateinit var accountRepository: AccountRepository
 
 
+
     beforeTest {
         commentRepository = mockk()
         webtoonRepository = mockk()
         accountRepository = mockk()
         commentImportService = CommentImportService(commentRepository, webtoonRepository, accountRepository)
+        SecurityContextHolder.getContext().authentication =
+            PreAuthenticatedAuthenticationToken(1, null, listOf(SimpleGrantedAuthority("ROLE_USER")))
     }
 
     context("CommentImportServiceTest"){
-        test("upsertComment 연관 메소드 정상 수행 테스트"){
-            // given
-            val commentRequest = CommentRequest(
-                accountId = 1L,
-                nickname = "tester",
-                webtoonId = 1L,
-                content = "재밌다"
-            )
-            val account = accountFixture(commentRequest.accountId, commentRequest.nickname)
-            val webtoon = webtoonFixture(commentRequest.webtoonId)
 
-            every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
+        test("createComment"){
+            // given
+            val account = accountFixture(1L)
+            val webtoon = webtoonFixture(1L)
+            val newComment = commentFixture(1L, "funny", account, webtoon, account.nickname, LocalDateTime.now(), LocalDateTime.now())
+
             every { accountRepository.findById(any()) } returns Optional.of(account)
-            every { commentRepository.findByWebtoonIdAndAccountId(any(), any()) } returns commentFixture(
-                id = 1L,
-                content = commentRequest.content,
-                account = account,
-                webtoon = webtoon,
-                nickname = account.nickname
-            )
+            every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
+            every { commentRepository.save(any()) } returns newComment
 
             // when
-            val result = commentImportService.upsertComment(commentRequest)
+            commentImportService.createComment(CreateCommentRequest(webtoon.id!!, newComment.content!!))
 
-            // then
-            verify(exactly = 1) { webtoonRepository.findById(commentRequest.webtoonId)  }
-
-            verify(exactly = 1) { accountRepository.findById(commentRequest.accountId) }
-
-            verify(exactly = 1) { commentRepository.findByWebtoonIdAndAccountId(commentRequest.webtoonId, commentRequest.accountId) }
-
-            result.data!!.accountId.shouldBe(account.id)
-            result.data!!.webtoonId.shouldBe(webtoon.id)
-            result.data!!.content.shouldBe(commentRequest.content)
-            result.data!!.nickname.shouldBe(account.nickname)
-
+            // ten
+            verify(exactly = 1) {
+                accountRepository.findById(account.id!!)
+                webtoonRepository.findById(webtoon.id!!)
+                commentRepository.save(any())
+            }
         }
 
-        test("upsertComment 잘못된 웹툰ID 입력"){
-            val commentRequest = CommentRequest(
-                accountId = 1L,
-                nickname = "tester",
-                webtoonId = 1L,
-                content = "재밌다"
-            )
+        test("updateComment"){
+            // given
+            val updateCommentRequest = UpdateCommentRequest(1L, "fun")
+            val originalComment = commentFixture(1L, "funny")
+            val newComment = commentFixture(1L,"fun")
 
-            every { webtoonRepository.findById(any()) } returns Optional.empty()
+            every { commentRepository.findById(any()) } returns Optional.of(originalComment)
+            every { commentRepository.save(any()) } returns newComment
+            every { accountRepository.findById(any()) } returns Optional.of(accountFixture(1L))
 
-            shouldThrow<ApiValidationException> { commentImportService.upsertComment(commentRequest) }
+
+            // when
+            commentImportService.updateComment(updateCommentRequest)
+
+            // ten
+            verify(exactly = 1) {
+                commentRepository.findById(updateCommentRequest.commentId)
+                commentRepository.save(any())
+            }
+        }
+
+        test("updateComment 실패 (작성자와 수정자의 id 가 다른경우"){
+            // given
+            val updateCommentRequest = UpdateCommentRequest(1L, "fun")
+            val originalComment = commentFixture(1L, "funny")
+
+            every { commentRepository.findById(any()) } returns Optional.of(originalComment)
+            every { accountRepository.findById(any()) } returns Optional.of(accountFixture(2L))
+
+
+            // when then
+            shouldThrow<ApiValidationException> {
+                commentImportService.updateComment(updateCommentRequest)
+            }
+            verify(exactly = 1) {
+                commentRepository.findById(updateCommentRequest.commentId)
+            }
+        }
+
+        test("deleteComment"){
+            val originalComment = commentFixture(1L, "funny")
+
+            every { commentRepository.findById(any()) } returns Optional.of(originalComment)
+            every { accountRepository.findById(any()) } returns Optional.of(accountFixture(1L))
+            every { commentRepository.delete(any()) } returns Unit
+
+            // when
+            commentImportService.deleteComment(originalComment.id!!)
+
+            // ten
+            verify(exactly = 1) {
+                commentRepository.findById(originalComment.id!!)
+                commentRepository.delete(originalComment)
+            }
+        }
+
+        test("deleteComment 실패 (작성자와 삭제자가 다른 경우"){
+            val originalComment = commentFixture(1L, "funny")
+
+            every { commentRepository.findById(any()) } returns Optional.of(originalComment)
+            every { accountRepository.findById(any()) } returns Optional.of(accountFixture(2L))
+            every { commentRepository.delete(any()) } returns Unit
+
+            // when
+            shouldThrow<ApiValidationException> {
+                commentImportService.deleteComment(originalComment.id!!)
+            }
+            // ten
+            verify(exactly = 1) {
+                commentRepository.findById(originalComment.id!!)
+            }
         }
     }
+
 })
