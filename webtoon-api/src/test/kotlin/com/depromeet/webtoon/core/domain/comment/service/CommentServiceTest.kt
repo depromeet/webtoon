@@ -20,18 +20,6 @@ class CommentServiceTest: FunSpec ({
     }
 
     context("CommentServiceTest"){
-        test("deleteComment"){
-
-            //given todo void return 하는경우 어떻게하는지?
-            val comment = commentFixture(1L)
-            every { commentRepository.deleteById(any()) }.returns(Unit)
-
-            // when
-            commentService.deleteComment(comment.id!!)
-
-            verify { commentRepository.deleteById(comment.id!!) }
-        }
-
         test("getComments"){
             //given
             every { commentRepository.getComments(any(), any(), any()) }.returns(listOf(commentFixture(id=4L), commentFixture(id = 3L)))

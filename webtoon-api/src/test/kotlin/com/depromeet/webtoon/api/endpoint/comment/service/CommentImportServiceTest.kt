@@ -1,19 +1,23 @@
+/* todo
 package com.depromeet.webtoon.api.endpoint.comment.service
 
-import com.depromeet.webtoon.api.endpoint.comment.dto.CommentRequest
+import com.depromeet.webtoon.api.endpoint.comment.dto.CreateCommentRequest
 import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.comment.commentFixture
 import com.depromeet.webtoon.core.domain.comment.repository.CommentRepository
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
-import com.depromeet.webtoon.core.exceptions.ApiValidationException
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.mockito.Mockito
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContext
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.test.context.support.WithSecurityContext
+import java.time.LocalDateTime
 import java.util.*
 
 class CommentImportServiceTest: FunSpec({
@@ -22,65 +26,47 @@ class CommentImportServiceTest: FunSpec({
     lateinit var commentRepository: CommentRepository
     lateinit var webtoonRepository: WebtoonRepository
     lateinit var accountRepository: AccountRepository
+    lateinit var authentication: Authentication
+    lateinit var securityContext: SecurityContext
+
 
 
     beforeTest {
         commentRepository = mockk()
         webtoonRepository = mockk()
         accountRepository = mockk()
+        authentication = Mockito.mock(Authentication::class.java)
+        securityContext = Mockito.mock(SecurityContext::class.java)
         commentImportService = CommentImportService(commentRepository, webtoonRepository, accountRepository)
     }
 
     context("CommentImportServiceTest"){
-        test("upsertComment 연관 메소드 정상 수행 테스트"){
-            // given
-            val commentRequest = CommentRequest(
-                accountId = 1L,
-                nickname = "tester",
-                webtoonId = 1L,
-                content = "재밌다"
-            )
-            val account = accountFixture(commentRequest.accountId, commentRequest.nickname)
-            val webtoon = webtoonFixture(commentRequest.webtoonId)
 
-            every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
+        test("createComment"){
+
+            // given
+            securityContext.authentication = authentication
+            SecurityContextHolder.setContext(securityContext)
+            Mockito.`when`(authentication.name).thenReturn("1")
+            val account = accountFixture(1L)
+            val webtoon = webtoonFixture(1L)
+            val newComment = commentFixture(1L, "funny", account, webtoon, account.nickname, LocalDateTime.now(), LocalDateTime.now())
+
             every { accountRepository.findById(any()) } returns Optional.of(account)
-            every { commentRepository.findByWebtoonIdAndAccountId(any(), any()) } returns commentFixture(
-                id = 1L,
-                content = commentRequest.content,
-                account = account,
-                webtoon = webtoon,
-                nickname = account.nickname
-            )
+            every { webtoonRepository.findById(any()) } returns Optional.of(webtoon)
+
 
             // when
-            val result = commentImportService.upsertComment(commentRequest)
+            commentImportService.createComment(CreateCommentRequest(webtoon.id!!, "funny"))
 
-            // then
-            verify(exactly = 1) { webtoonRepository.findById(commentRequest.webtoonId)  }
+            verify(exactly = 1) {
+                accountRepository.findById(account.id!!)
+                webtoonRepository.findById(webtoon.id!!)
+            }
 
-            verify(exactly = 1) { accountRepository.findById(commentRequest.accountId) }
 
-            verify(exactly = 1) { commentRepository.findByWebtoonIdAndAccountId(commentRequest.webtoonId, commentRequest.accountId) }
-
-            result.data!!.accountId.shouldBe(account.id)
-            result.data!!.webtoonId.shouldBe(webtoon.id)
-            result.data!!.content.shouldBe(commentRequest.content)
-            result.data!!.nickname.shouldBe(account.nickname)
-
-        }
-
-        test("upsertComment 잘못된 웹툰ID 입력"){
-            val commentRequest = CommentRequest(
-                accountId = 1L,
-                nickname = "tester",
-                webtoonId = 1L,
-                content = "재밌다"
-            )
-
-            every { webtoonRepository.findById(any()) } returns Optional.empty()
-
-            shouldThrow<ApiValidationException> { commentImportService.upsertComment(commentRequest) }
         }
     }
+
 })
+*/
