@@ -7,17 +7,10 @@ POST {{webtoonApi}}/api/v1/login
 Content-Type: application/json
 
 {
-    "loginToken": "1231233"
+    "loginToken": "testToken"
 }
 
 ###
 GET {{webtoonApi}}/api/v1/webtoons/detail?id=1
-Authorization: Bearer 123123
-
-###
-POST localhost:8080/api/v1/login
 Content-Type: application/json
-
-{
-    "loginToken": "123"
-}
+Authorization: Bearer testToken
