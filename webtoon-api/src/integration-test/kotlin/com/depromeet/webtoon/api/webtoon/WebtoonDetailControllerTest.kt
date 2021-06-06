@@ -1,10 +1,12 @@
 package com.depromeet.webtoon.api.webtoon
 
+import com.depromeet.webtoon.api.endpoint.comment.dto.CommentResponse
 import com.depromeet.webtoon.api.endpoint.dto.ScoreResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonDetailResponse
 import com.depromeet.webtoon.core.application.api.dto.AuthorResponse
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponse
 import com.depromeet.webtoon.core.domain.account.accountFixture
+import com.depromeet.webtoon.core.domain.account.dto.convertToAccountResponse
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
@@ -64,7 +66,7 @@ class WebtoonDetailControllerTest(
                     WebtoonDetailResponse(
                         webtoon.convertToWebtoonResponse(),
                         ScoreResponse(webtoonRatingAvg.totalAverage!!, webtoonRatingAvg.totalStoryScore!!, webtoonRatingAvg.drawingAverage!!),
-                        comments = listOf(CommentDto(comment.content, comment.nickname)),
+                        comments = listOf(CommentResponse(comment.id!!, comment.account.convertToAccountResponse(), comment.content!!, comment.modifiedAt!!.toLocalDate())),
                         randomRecommendWebtoons = listOf(webtoon.convertToWebtoonResponse())
                     ).toString()
                 )
