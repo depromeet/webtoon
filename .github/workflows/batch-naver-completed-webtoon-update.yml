@@ -1,4 +1,4 @@
-name: "[BATCH] 네이버 웹툰 크롤링"
+name: "[BATCH] 네이버 완료 웹툰 크롤링"
 on:
   #  schedule:
   #    - cron: '5 15 * * *' # 12시 5분 동작
@@ -13,7 +13,7 @@ jobs:
           WEBTOON_SERVICE_DB_USERNAME: ${{ secrets.WEBTOON_SERVICE_DB_USERNAME }}
           WEBTOON_SERVICE_DB_PASSWORD: ${{ secrets.WEBTOON_SERVICE_DB_PASSWORD }}
         run: |
-          java -jar -Dspring.profiles.active=beta /app/webtoon-batch/webtoon-batch.jar --job.name=naverWebtoonUpdateJob
+          java -jar -Dspring.profiles.active=beta /app/webtoon-batch/webtoon-batch.jar --job.name=naverCompletedWebtoonUpdateJob
       - name: action-slack
         uses: 8398a7/action-slack@v3
         with:

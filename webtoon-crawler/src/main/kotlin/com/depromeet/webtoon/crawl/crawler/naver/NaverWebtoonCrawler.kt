@@ -53,7 +53,6 @@ class NaverWebtoonCrawler() {
                 val titleId = TITLE_ID_REGEX.find(url)!!.groupValues[1]
                 NaverWebtoonItem(titleId.toLong(), title, score, index, url, true)
             }
-            .take(10)
             .fold(NaverWebtoonItems()) { acc, naverWebtoonItem -> acc.addItem(naverWebtoonItem); acc }
 
         return naverWebtoonItems.setDetailEach { item ->
