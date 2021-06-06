@@ -12,37 +12,62 @@ import org.springframework.stereotype.Component
 
 @Component
 class NaverWebtoonCrawler() {
-    fun crawlOngoingWebtoons(): List<WebtoonImportRequest> {
-        // 네이버 웹툰의 정보를 긁어온다!
-        val titleIdRegex = "titleId=(\\d*)".toRegex()
+    fun crawlOngoingWebtoons(): List<WebtoonImportRequest> = WEEKDAYS
+        .map { weekday ->
+            val doc: Document = Jsoup.connect("https://comic.naver.com/webtoon/weekdayList.nhn?week=$weekday").get()
+            val webtoons: Elements = doc.select(".list_area ul li")
+            webtoons.mapIndexed { index, it ->
+                val title = it.select("dl dt a").text()
+                val url = "https://comic.naver.com" + it.select("dl dt a").attr("href")
+                val score = it.select("dl .rating_type strong").text().toDouble()
 
-        return WEEKDAYS
-            .map { weekday ->
-                val doc: Document = Jsoup.connect("https://comic.naver.com/webtoon/weekdayList.nhn?week=$weekday").get()
-                val webtoons: Elements = doc.select(".list_area ul li")
-                webtoons.mapIndexed { index, it ->
-                    val title = it.select("dl dt a").text()
-                    val url = "https://comic.naver.com" + it.select("dl dt a").attr("href")
-                    val score = it.select("dl .rating_type strong").text().toDouble()
-
-                    val titleId = titleIdRegex.find(url)!!.groupValues[1]
-                    NaverWebtoonItem(titleId.toLong(), title, weekday, score, index, url)
-                }
+                val titleId = TITLE_ID_REGEX.find(url)!!.groupValues[1]
+                NaverWebtoonItem(titleId.toLong(), title, score, index, url, false, weekday)
             }
-            .flatten()
-            .fold(NaverWebtoonItems()) { acc, naverWebtoonItem -> acc.addItem(naverWebtoonItem); acc }
-            .setDetailEach { item ->
-                Thread.sleep(30)
-                val doc: Document = Jsoup.connect(item.url).get()
-                val webtoonDetail: Elements = doc.select(".comicinfo")
-                val authors = webtoonDetail.select("div.detail span.wrt_nm").text().split("/").map { it.trim() }
-                val thumbnailImage = webtoonDetail.select(".thumb img").attr("src")
-                val genres = webtoonDetail.select(".detail_info .genre").text().split(",").map { it.trim() }
-                val summary = webtoonDetail.select("h2").next("p").text()
+        }
+        .flatten()
+        .fold(NaverWebtoonItems()) { acc, naverWebtoonItem -> acc.addItem(naverWebtoonItem); acc }
+        .setDetailEach { item ->
+            Thread.sleep(30)
+            val doc: Document = Jsoup.connect(item.url).get()
+            val webtoonDetail: Elements = doc.select(".comicinfo")
+            val authors = webtoonDetail.select("div.detail span.wrt_nm").text().split("/").map { it.trim() }
+            val thumbnailImage = webtoonDetail.select(".thumb img").attr("src")
+            val genres = webtoonDetail.select(".detail_info .genre").text().split(",").map { it.trim() }
+            val summary = webtoonDetail.select("h2").next("p").text()
 
-                item.putDetail(authors, thumbnailImage, genres, summary)
-                log.info("[NaverCrawlerService] $item")
-            }.toWebtoonImportRequests()
+            item.putDetail(authors, thumbnailImage, genres, summary)
+            log.info("[NaverCrawlerService] $item")
+        }.toWebtoonImportRequests()
+
+    fun crawlCompletedWebtoons(): List<WebtoonImportRequest> {
+        val doc: Document = Jsoup.connect("https://comic.naver.com/webtoon/finish.nhn").get()
+        val webtoons: Elements = doc.select(".list_area ul li")
+
+        val naverWebtoonItems = webtoons
+            .mapIndexed { index, it ->
+                val title = it.select("dl dt a").text()
+                val url = "https://comic.naver.com" + it.select("dl dt a").attr("href")
+                val score = it.select("dl .rating_type strong").text().toDouble()
+
+                val titleId = TITLE_ID_REGEX.find(url)!!.groupValues[1]
+                NaverWebtoonItem(titleId.toLong(), title, score, index, url, true)
+            }
+            .take(10)
+            .fold(NaverWebtoonItems()) { acc, naverWebtoonItem -> acc.addItem(naverWebtoonItem); acc }
+
+        return naverWebtoonItems.setDetailEach { item ->
+            Thread.sleep(30)
+            val doc: Document = Jsoup.connect(item.url).get()
+            val webtoonDetail: Elements = doc.select(".comicinfo")
+            val authors = webtoonDetail.select("div.detail span.wrt_nm").text().split("/").map { it.trim() }
+            val thumbnailImage = webtoonDetail.select(".thumb img").attr("src")
+            val genres = webtoonDetail.select(".detail_info .genre").text().split(",").map { it.trim() }
+            val summary = webtoonDetail.select("h2").next("p").text()
+
+            item.putDetail(authors, thumbnailImage, genres, summary)
+            log.info("[NaverCrawlerService] $item")
+        }.toWebtoonImportRequests()
     }
 
     class NaverWebtoonItems {
@@ -78,7 +103,7 @@ class NaverWebtoonCrawler() {
                     summary = it.summary,
                     // todo 백그라운드 색상, 연재중
                     backgroundColor = BackgroundColor.NONE,
-                    isComplete = false,
+                    isComplete = it.isComplete,
                 )
             }
         }
@@ -95,13 +120,22 @@ class NaverWebtoonCrawler() {
         }
     }
 
-    class NaverWebtoonItem(titleId: Long, title: String, weekday: String, score: Double, rank: Int, url: String) {
+    class NaverWebtoonItem(
+        titleId: Long,
+        title: String,
+        score: Double,
+        rank: Int,
+        url: String,
+        isComplete: Boolean,
+        weekday: String? = null
+    ) {
         val titleId: Long = titleId
         val title: String = title
-        val weekdays: MutableSet<String> = mutableSetOf(weekday)
         val score: Double = score
         val rank: Int = rank
         val url: String = url
+        val isComplete: Boolean = isComplete
+        val weekdays: MutableSet<String> = weekday?.let { mutableSetOf(it) } ?: mutableSetOf()
 
         // 상세정보는 상세페이지에서 처리
         lateinit var authors: List<String>
@@ -123,6 +157,8 @@ class NaverWebtoonCrawler() {
 
     companion object {
         val log = LoggerFactory.getLogger(NaverWebtoonCrawler::class.java)
+
         val WEEKDAYS = listOf("mon", "tue", "wed", "thu", "fri", "sat", "sun")
+        val TITLE_ID_REGEX = "titleId=(\\d*)".toRegex()
     }
 }

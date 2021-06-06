@@ -1,6 +1,6 @@
 package com.depromeet.webtoon.batch.job.naver
 
-import com.depromeet.webtoon.batch.job.naver.NaverWebtoonJobConfiguration.Companion.NAVER_WEBTOON_UPDATE_JOB
+import com.depromeet.webtoon.batch.job.naver.NaverOngoingWebtoonJobConfiguration.Companion.NAVER_WEBTOON_UPDATE_JOB
 import com.depromeet.webtoon.batch.support.ParamCleanRunIdIncrementer
 import com.depromeet.webtoon.core.application.imports.WebtoonImportService
 import com.depromeet.webtoon.crawl.crawler.naver.NaverWebtoonCrawler
@@ -18,13 +18,13 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConditionalOnProperty(name = ["job.name"], havingValue = NAVER_WEBTOON_UPDATE_JOB)
-class NaverWebtoonJobConfiguration(
+class NaverOngoingWebtoonJobConfiguration(
     val jobBuilderFactory: JobBuilderFactory,
     val stepBuilderFactory: StepBuilderFactory,
     val naverWebtoonCrawler: NaverWebtoonCrawler,
     val webtoonImportService: WebtoonImportService,
 ) {
-    private val log = LoggerFactory.getLogger(NaverWebtoonJobConfiguration::class.java)
+    private val log = LoggerFactory.getLogger(NaverOngoingWebtoonJobConfiguration::class.java)
 
     @Bean
     fun updateNaverWebtoons(
@@ -49,7 +49,7 @@ class NaverWebtoonJobConfiguration(
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(NaverWebtoonJobConfiguration::class.java)
+        private val log = LoggerFactory.getLogger(NaverOngoingWebtoonJobConfiguration::class.java)
         const val NAVER_WEBTOON_UPDATE_JOB = "naverWebtoonUpdateJob"
     }
 }
