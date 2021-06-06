@@ -1,8 +1,9 @@
 package com.depromeet.webtoon.api.webtoon
 
-import com.depromeet.webtoon.api.endpoint.comment.dto.CommentInfo
+import com.depromeet.webtoon.api.endpoint.comment.dto.CommentResponse
 import com.depromeet.webtoon.api.endpoint.comment.dto.CommentsResponse
 import com.depromeet.webtoon.core.domain.account.accountFixture
+import com.depromeet.webtoon.core.domain.account.dto.convertToAccountResponse
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
@@ -55,9 +56,9 @@ class CommentControllerTest(
                     CommentsResponse(
                         isLastComment = true,
                         lastCommentId = null,
-                        listOf(CommentInfo(
+                        listOf(CommentResponse(
                             comment.id!!,
-                            comment.nickname!!,
+                            comment.account.convertToAccountResponse(),
                             comment.content!!,
                             comment.modifiedAt!!.toLocalDate()
                         ))

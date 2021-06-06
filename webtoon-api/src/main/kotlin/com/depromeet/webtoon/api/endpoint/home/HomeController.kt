@@ -1,5 +1,6 @@
 package com.depromeet.webtoon.api.endpoint.home
 
+import com.depromeet.webtoon.api.common.swaggerannotation.SwaggerAuthApi
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.core.application.api.home.HomeApiService
 import com.depromeet.webtoon.core.application.api.home.dto.HomeApiRequest
@@ -17,14 +18,7 @@ import java.time.LocalDateTime
 class HomeController(val homeApiService: HomeApiService) {
 
     @GetMapping("/home")
-    @ApiImplicitParams(
-        ApiImplicitParam(name = "Authorization",
-            value = "authorization header",
-            required = true,
-            dataType = "string",
-            paramType = "header",
-            defaultValue = "Bearer testToken")
-    )
+    @SwaggerAuthApi
     fun home(
         @RequestParam(name = "baseDateTime", required = false)
         baseDateTime: LocalDateTime?

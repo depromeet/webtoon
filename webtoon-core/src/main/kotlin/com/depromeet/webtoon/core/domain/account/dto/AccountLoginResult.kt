@@ -6,11 +6,15 @@ import io.swagger.annotations.ApiModelProperty
 
 @ApiModel("사용자 정보")
 data class AccountLoginResult(
+    @ApiModelProperty("accountId")
+    val accountId: Long,
     @ApiModelProperty("닉네임")
     val nickname: String
 )
 
 // todo 하드코드로 넣는게 아니라 account 의 자동생성한 nickname 넣어줄것
 fun Account.convertToAccountLoginResult():AccountLoginResult{
-    return AccountLoginResult(nickname = "testNick")
+    return AccountLoginResult(
+        this.id!!,
+        nickname = "testNick")
 }

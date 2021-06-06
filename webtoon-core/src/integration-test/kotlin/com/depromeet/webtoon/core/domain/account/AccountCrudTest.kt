@@ -20,6 +20,7 @@ class AccountCrudTest(
             null,
             "testDevice",
             "testNick",
+            "profileImage",
             LocalDateTime.now(),
             LocalDateTime.now()
         )
@@ -37,6 +38,7 @@ class AccountCrudTest(
             null,
             "testDevice",
             "testNick",
+            "profileImage",
             LocalDateTime.now(),
             LocalDateTime.now()
         )
@@ -56,6 +58,7 @@ class AccountCrudTest(
             null,
             "testDevice",
             "testNick",
+            "profileImage",
             LocalDateTime.now(),
             LocalDateTime.now()
         )
@@ -77,6 +80,7 @@ class AccountCrudTest(
             null,
             "testDevice",
             "testNick",
+            "profileImage",
             LocalDateTime.now(),
             LocalDateTime.now()
         )

@@ -25,7 +25,7 @@ import java.util.Optional;
 
 // 테스트를 위해 크롤링하여 데이터 삽입하는 환경 구성
 @Component
-@Profile("webtoon-local-test")
+@Profile("webtoon-core-local")
 public class SampleRunner implements ApplicationRunner {
 
     @Autowired
@@ -58,23 +58,21 @@ public class SampleRunner implements ApplicationRunner {
 
         Optional<Webtoon> webtoon = webtoonRepository.findById(1l);
 
-        Account account = new Account(null, "testDeviceId", "tester", LocalDateTime.now(), LocalDateTime.now());
+        Account account = new Account(null, "testDeviceId", "tester", "", LocalDateTime.now(), LocalDateTime.now());
         accountRepository.save(account);
 
-        Account account2 = new Account(null, "testDeviceId2", "tester2", LocalDateTime.now(), LocalDateTime.now());
+        Account account2 = new Account(null, "testDeviceId2", "tester2", "image", LocalDateTime.now(), LocalDateTime.now());
         accountRepository.save(account2);
 
-        Account account3 = new Account(null, "testDeviceId3", "tester3", LocalDateTime.now(), LocalDateTime.now());
+        Account account3 = new Account(null, "testDeviceId3", "tester3", "", LocalDateTime.now(), LocalDateTime.now());
         accountRepository.save(account3);
 
-        Account account4 = new Account(null, "testDeviceId4", "tester4", LocalDateTime.now(), LocalDateTime.now());
+        Account account4 = new Account(null, "testDeviceId4", "tester4", "",LocalDateTime.now(), LocalDateTime.now());
         accountRepository.save(account4);
 
-        Account account5 = new Account(null, "testDeviceId5", "tester5", LocalDateTime.now(), LocalDateTime.now());
+        Account account5 = new Account(null, "testDeviceId5", "tester5", "iamge",LocalDateTime.now(), LocalDateTime.now());
         accountRepository.save(account5);
 
-        Account account6 = new Account(null, "testDeviceId6", "tester6", LocalDateTime.now(), LocalDateTime.now());
-        accountRepository.save(account6);
 
 
         Rating rating = new Rating(null, webtoon.get(), account, 3.0, 5.0, LocalDateTime.now(), LocalDateTime.now());
@@ -98,8 +96,7 @@ public class SampleRunner implements ApplicationRunner {
         Comment comment5 = new Comment(null, "재밌네요5", account5, webtoon.get(), account.getNickname(), LocalDateTime.now(), LocalDateTime.now());
         commentRepository.save(comment5);
         Thread.sleep(1000);
-        Comment comment6 = new Comment(null, "재밌네요6", account6, webtoon.get(), account.getNickname(), LocalDateTime.now(), LocalDateTime.now());
-        commentRepository.save(comment6);
+
 
 
 

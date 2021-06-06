@@ -1,5 +1,7 @@
 package com.depromeet.webtoon.api.endpoint.comment.dto
 
+import com.depromeet.webtoon.core.domain.account.dto.AccountResponse
+import com.depromeet.webtoon.core.domain.account.dto.convertToAccountResponse
 import com.depromeet.webtoon.core.domain.comment.model.Comment
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
@@ -12,34 +14,32 @@ data class CommentsResponse(
     @ApiModelProperty("마지막 댓글 ID")
     val lastCommentId: Long?,
     @ApiModelProperty("댓글")
-    val commentInfo: List<CommentInfo>,
+    val commentResponse: List<CommentResponse>?,
 )
 
-// todo commentResponse
-data class CommentInfo(
+data class CommentResponse(
     @ApiModelProperty("댓글 Id")
     val commentId: Long,
-    // todo 작성자 관련 정보는 따로 (accountResponse - 닉네임, id, 사진)
-    @ApiModelProperty("작성자 닉네임")
-    val nickname: String,
+    @ApiModelProperty("작성자 정보")
+    val account: AccountResponse,
     @ApiModelProperty("댓글 내용")
     val content: String,
     @ApiModelProperty("작성 날짜")
     val writeDate: LocalDate,
 )
 
-fun convertToCommentsResponse(comments: List<Comment>, lastCommentId: Long?) :CommentsResponse{
+fun convertToCommentsResponse(comments: List<Comment>?, lastCommentId: Long?) :CommentsResponse{
     if(lastCommentId == null){
         return CommentsResponse(
             isLastComment = true,
             lastCommentId = null,
-            commentInfo = comments.map { CommentInfo(it.id!!, it.nickname!!, it.content!!, it.modifiedAt!!.toLocalDate()) }
+            commentResponse = comments?.map { CommentResponse(it.id!!, it.account.convertToAccountResponse(), it.content!!, it.modifiedAt!!.toLocalDate()) }
         )
     } else {
         return CommentsResponse(
             isLastComment = false,
             lastCommentId = lastCommentId,
-            commentInfo = comments.map { CommentInfo(it.id!!, it.nickname!!, it.content!!, it.modifiedAt!!.toLocalDate()) }
+            commentResponse = comments?.map { CommentResponse(it.id!!, it.account.convertToAccountResponse(), it.content!!, it.modifiedAt!!.toLocalDate()) }
         )
     }
 }

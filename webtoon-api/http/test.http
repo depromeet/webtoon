@@ -7,7 +7,7 @@ POST {{webtoonApi}}/api/v1/login
 Content-Type: application/json
 
 {
-    "loginToken": "testToken"
+    "loginToken": "testToken1"
 }
 
 ###

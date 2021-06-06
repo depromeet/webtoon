@@ -10,7 +10,6 @@ import com.depromeet.webtoon.core.domain.rating.webtoonRatingAverageFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.exceptions.ApiValidationException
-import com.depromeet.webtoon.core.type.BackgroundColor
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -73,7 +72,7 @@ class WebtoonDetailServiceTest : FunSpec({
             webtoonDetail.data!!.toonieScore.storyScore.shouldBe(ratingAverage.storyAverage)
             webtoonDetail.data!!.toonieScore.drawingScore.shouldBe(ratingAverage.drawingAverage)
             webtoonDetail.data!!.webtoon.authors.size.shouldBe(1)
-            webtoonDetail.data!!.comments.size.shouldBe(1)
+            webtoonDetail.data!!.comments!!.size.shouldBe(1)
         }
 
         test("getWebtoonDetail 존재하지 않는 웹툰 id") {
@@ -110,7 +109,7 @@ class WebtoonDetailServiceTest : FunSpec({
             webtoonDetail.data!!.toonieScore.totalScore.shouldBe(0.0)
             webtoonDetail.data!!.toonieScore.storyScore.shouldBe(0.0)
             webtoonDetail.data!!.toonieScore.drawingScore.shouldBe(0.0)
-            webtoonDetail.data!!.comments.size.shouldBe(1)
+            webtoonDetail.data!!.comments!!.size.shouldBe(1)
         }
 
         test("getWebtoonDetail 웹툰에 대한 댓글이 없는 경우"){
@@ -139,7 +138,7 @@ class WebtoonDetailServiceTest : FunSpec({
             webtoonDetail.data!!.toonieScore.storyScore.shouldBe(ratingAverage.storyAverage)
             webtoonDetail.data!!.toonieScore.drawingScore.shouldBe(ratingAverage.drawingAverage)
             webtoonDetail.data!!.webtoon.authors.size.shouldBe(1)
-            webtoonDetail.data!!.comments.size.shouldBe(0)
+            webtoonDetail.data!!.comments!!.size.shouldBe(0)
 
         }
 
