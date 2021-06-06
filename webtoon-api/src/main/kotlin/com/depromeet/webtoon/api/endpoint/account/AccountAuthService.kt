@@ -1,8 +1,7 @@
 package com.depromeet.webtoon.api.endpoint.account
 
-import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
-import com.depromeet.webtoon.core.domain.account.dto.AccountLoginResult
-import com.depromeet.webtoon.core.domain.account.dto.convertToAccountLoginResult
+import com.depromeet.webtoon.core.domain.account.dto.AccountResponse
+import com.depromeet.webtoon.core.domain.account.dto.convertToAccountResponse
 import com.depromeet.webtoon.core.domain.account.model.Account
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import org.springframework.stereotype.Service
@@ -11,10 +10,9 @@ import org.springframework.stereotype.Service
 class AccountAuthService(
     val accountRepository: AccountRepository,
 ) {
-    fun loginAccount(loginToken: String):ApiResponse<AccountLoginResult> {
+    fun loginAccount(loginToken: String) :AccountResponse {
 
-        // todo nickname 랜덤 생성구현
-        return ApiResponse.ok(createOrFindAccount(loginToken).convertToAccountLoginResult())
+        return createOrFindAccount(loginToken).convertToAccountResponse()
     }
 
     private fun createOrFindAccount(loginToken: String): Account {
