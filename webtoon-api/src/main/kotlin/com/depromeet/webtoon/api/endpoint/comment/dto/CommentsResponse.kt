@@ -15,9 +15,11 @@ data class CommentsResponse(
     val commentInfo: List<CommentInfo>,
 )
 
+// todo commentResponse
 data class CommentInfo(
     @ApiModelProperty("댓글 Id")
     val commentId: Long,
+    // todo 작성자 관련 정보는 따로 (accountResponse - 닉네임, id, 사진)
     @ApiModelProperty("작성자 닉네임")
     val nickname: String,
     @ApiModelProperty("댓글 내용")

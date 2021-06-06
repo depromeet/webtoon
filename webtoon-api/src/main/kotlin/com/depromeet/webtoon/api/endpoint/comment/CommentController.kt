@@ -28,6 +28,7 @@ class CommentController(
 
     @GetMapping("/list")
     @SwaggerGetComments
+    //todo default pageSize 20
     fun getComments(@RequestParam webtoonId: Long, commentId: Long?, pageSize: Long): ApiResponse<CommentsResponse> {
         return commentService.getComments(webtoonId, commentId, pageSize)
     }

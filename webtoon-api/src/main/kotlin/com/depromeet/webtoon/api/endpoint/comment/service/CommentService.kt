@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class CommentService (val commentRepository: CommentRepository) {
 
+    // todo ApiResopnse 웹 관련은 controller 로 빼는게 좋다.
     fun getComments(webtoonId: Long, commentId: Long?, pageSize: Long): ApiResponse<CommentsResponse>{
         val comments = commentRepository.getComments(webtoonId, commentId, pageSize)
         return if(comments[comments.size-1].id == 1L){
