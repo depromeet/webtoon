@@ -1,5 +1,6 @@
 dependencies {
     implementation(project(":webtoon-core"))
+    implementation(project(":webtoon-crawler"))
     implementation("org.springframework.boot:spring-boot-starter-batch")
 }
 tasks.jar {

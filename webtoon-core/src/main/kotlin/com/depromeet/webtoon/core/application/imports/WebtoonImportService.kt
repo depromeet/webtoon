@@ -1,6 +1,6 @@
 package com.depromeet.webtoon.core.application.imports
 
-import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
+import com.depromeet.webtoon.common.dto.imports.WebtoonImportRequest
 import com.depromeet.webtoon.core.domain.author.model.Author
 import com.depromeet.webtoon.core.domain.author.service.AuthorService
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonUpsertRequest

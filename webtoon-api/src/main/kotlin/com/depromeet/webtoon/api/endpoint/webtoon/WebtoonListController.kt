@@ -7,13 +7,13 @@ import com.depromeet.webtoon.api.endpoint.dto.WebtoonSearchResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonWeekDayResponse
 import com.depromeet.webtoon.api.endpoint.webtoon.dto.AuthorWebtoonResponse
 import com.depromeet.webtoon.api.endpoint.webtoon.service.AuthorWebtoonService
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
 import com.depromeet.webtoon.core.domain.webtoon.dto.RandomWebtoonsResponse
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonTop20Response
 import com.depromeet.webtoon.core.domain.webtoon.dto.convertToRandomWebtoonsResponse
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonSearchService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
-import com.depromeet.webtoon.core.type.WeekDay
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiParam
 import org.slf4j.LoggerFactory
@@ -35,7 +35,7 @@ class WebtoonListController(
 
     @GetMapping("/random")
     @SwaggerAuthApi
-    fun findRandom20Webtoons(): ApiResponse<RandomWebtoonsResponse>{
+    fun findRandom20Webtoons(): ApiResponse<RandomWebtoonsResponse> {
         log.info("[WebtoonListController] - findRandom20Webtoons")
         return ok(webtoonService.getRandomWebtoons().convertToRandomWebtoonsResponse())
     }

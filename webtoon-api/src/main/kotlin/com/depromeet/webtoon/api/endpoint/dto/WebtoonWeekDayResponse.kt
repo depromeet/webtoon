@@ -1,7 +1,7 @@
 package com.depromeet.webtoon.api.endpoint.dto
 
+import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.core.application.api.dto.WebtoonResponse
-import com.depromeet.webtoon.core.type.WebtoonSite
 
 data class WebtoonWeekDayResponse(
     val sites: List<Site> = Site.allSites(),
