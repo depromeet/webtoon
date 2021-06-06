@@ -44,4 +44,14 @@ interface WebtoonRepository : JpaRepository<Webtoon, Long>, WebtoonCustomReposit
         nativeQuery = true
     )
     fun findRandomWebtoons():List<Webtoon>
+
+    @Query(
+        """
+            select * from webtoon w
+            order by rand()
+            limit 20
+        """,
+        nativeQuery = true
+    )
+    fun find20RandomWebtoons():List<Webtoon>
 }

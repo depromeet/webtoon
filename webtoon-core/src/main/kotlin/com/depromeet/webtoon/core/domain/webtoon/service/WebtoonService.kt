@@ -1,6 +1,5 @@
 package com.depromeet.webtoon.core.domain.webtoon.service
 
-import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponse
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateRequest
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateResponseDto
@@ -89,6 +88,10 @@ class WebtoonService(
                 webtoonRepository.save(it)
             }
         }
+    }
+
+    fun getRandomWebtoons(): List<Webtoon> {
+        return webtoonRepository.find20RandomWebtoons()
     }
 
 

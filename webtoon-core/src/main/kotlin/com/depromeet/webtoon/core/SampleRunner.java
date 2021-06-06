@@ -73,7 +73,7 @@ public class SampleRunner implements ApplicationRunner {
         Account account5 = new Account(null, "testDeviceId5", "tester5", LocalDateTime.now(), LocalDateTime.now());
         accountRepository.save(account5);
 
-        Account account6 = new Account(null, "testDeviceId6", "tester6", LocalDateTime.now(), LocalDateTime.now());
+        Account account6 = new Account(null, "testToken", "tester6", LocalDateTime.now(), LocalDateTime.now());
         accountRepository.save(account6);
 
 
