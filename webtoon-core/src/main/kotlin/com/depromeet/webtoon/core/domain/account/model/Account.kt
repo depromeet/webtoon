@@ -19,6 +19,7 @@ class Account(
     id: Long? = null,
     authToken: String = "",
     nickname: String = "",
+    profileImage: String = "",
     createdAt: LocalDateTime? = null,
     modifiedAt: LocalDateTime? = null,
 
@@ -30,6 +31,8 @@ class Account(
     var authToken: String = authToken
 
     var nickname: String = nickname
+
+    var profileImage: String = profileImage
 
     @CreatedDate
     var createdAt: LocalDateTime? = createdAt

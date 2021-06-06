@@ -8,6 +8,7 @@ import com.depromeet.webtoon.api.endpoint.comment.dto.UpdateCommentRequest
 import com.depromeet.webtoon.api.endpoint.comment.service.CommentImportService
 import com.depromeet.webtoon.api.endpoint.comment.service.CommentService
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
+import com.depromeet.webtoon.api.endpoint.dto.ApiResponse.Companion.ok
 import io.swagger.annotations.Api
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -28,29 +29,30 @@ class CommentController(
 
     @GetMapping("/list")
     @SwaggerGetComments
-    //todo default pageSize 20
-    fun getComments(@RequestParam webtoonId: Long, commentId: Long?, pageSize: Long): ApiResponse<CommentsResponse> {
-        return commentService.getComments(webtoonId, commentId, pageSize)
+    fun getComments(@RequestParam webtoonId: Long,
+                    @RequestParam offsetCommentId: Long?,
+                    @RequestParam(defaultValue = "20") pageSize: Long): ApiResponse<CommentsResponse> {
+        return ok(commentService.getComments(webtoonId, offsetCommentId, pageSize))
     }
 
     @PostMapping
     @SwaggerAuthApi
     fun createComment(@RequestBody createRequest: CreateCommentRequest): ApiResponse<String> {
         commentImportService.createComment(createRequest)
-        return ApiResponse.ok("정상적으로 댓글이 작성되었습니다.")
+        return ok("정상적으로 댓글이 작성되었습니다.")
     }
 
     @PatchMapping
     @SwaggerAuthApi
     fun updateComment(@RequestBody updateRequest: UpdateCommentRequest): ApiResponse<String>{
         commentImportService.updateComment(updateRequest)
-        return ApiResponse.ok("정상적으로 댓글이 수정되었습니다.")
+        return ok("정상적으로 댓글이 수정되었습니다.")
     }
 
     @DeleteMapping
     @SwaggerAuthApi
     fun deleteComment(@RequestParam commentId: Long): ApiResponse<String> {
        commentImportService.deleteComment(commentId)
-        return ApiResponse.ok("정상적으로 댓글이 삭제되었습니다.")
+        return ok("정상적으로 댓글이 삭제되었습니다.")
     }
 }

@@ -29,21 +29,21 @@ class WebtoonDetailService(
             throw ApiValidationException("잘못된 웹툰 ID 입니다")
         }
 
-        val ratingInfo = webtoonRatingAverageRepository.findByWebtoon(foundWebtoon.get())
+        val rating = webtoonRatingAverageRepository.findByWebtoon(foundWebtoon.get())
 
-        val commentInfo = commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(foundWebtoon.get())
+        val comments = commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(foundWebtoon.get())
 
         val randomWebtoons = webtoonRepository.findRandomWebtoons()
 
-        if (ratingInfo != null) {
+        if (rating != null) {
             val webtoonDetailResponse = convertToWebtoonDetailResponse(
                 foundWebtoon.get().convertToWebtoonResponse(),
                 ScoreDto(
-                    ratingInfo.totalAverage,
-                    ratingInfo.storyAverage,
-                    ratingInfo.drawingAverage
+                    rating.totalAverage,
+                    rating.storyAverage,
+                    rating.drawingAverage
                 ),
-                commentInfo!!.map { CommentDto(it.content, it.nickname) },
+                comments,
                 randomWebtoons
             )
             log.info("[WebtoonDetailService - getWebtoonDetail] webtoon[${id}] rating not exist")
@@ -56,7 +56,7 @@ class WebtoonDetailService(
                     0.0,
                     0.0
                 ),
-                commentInfo!!.map { CommentDto(it.content, it.nickname) },
+                comments,
                 randomWebtoons
             )
             log.info("[WebtoonDetailService - getWebtoonDetail] webtoon[${id}] rating exist")
