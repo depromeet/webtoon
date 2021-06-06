@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service
 @Service
 class AuthorWebtoonService(
     val authorRepository: AuthorRepository,
-    val webtoonRepository: WebtoonRepository)
-{
+    val webtoonRepository: WebtoonRepository
+) {
     fun getAuthorWebtoons(authorId: Long): ApiResponse<AuthorWebtoonResponse> {
         val optionalAuthor = authorRepository.findById(authorId)
         optionalAuthor.orElseThrow { ApiValidationException("잘못된 작가 ID 입니다") }
@@ -20,6 +20,5 @@ class AuthorWebtoonService(
         val webtoons = webtoonRepository.findByAuthors(author)
         val authorWebtoonResponse = convertToAuthorWebtoonResponse(author.name, webtoons)
         return ApiResponse.ok(authorWebtoonResponse)
-
     }
 }

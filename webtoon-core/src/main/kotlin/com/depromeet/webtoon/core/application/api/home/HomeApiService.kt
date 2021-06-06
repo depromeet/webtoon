@@ -1,5 +1,6 @@
 package com.depromeet.webtoon.core.application.api.home
 
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
 import com.depromeet.webtoon.core.application.api.home.dto.HomeApiRequest
 import com.depromeet.webtoon.core.application.api.home.dto.HomeApiResponse
@@ -8,7 +9,6 @@ import com.depromeet.webtoon.core.domain.banner.dto.SearchBannerRequest
 import com.depromeet.webtoon.core.domain.banner.model.BannerInventory
 import com.depromeet.webtoon.core.domain.banner.service.BannerService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
-import com.depromeet.webtoon.core.type.WeekDay
 import org.springframework.stereotype.Service
 
 @Service

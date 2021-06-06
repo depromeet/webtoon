@@ -1,11 +1,11 @@
 package com.depromeet.webtoon.core.crawl.daum
 
+import com.depromeet.webtoon.common.dto.imports.WebtoonImportRequest
+import com.depromeet.webtoon.common.type.BackgroundColor
+import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.application.imports.WebtoonImportService
-import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.WebtoonWeeks
-import com.depromeet.webtoon.core.type.BackgroundColor
-import com.depromeet.webtoon.core.type.WebtoonSite
-import com.depromeet.webtoon.core.type.WeekDay
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -16,7 +16,7 @@ class DaumCrawlerService(
     val fetchService: DaumCrawlerFetchService
 ) {
 
-    fun updateCompletedDaumWebtoons(){
+    fun updateCompletedDaumWebtoons() {
         val completedWebtoons = fetchService.crawlCompletedWebtoonNicknames()
             .map { fetchService.crawlCompletedWebtoonDetail(it) }
 
@@ -38,8 +38,6 @@ class DaumCrawlerService(
         }
 
         completeWebtoonImportRequests.map { webtoonImportService.importWebtoon(it) }
-
-
     }
 
     fun updateDaumWebtoons() {
@@ -49,7 +47,7 @@ class DaumCrawlerService(
         val webtoonImportRequests = updatedWebtoons.mapIndexed { idx, crawled ->
             WebtoonImportRequest(
                 crawled!!.data.webtoon.title,
-                DAUM_WEBTOON_URL+crawled.data.webtoon.nickname,
+                DAUM_WEBTOON_URL + crawled.data.webtoon.nickname,
                 crawled.data.webtoon.thumbnailImage2.url,
                 setDayOfWeek(crawled.data.webtoon.webtoonWeeks!!),
                 crawled.data.webtoon.cartoon.artists.map { it.name }.distinct(),

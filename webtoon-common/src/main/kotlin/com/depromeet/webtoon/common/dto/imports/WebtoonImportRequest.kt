@@ -1,8 +1,8 @@
-package com.depromeet.webtoon.core.application.imports.dto
+package com.depromeet.webtoon.common.dto.imports
 
-import com.depromeet.webtoon.core.type.BackgroundColor
-import com.depromeet.webtoon.core.type.WebtoonSite
-import com.depromeet.webtoon.core.type.WeekDay
+import com.depromeet.webtoon.common.type.BackgroundColor
+import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 
 data class WebtoonImportRequest(
     val title: String,

@@ -1,7 +1,7 @@
 package com.depromeet.webtoon.core.domain.webtoon.dto
 
+import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.core.domain.author.model.Author
-import com.depromeet.webtoon.core.type.WebtoonSite
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotEmpty
 

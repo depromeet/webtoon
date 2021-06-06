@@ -1,7 +1,10 @@
 package com.depromeet.webtoon.core.crawl.daum
 
+import com.depromeet.webtoon.common.dto.imports.WebtoonImportRequest
+import com.depromeet.webtoon.common.type.BackgroundColor
+import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.application.imports.WebtoonImportService
-import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.Cartoon
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.Data
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.DaumWebtoonDetailCrawlResult
@@ -9,9 +12,6 @@ import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.ThumbnailImage2
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.Webtoon
 import com.depromeet.webtoon.core.crawl.daum.dto.webtoondetail.WebtoonWeeks
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
-import com.depromeet.webtoon.core.type.BackgroundColor
-import com.depromeet.webtoon.core.type.WebtoonSite
-import com.depromeet.webtoon.core.type.WeekDay
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -36,9 +36,11 @@ class DaumCrawlerServiceTest : FunSpec({
             DaumWebtoonDetailCrawlResult(
                 Data(
                     Webtoon(
-                        "testTitle", "nick", Cartoon(
+                        "testTitle", "nick",
+                        Cartoon(
                             emptyList(), emptyList()
-                        ), ThumbnailImage2("thumbnail"), listOf(WebtoonWeeks("mon")), 5.0, "줄거리"
+                        ),
+                        ThumbnailImage2("thumbnail"), listOf(WebtoonWeeks("mon")), 5.0, "줄거리"
                     )
                 )
             )
@@ -66,9 +68,8 @@ class DaumCrawlerServiceTest : FunSpec({
 
         // then
         verify(exactly = 1) { fetchService.crawlCompletedWebtoonNicknames() }
-        verify(exactly = 1) { fetchService.crawlCompletedWebtoonDetail(detailResult.data.webtoon.title)}
+        verify(exactly = 1) { fetchService.crawlCompletedWebtoonDetail(detailResult.data.webtoon.title) }
         verify(exactly = 1) { webtoonImportService.importWebtoon(webtoonImportRequest) }
-
     }
 
     test("[DaumCrawlerService] - crawlSortedWebtoonNicknames()") {
@@ -95,9 +96,11 @@ class DaumCrawlerServiceTest : FunSpec({
             DaumWebtoonDetailCrawlResult(
                 Data(
                     Webtoon(
-                        "testTitle", "nick", Cartoon(
+                        "testTitle", "nick",
+                        Cartoon(
                             emptyList(), emptyList()
-                        ), ThumbnailImage2("thumbnail"), listOf(WebtoonWeeks("mon")), 5.0, "줄거리"
+                        ),
+                        ThumbnailImage2("thumbnail"), listOf(WebtoonWeeks("mon")), 5.0, "줄거리"
                     )
                 )
             )
@@ -130,5 +133,4 @@ class DaumCrawlerServiceTest : FunSpec({
         verify(exactly = 1) { fetchService.crawlWebtoonDetail("nick") }
         verify(exactly = 1) { webtoonImportService.importWebtoon(webtoonImportRequest) }
     }
-
 })

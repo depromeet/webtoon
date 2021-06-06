@@ -1,5 +1,6 @@
 package com.depromeet.webtoon.core.domain.rating
 
+import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.depromeet.webtoon.core.domain.author.authorFixture
@@ -8,7 +9,6 @@ import com.depromeet.webtoon.core.domain.rating.model.Rating
 import com.depromeet.webtoon.core.domain.rating.repository.RatingRepository
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
-import com.depromeet.webtoon.core.type.WebtoonSite
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull

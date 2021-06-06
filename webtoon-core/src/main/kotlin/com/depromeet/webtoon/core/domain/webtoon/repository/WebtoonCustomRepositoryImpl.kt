@@ -1,9 +1,8 @@
 package com.depromeet.webtoon.core.domain.webtoon.repository
 
-import com.depromeet.webtoon.core.domain.webtoon.model.QWebtoon
+import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.core.domain.webtoon.model.QWebtoon.webtoon
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
-import com.depromeet.webtoon.core.type.WebtoonSite
 import com.querydsl.core.BooleanBuilder
 import com.querydsl.core.types.Predicate
 import com.querydsl.jpa.impl.JPAQueryFactory
@@ -13,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 
 @Transactional
-class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRepository, QuerydslRepositorySupport(Webtoon::class.java) {
+class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRepository,
+    QuerydslRepositorySupport(Webtoon::class.java) {
 
     private val query = JPAQueryFactory(entityManger)
-
 
     override fun get_Top10_Naver_Webtoons_ByGenre(genre: String): List<Webtoon> {
         return query
@@ -38,14 +37,14 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
             .fetch()
     }
 
-    override fun genreRecommendWebtoon(random: Long, genres: String):Webtoon? {
+    override fun genreRecommendWebtoon(random: Long, genres: String): Webtoon? {
         val dynamicSite = BooleanBuilder()
         // 두가지 사이트를 섞어서 보여주기 위함
-        if(random.toInt() % 2 == 0){
+        if (random.toInt() % 2 == 0) {
             dynamicSite.and(webtoon.site.eq(WebtoonSite.NAVER))
-        } else(
+        } else (
             dynamicSite.and(webtoon.site.eq(WebtoonSite.DAUM))
-        )
+            )
 
         return query
             .selectFrom(webtoon)
@@ -57,8 +56,11 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
     }
 
     private fun webtoonGenreEq(genres: String): Predicate? {
-        if(genres == "순정"){
-            return (webtoon.genres.contains("로맨스").and(webtoon.genres.contains("스토리"))).or(webtoon.genres.contains("순정"))
+        if (genres == "순정") {
+            return (
+                webtoon.genres.contains("로맨스")
+                    .and(webtoon.genres.contains("스토리"))
+                ).or(webtoon.genres.contains("순정"))
         } else {
             return webtoon.genres.contains(genres)
         }

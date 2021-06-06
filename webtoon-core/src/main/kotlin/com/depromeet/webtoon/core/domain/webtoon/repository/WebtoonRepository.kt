@@ -1,9 +1,9 @@
 package com.depromeet.webtoon.core.domain.webtoon.repository
 
+import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.author.model.Author
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
-import com.depromeet.webtoon.core.type.WebtoonSite
-import com.depromeet.webtoon.core.type.WeekDay
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -29,7 +29,6 @@ interface WebtoonRepository : JpaRepository<Webtoon, Long>, WebtoonCustomReposit
     )
     fun searchByQuery(text: String): List<Webtoon>
 
-
     fun findTop10ByGenresInAndSiteOrderByScoreDesc(
         genres: List<String>,
         site: WebtoonSite
@@ -43,7 +42,7 @@ interface WebtoonRepository : JpaRepository<Webtoon, Long>, WebtoonCustomReposit
         """,
         nativeQuery = true
     )
-    fun findRandomWebtoons():List<Webtoon>
+    fun findRandomWebtoons(): List<Webtoon>
 
     @Query(
         """
@@ -53,5 +52,5 @@ interface WebtoonRepository : JpaRepository<Webtoon, Long>, WebtoonCustomReposit
         """,
         nativeQuery = true
     )
-    fun find20RandomWebtoons():List<Webtoon>
+    fun find20RandomWebtoons(): List<Webtoon>
 }

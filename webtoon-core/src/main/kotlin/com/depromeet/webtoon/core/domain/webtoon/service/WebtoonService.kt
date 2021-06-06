@@ -1,5 +1,6 @@
 package com.depromeet.webtoon.core.domain.webtoon.service
 
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateRequest
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateResponseDto
@@ -8,7 +9,6 @@ import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonUpsertRequest
 import com.depromeet.webtoon.core.domain.webtoon.dto.toWebtoonCreateResponseDto
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
-import com.depromeet.webtoon.core.type.WeekDay
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -93,6 +93,4 @@ class WebtoonService(
     fun getRandomWebtoons(): List<Webtoon> {
         return webtoonRepository.find20RandomWebtoons()
     }
-
-
 }

@@ -1,8 +1,8 @@
 package com.depromeet.webtoon.core.application.api.dto
 
+import com.depromeet.webtoon.common.type.BackgroundColor
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
-import com.depromeet.webtoon.core.type.BackgroundColor
-import com.depromeet.webtoon.core.type.WeekDay
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 

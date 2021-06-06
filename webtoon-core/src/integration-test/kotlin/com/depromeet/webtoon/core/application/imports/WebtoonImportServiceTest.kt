@@ -1,7 +1,8 @@
 package com.depromeet.webtoon.core.application.imports
 
-import com.depromeet.webtoon.core.type.WebtoonSite
-import com.depromeet.webtoon.core.type.WeekDay
+import com.depromeet.webtoon.common.dto.imports.webtoonImportRequestFixture
+import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

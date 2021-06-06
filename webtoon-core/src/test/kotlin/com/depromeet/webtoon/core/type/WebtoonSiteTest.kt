@@ -1,5 +1,6 @@
 package com.depromeet.webtoon.core.type
 
+import com.depromeet.webtoon.common.type.WebtoonSite
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldNotContain
 import io.kotest.matchers.shouldBe

@@ -1,9 +1,9 @@
 package com.depromeet.webtoon.core.domain.webtoon.model
 
+import com.depromeet.webtoon.common.type.BackgroundColor
+import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.model.Author
-import com.depromeet.webtoon.core.type.BackgroundColor
-import com.depromeet.webtoon.core.type.WebtoonSite
 import java.time.LocalDateTime
 
 fun webtoonFixture(

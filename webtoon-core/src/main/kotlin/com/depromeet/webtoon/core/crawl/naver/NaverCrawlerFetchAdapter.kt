@@ -1,10 +1,10 @@
 package com.depromeet.webtoon.core.crawl.naver
 
-import com.depromeet.webtoon.core.application.imports.dto.WebtoonImportRequest
+import com.depromeet.webtoon.common.dto.imports.WebtoonImportRequest
+import com.depromeet.webtoon.common.type.BackgroundColor
+import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.crawl.daum.DaumCrawlerService
-import com.depromeet.webtoon.core.type.BackgroundColor
-import com.depromeet.webtoon.core.type.WebtoonSite
-import com.depromeet.webtoon.core.type.WeekDay
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
@@ -80,7 +80,7 @@ class NaverCrawlerFetchAdapter() {
                     // todo 백그라운드 색상, 연재중
                     backgroundColor = BackgroundColor.NONE,
                     isComplete = false,
-                 )
+                )
             }
         }
 

@@ -1,11 +1,11 @@
 package com.depromeet.webtoon.core.domain.webtoon
 
+import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateRequest
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
-import com.depromeet.webtoon.core.type.WebtoonSite
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.mockk.every
