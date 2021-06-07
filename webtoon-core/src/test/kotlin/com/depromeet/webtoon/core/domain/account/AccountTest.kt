@@ -10,6 +10,7 @@ class AccountTest: FunSpec ({
             val account = accountFixture(nickname = "")
             account.generateNickname()
             account.nickname.shouldNotBe("")
+            println(account.nickname)
         }
     }
 })
