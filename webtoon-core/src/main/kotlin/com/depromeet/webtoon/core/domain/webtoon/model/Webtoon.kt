@@ -1,10 +1,9 @@
 package com.depromeet.webtoon.core.domain.webtoon.model
 
+import com.depromeet.webtoon.common.type.BackgroundColor
+import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.author.model.Author
-import com.depromeet.webtoon.core.type.BackgroundColor
-import com.depromeet.webtoon.core.type.WebtoonSite
-import com.depromeet.webtoon.core.type.WebtoonSite.NONE
-import com.depromeet.webtoon.core.type.WeekDay
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -29,7 +28,7 @@ import javax.persistence.ManyToMany
 class Webtoon constructor(
     id: Long? = null,
     title: String = "",
-    site: WebtoonSite = NONE,
+    site: WebtoonSite = WebtoonSite.NONE,
     url: String = "",
     authors: List<Author> = mutableListOf(),
     weekdays: List<WeekDay> = mutableListOf(),
@@ -90,7 +89,6 @@ class Webtoon constructor(
     @CollectionTable(name = "webtoon_genre", joinColumns = [JoinColumn(name = "webtoon_id")])
     @Column(name = "genre")
     var genres: MutableList<String> = genres as MutableList<String>
-
 
     @Column(name = "background_color")
     @Enumerated(EnumType.STRING)

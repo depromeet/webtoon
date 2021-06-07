@@ -1,9 +1,9 @@
 package com.depromeet.webtoon.core.domain.webtoon.dto
 
+import com.depromeet.webtoon.common.type.BackgroundColor
+import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.author.model.Author
-import com.depromeet.webtoon.core.type.BackgroundColor
-import com.depromeet.webtoon.core.type.WebtoonSite
-import com.depromeet.webtoon.core.type.WeekDay
 
 data class WebtoonUpsertRequest(
     val title: String,
