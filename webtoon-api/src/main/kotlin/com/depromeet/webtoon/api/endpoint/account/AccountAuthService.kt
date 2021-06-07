@@ -25,7 +25,14 @@ class AccountAuthService(
 
     private fun createAccount(deviceId: String): Account {
         val newAccount = Account(authToken = deviceId)
-        return accountRepository.save(newAccount)
+        return createNoDuplicatedNicknameAccount(newAccount)
+    }
+
+    private fun createNoDuplicatedNicknameAccount(newAccount: Account):Account {
+        val createdAccount = accountRepository.save(newAccount)
+        createdAccount.generateNickname()
+        createdAccount.nickname += "#${newAccount.id.toString()}"
+        return accountRepository.save(createdAccount)
     }
 
 }
