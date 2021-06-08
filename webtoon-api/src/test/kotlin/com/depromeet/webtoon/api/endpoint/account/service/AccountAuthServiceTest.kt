@@ -49,7 +49,7 @@ class AccountAuthServiceTest: FunSpec ({
 
             // then
             verify(exactly = 1) {accountRepository.findByAuthToken("testToken")}
-            verify(exactly = -1) { accountNicknameGenerator.saveAccountWithGeneratedNickname(any()) }
+            verify(exactly = 0) { accountNicknameGenerator.saveAccountWithGeneratedNickname(any()) }
 
         }
     }
