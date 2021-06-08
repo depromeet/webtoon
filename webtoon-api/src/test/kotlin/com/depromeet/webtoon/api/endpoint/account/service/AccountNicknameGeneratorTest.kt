@@ -5,8 +5,6 @@ import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldHave
-import io.kotest.matchers.shouldNot
 import io.kotest.matchers.shouldNotBe
 import io.mockk.every
 import io.mockk.mockk
@@ -21,8 +19,8 @@ class AccountNicknameGeneratorTest: FunSpec ({
 
     val mockNicknameNounFile = "명사"
     val mockNicknamePrefixFile = "접두어"
-    var nounInputStream = ByteArrayInputStream(mockNicknameNounFile.toByteArray())
-    var prefixInputSream = ByteArrayInputStream(mockNicknamePrefixFile.toByteArray())
+    val nounInputStream = ByteArrayInputStream(mockNicknameNounFile.toByteArray())
+    val prefixInputStream = ByteArrayInputStream(mockNicknamePrefixFile.toByteArray())
 
     beforeTest {
         resourceLoader = mockk()
@@ -37,7 +35,7 @@ class AccountNicknameGeneratorTest: FunSpec ({
             val newAccount = accountFixture(1L, nickname = "")
             every { accountRepository.save(any()) } returns newAccount
             every { resourceLoader.getResource("classpath:nickname/nicknamenoun.txt").inputStream} returns nounInputStream
-            every { resourceLoader.getResource("classpath:nickname/nicknameprefix.txt").inputStream } returns prefixInputSream
+            every { resourceLoader.getResource("classpath:nickname/nicknameprefix.txt").inputStream } returns prefixInputStream
 
             // when
             val createdAccount = accountNicknameGenerator.saveAccountWithGeneratedNickname(accountFixture(1L))
