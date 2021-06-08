@@ -1,10 +1,8 @@
 package com.depromeet.webtoon.core.domain.account.model
 
-import org.springframework.core.io.ClassPathResource
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import java.io.InputStream
 import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
