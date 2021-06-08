@@ -1,14 +1,14 @@
 package com.depromeet.webtoon.batch
 
 import com.depromeet.webtoon.core.WebtoonCoreRoot
+import com.depromeet.webtoon.crawl.WebtoonCrawlerRoot
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import kotlin.system.exitProcess
 
-
-@SpringBootApplication(scanBasePackageClasses = [WebtoonBatchApplication::class, WebtoonCoreRoot::class])
+@SpringBootApplication(scanBasePackageClasses = [WebtoonBatchApplication::class, WebtoonCoreRoot::class, WebtoonCrawlerRoot::class])
 @EnableBatchProcessing
 class WebtoonBatchApplication
 

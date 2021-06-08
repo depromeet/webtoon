@@ -6,6 +6,7 @@ import com.depromeet.webtoon.api.common.filter.CustomAuthorizationFilter
 import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -35,6 +36,7 @@ class SecurityConfig(val accountRepository: AccountRepository) : WebSecurityConf
     // todo swagger 접속시 왜 exceptionHandling 에 걸리는지 확인.. 필터는 걸리는데 에러는 안떨어지네?
     override fun configure(web: WebSecurity) {
         web.ignoring().mvcMatchers("/favicon.ico")
+        web.ignoring().requestMatchers(PathRequest.toH2Console())
         web.ignoring().antMatchers(
             "/v2/api-docs",
             "/configuration/**",
@@ -53,8 +55,6 @@ class SecurityConfig(val accountRepository: AccountRepository) : WebSecurityConf
         http.headers().frameOptions().disable()
         http.authorizeRequests()
             .mvcMatchers("/", "/api/v1/login").permitAll()
-            .mvcMatchers("/h2-console").permitAll()
-            .mvcMatchers("/h2-console/**").permitAll()
             .anyRequest().authenticated()
         http.exceptionHandling().authenticationEntryPoint(toonietoonieAuthenticationEntryPoint)
         http.exceptionHandling().accessDeniedHandler(toonietoonieAccessDeniedHandler())

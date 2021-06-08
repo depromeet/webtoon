@@ -1,5 +1,6 @@
 package com.depromeet.webtoon.core.type
 
+import com.depromeet.webtoon.common.type.WeekDay
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.blocking.forAll
