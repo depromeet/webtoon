@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class AccountAuthService(
     val accountRepository: AccountRepository,
+    val accountNicknameGenerator: AccountNicknameGenerator
 ) {
     fun loginAccount(loginToken: String) :AccountResponse {
 
@@ -25,7 +26,6 @@ class AccountAuthService(
 
     private fun createAccount(deviceId: String): Account {
         val newAccount = Account(authToken = deviceId)
-        return accountRepository.save(newAccount)
+        return accountNicknameGenerator.saveAccountWithGeneratedNickname(newAccount)
     }
-
 }

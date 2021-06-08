@@ -1,6 +1,7 @@
 package com.depromeet.webtoon.core.domain.webtoon
 
 import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonCreateRequest
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
@@ -8,6 +9,7 @@ import com.depromeet.webtoon.core.domain.webtoon.repository.WebtoonRepository
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -25,7 +27,7 @@ class WebtoonServiceTest : FunSpec({
     test("createWebtoon") {
         // given
         val testAuthor = authorFixture(name = "김훈")
-        val testCreateRequest = WebtoonCreateRequest("칼의노래", authors = listOf(testAuthor), site = WebtoonSite.NAVER)
+        val testCreateRequest = WebtoonCreateRequest("칼의노래", authors = listOf(testAuthor), site = WebtoonSite.DAUM)
 
         every { webtoonRepository.save(any()) } returns webtoonFixture(
             title = testCreateRequest.title,
@@ -40,7 +42,7 @@ class WebtoonServiceTest : FunSpec({
         verify(exactly = 1) { webtoonRepository.save(any()) }
     }
 
-    test("getWebtoonList") {
+    test("getWebtoons") {
         // given
         // 목객체 동작 정의 : every
         every { webtoonRepository.findAll() } returns listOf(
@@ -58,5 +60,29 @@ class WebtoonServiceTest : FunSpec({
         webtoons.map { it.title }.apply {
             this shouldContainExactly listOf("webtoon1", "webtoon2")
         }
+    }
+
+    test("getRandomWebtoons 호출 테스트") {
+        // given
+        every { webtoonRepository.find20RandomWebtoons() } returns listOf(webtoonFixture(1L), webtoonFixture(2L))
+
+        // when
+        val randomWebtoons = webtoonService.getRandomWebtoons()
+
+        verify(exactly = 1) { webtoonRepository.find20RandomWebtoons() }
+        randomWebtoons.size.shouldBe(2)
+
+    }
+
+    test("getWeekdayWebtoons 호출 테스트") {
+        // given
+        every { webtoonRepository.findAllByWeekdaysOrderByPopularityAsc(any()) } returns listOf(webtoonFixture(1L), webtoonFixture(2L))
+
+        // when
+        val weekdayWebtoons = webtoonService.getWeekdayWebtoons(WeekDay.MON)
+
+        // then
+        verify(exactly = 1){ webtoonRepository.findAllByWeekdaysOrderByPopularityAsc(WeekDay.MON)  }
+        weekdayWebtoons.size.shouldBe(2)
     }
 })

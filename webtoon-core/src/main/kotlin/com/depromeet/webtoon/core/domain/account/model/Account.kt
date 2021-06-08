@@ -4,14 +4,11 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
-import javax.persistence.CollectionTable
-import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType.IDENTITY
 import javax.persistence.Id
-import javax.persistence.JoinColumn
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
@@ -22,8 +19,8 @@ class Account(
     profileImage: String = "",
     createdAt: LocalDateTime? = null,
     modifiedAt: LocalDateTime? = null,
-
     ) {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     var id: Long? = id
