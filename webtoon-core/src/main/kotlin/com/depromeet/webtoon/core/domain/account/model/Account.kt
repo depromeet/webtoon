@@ -1,6 +1,5 @@
 package com.depromeet.webtoon.core.domain.account.model
 
-import org.slf4j.LoggerFactory
 import org.springframework.core.io.ClassPathResource
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -41,39 +40,4 @@ class Account(
     @LastModifiedDate
     var modifiedAt: LocalDateTime? = modifiedAt
         private set
-
-
-    fun generateNickname() {
-        val prefixList = getPrefixList()
-        val nounList = getNounList()
-        val randomPrefix = generateRandom(prefixList)
-        val randomNoun = generateRandom(nounList)
-        this.nickname = "$randomPrefix $randomNoun"
-    }
-
-    private fun generateRandom(nounList: List<String>): String {
-        return nounList[(Math.random() * nounList.size).toInt()]
-    }
-
-    private fun getPrefixList(): List<String> {
-        val prefix = ClassPathResource(nicknamePrefixPath)
-        log.info("이거확인!!!!!")
-        log.info(prefix.path)
-        val prefixStream: InputStream = prefix.file.inputStream()
-        val prefixSource = prefixStream.bufferedReader().use { it.readText() }
-        return prefixSource.split(",")
-    }
-
-    private fun getNounList(): List<String> {
-        val noun = ClassPathResource(nicknamePath)
-        val nounStream: InputStream = noun.file.inputStream()
-        val nounSource = nounStream.bufferedReader().use { it.readText() }
-        return nounSource.split(",")
-    }
-
-    companion object {
-        val log = LoggerFactory.getLogger(Account::class.java)
-        val nicknamePath = "nickname/nicknamenoun.txt"
-        val nicknamePrefixPath = "nickname/nicknameprefix.txt"
-    }
 }
