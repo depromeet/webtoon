@@ -38,7 +38,7 @@ class AccountNicknameGeneratorTest: FunSpec ({
             every { resourceLoader.getResource("classpath:nickname/nicknameprefix.txt").inputStream } returns prefixInputStream
 
             // when
-            val createdAccount = accountNicknameGenerator.saveAccountWithGeneratedNickname(accountFixture(1L))
+            val createdAccount = accountNicknameGenerator.generateNickname(accountFixture(1L))
 
             // then
             createdAccount.nickname.shouldNotBe("")

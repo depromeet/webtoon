@@ -11,7 +11,7 @@ class AccountNicknameGenerator (
     val accountRepository: AccountRepository
     )
 {
-    fun saveAccountWithGeneratedNickname(newAccount: Account): Account{
+    fun generateNickname(newAccount: Account): Account{
         val createdAccount = accountRepository.save(newAccount)
 
         val nounList = getNicknameNounList()
