@@ -21,7 +21,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class CommentControllerTest(
+class
+CommentControllerTest(
     var mockMvc: MockMvc,
     var webtoonRepository: WebtoonRepository,
     var commentRepository: CommentRepository,

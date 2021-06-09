@@ -1,6 +1,6 @@
 package com.depromeet.webtoon.api.endpoint.webtoon
 
-import com.depromeet.webtoon.api.common.swaggerannotation.SwaggerAuthApi
+import com.depromeet.webtoon.api.common.annotation.SwaggerAuthApi
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse.Companion.ok
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonSearchResponse

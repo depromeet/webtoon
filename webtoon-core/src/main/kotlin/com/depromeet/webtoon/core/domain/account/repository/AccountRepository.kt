@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository
 interface AccountRepository : JpaRepository<Account, Long> {
 
     fun findByAuthToken(authToken: String): Account?
+    fun findByNickname(newNickname: String): Account?
 }

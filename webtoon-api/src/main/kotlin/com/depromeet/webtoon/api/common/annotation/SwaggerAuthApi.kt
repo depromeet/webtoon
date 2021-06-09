@@ -1,4 +1,4 @@
-package com.depromeet.webtoon.api.common.swaggerannotation
+package com.depromeet.webtoon.api.common.annotation
 
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
