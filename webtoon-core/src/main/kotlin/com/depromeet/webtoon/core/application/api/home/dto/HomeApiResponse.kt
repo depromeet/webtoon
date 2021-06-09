@@ -1,7 +1,9 @@
 package com.depromeet.webtoon.core.application.api.home.dto
 
+import com.depromeet.webtoon.core.application.api.dto.AuthorResponse
 import com.depromeet.webtoon.core.application.api.dto.WebtoonResponse
 import com.depromeet.webtoon.core.application.common.dto.BannerResponse
+import com.depromeet.webtoon.core.domain.author.dto.AuthorRecommendResponse
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
@@ -17,4 +19,6 @@ data class HomeApiResponse(
     val genreWebtoons: List<WebtoonResponse>,
     @ApiModelProperty(value = "몰아보기 좋은 웹툰 리스트")
     val bingeWatchableWebtoons: List<WebtoonResponse>,
+    @ApiModelProperty(value = "추천 작가 리스트")
+    val recommendAuthors: List<AuthorResponse>
 )

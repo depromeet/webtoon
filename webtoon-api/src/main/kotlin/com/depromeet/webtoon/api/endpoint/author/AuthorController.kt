@@ -1,7 +1,7 @@
 package com.depromeet.webtoon.api.endpoint.author
 
 import com.depromeet.webtoon.api.common.annotation.SwaggerAuthApi
-import com.depromeet.webtoon.api.endpoint.author.service.AuthorRecommendService
+import com.depromeet.webtoon.core.domain.author.service.AuthorRecommendService
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.core.domain.author.dto.AuthorRecommendResponse
 import io.swagger.annotations.Api

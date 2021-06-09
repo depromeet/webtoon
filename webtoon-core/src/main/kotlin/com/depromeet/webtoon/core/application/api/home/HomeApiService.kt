@@ -5,6 +5,7 @@ import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
 import com.depromeet.webtoon.core.application.api.home.dto.HomeApiRequest
 import com.depromeet.webtoon.core.application.api.home.dto.HomeApiResponse
 import com.depromeet.webtoon.core.application.common.dto.BannerResponse.Companion.convertToBannerResponses
+import com.depromeet.webtoon.core.domain.author.service.AuthorRecommendService
 import com.depromeet.webtoon.core.domain.banner.dto.SearchBannerRequest
 import com.depromeet.webtoon.core.domain.banner.model.BannerInventory
 import com.depromeet.webtoon.core.domain.banner.service.BannerService
@@ -16,6 +17,7 @@ class HomeApiService(
     val webtoonService: WebtoonService,
     val bannerService: BannerService,
     val genreRecommendService: GenreRecommendService,
+    val authorRecommendService: AuthorRecommendService,
 ) {
     fun fetchHome(homeApiRequest: HomeApiRequest): HomeApiResponse {
         val sampleWebtoons = webtoonService.getWeekdayWebtoons(WeekDay.MON)
@@ -29,12 +31,15 @@ class HomeApiService(
         val genreWebtoons = genreRecommendService.getRecommendWebtoonByGenre()
             .convertToWebtoonResponses()
 
+        val recommendedAuthors = authorRecommendService.getHomeApiRecommendAuthors()
+
         return HomeApiResponse(
             mainBanner = homeMainBanners,
             weekdayWebtoons = sampleWebtoons,
             trendingWebtoons = sampleWebtoons,
             genreWebtoons = genreWebtoons,
             bingeWatchableWebtoons = sampleWebtoons,
+            recommendAuthors = recommendedAuthors
         )
     }
 }

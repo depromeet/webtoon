@@ -1,7 +1,7 @@
-package com.depromeet.webtoon.api.endpoint.author.service
+package com.depromeet.webtoon.core.domain.author
 
-import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
+import com.depromeet.webtoon.core.domain.author.service.AuthorRecommendService
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
