@@ -1,7 +1,6 @@
 package com.depromeet.webtoon.crawl.crawler.daum
 
 import com.depromeet.webtoon.common.dto.imports.WebtoonImportRequest
-import com.depromeet.webtoon.common.type.BackgroundColor
 import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.crawl.crawler.daum.dto.webtoondetail.WebtoonWeeks
@@ -29,7 +28,7 @@ class DaumWebtoonCrawler(
                 summary = it.data.webtoon.introduction,
                 genres = it.data.webtoon.cartoon.genres.map { it.name },
                 score = it.data.webtoon.averageScore,
-                backgroundColor = BackgroundColor.NONE,
+                backgroundColor = "",
                 isComplete = true
             )
         }
@@ -51,8 +50,7 @@ class DaumWebtoonCrawler(
                 crawled.data.webtoon.averageScore,
                 idx + 1,
                 crawled.data.webtoon.introduction,
-                // todo 배경화면, 연재중 확인할 것
-                BackgroundColor.NONE,
+                "",
                 isComplete = false,
             )
         }

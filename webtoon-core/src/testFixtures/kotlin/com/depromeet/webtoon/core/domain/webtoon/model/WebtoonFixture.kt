@@ -1,6 +1,5 @@
 package com.depromeet.webtoon.core.domain.webtoon.model
 
-import com.depromeet.webtoon.common.type.BackgroundColor
 import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.model.Author
@@ -13,7 +12,7 @@ fun webtoonFixture(
     authors: List<Author> = listOf(authorFixture(1L, "테스트 작가")),
     score: Double = 9.5,
     isComplete: Boolean = false,
-    backgroundColor: BackgroundColor = BackgroundColor.NONE,
+    backgroundColor: String = "AB32FE",
     createdAt: LocalDateTime = LocalDateTime.now(),
     modifiedAt: LocalDateTime = LocalDateTime.now(),
 ) = Webtoon(

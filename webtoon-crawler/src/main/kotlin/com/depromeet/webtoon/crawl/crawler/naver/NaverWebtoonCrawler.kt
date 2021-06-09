@@ -1,7 +1,6 @@
 package com.depromeet.webtoon.crawl.crawler.naver
 
 import com.depromeet.webtoon.common.dto.imports.WebtoonImportRequest
-import com.depromeet.webtoon.common.type.BackgroundColor
 import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.common.type.WeekDay
 import org.jsoup.Jsoup
@@ -101,7 +100,7 @@ class NaverWebtoonCrawler() {
                     popular = it.rank,
                     summary = it.summary,
                     // todo 백그라운드 색상, 연재중
-                    backgroundColor = BackgroundColor.NONE,
+                    backgroundColor = "",
                     isComplete = it.isComplete,
                 )
             }

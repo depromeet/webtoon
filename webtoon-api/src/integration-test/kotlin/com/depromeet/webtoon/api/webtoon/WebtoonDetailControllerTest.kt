@@ -3,7 +3,6 @@ package com.depromeet.webtoon.api.webtoon
 import com.depromeet.webtoon.api.endpoint.comment.dto.CommentResponse
 import com.depromeet.webtoon.api.endpoint.dto.ScoreResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonDetailResponse
-import com.depromeet.webtoon.core.application.api.dto.AuthorResponse
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponse
 import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.dto.convertToAccountResponse
@@ -12,7 +11,6 @@ import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
 import com.depromeet.webtoon.core.domain.comment.commentFixture
 import com.depromeet.webtoon.core.domain.comment.repository.CommentRepository
-import com.depromeet.webtoon.core.domain.rating.dto.CommentDto
 import com.depromeet.webtoon.core.domain.rating.repository.WebtoonRatingAverageRepository
 import com.depromeet.webtoon.core.domain.rating.webtoonRatingAverageFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
@@ -22,7 +20,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithAnonymousUser
-import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders

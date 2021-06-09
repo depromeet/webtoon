@@ -1,6 +1,5 @@
 package com.depromeet.webtoon.core.domain.webtoon.model
 
-import com.depromeet.webtoon.common.type.BackgroundColor
 import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.author.model.Author
@@ -37,7 +36,7 @@ class Webtoon constructor(
     summary: String = "",
     score: Double = 0.0,
     genres: List<String> = mutableListOf(),
-    backgroundColor: BackgroundColor = BackgroundColor.NONE,
+    backgroundColor: String = "",
     isComplete: Boolean? = true,
     createdAt: LocalDateTime? = null,
     modifiedAt: LocalDateTime? = null,
@@ -91,8 +90,7 @@ class Webtoon constructor(
     var genres: MutableList<String> = genres as MutableList<String>
 
     @Column(name = "background_color")
-    @Enumerated(EnumType.STRING)
-    var backgroudColor: BackgroundColor = backgroundColor
+    var backgroudColor: String = backgroundColor
 
     @Column(name = "isComplete")
     var isComplete: Boolean? = isComplete

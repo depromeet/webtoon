@@ -1,6 +1,5 @@
 package com.depromeet.webtoon.core.application.api.dto
 
-import com.depromeet.webtoon.common.type.BackgroundColor
 import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import io.swagger.annotations.ApiModel
@@ -30,7 +29,7 @@ WebtoonResponse(
     @ApiModelProperty("웹툰 장르")
     var genres: List<String>,
     @ApiModelProperty("웹툰 배경화면")
-    var backgroundColor: BackgroundColor,
+    var backgroundColor: String,
     @ApiModelProperty("웹툰 연재중 여부")
     var isComplete: Boolean,
 

@@ -1,7 +1,6 @@
 package com.depromeet.webtoon.crawl.crawler.daum
 
 import com.depromeet.webtoon.common.dto.imports.WebtoonImportRequest
-import com.depromeet.webtoon.common.type.BackgroundColor
 import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.crawl.crawler.daum.dto.webtoondetail.Cartoon
@@ -52,7 +51,7 @@ class DaumWebtoonCrawlerTest : FunSpec({
                 score = detailResult.data.webtoon.averageScore,
                 summary = detailResult.data.webtoon.introduction,
                 popular = 0,
-                backgroundColor = BackgroundColor.NONE,
+                backgroundColor = "",
                 isComplete = true
             )
         every { fetchService.crawlCompletedWebtoonNicknames() } returns listOf(detailResult.data.webtoon.title)
@@ -109,7 +108,7 @@ class DaumWebtoonCrawlerTest : FunSpec({
             5.0,
             1,
             "줄거리",
-            BackgroundColor.NONE,
+            "",
             false,
         )
         every { fetchService.getPopularNicknames() } returns arrayListOf("nick")

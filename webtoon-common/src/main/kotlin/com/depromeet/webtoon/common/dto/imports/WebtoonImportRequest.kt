@@ -1,6 +1,5 @@
 package com.depromeet.webtoon.common.dto.imports
 
-import com.depromeet.webtoon.common.type.BackgroundColor
 import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.common.type.WeekDay
 
@@ -15,6 +14,6 @@ data class WebtoonImportRequest(
     val score: Double,
     val popular: Int,
     val summary: String,
-    val backgroundColor: BackgroundColor,
+    val backgroundColor: String,
     val isComplete: Boolean,
 )

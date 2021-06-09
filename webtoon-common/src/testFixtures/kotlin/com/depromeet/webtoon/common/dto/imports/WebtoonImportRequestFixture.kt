@@ -1,6 +1,5 @@
 package com.depromeet.webtoon.common.dto.imports
 
-import com.depromeet.webtoon.common.type.BackgroundColor
 import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.common.type.WeekDay
 
@@ -15,7 +14,7 @@ fun webtoonImportRequestFixture(
     score: Double = 4.8,
     popular: Int = 2,
     summary: String = "몬난이 고양이 이야기",
-    backgroundColor: BackgroundColor = BackgroundColor.NONE,
+    backgroundColor: String = "AAA111",
     isComplete: Boolean = false,
 ) = WebtoonImportRequest(
     title = title,
