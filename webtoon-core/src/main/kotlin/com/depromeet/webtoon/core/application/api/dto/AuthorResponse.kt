@@ -5,7 +5,7 @@ import com.depromeet.webtoon.core.domain.author.model.Author
 data class AuthorResponse(
     var id: Long,
     var name: String,
-    var authorImage: String,
+    var authorImage: String?,
 )
 
 fun Author.convertToAuthorResponse() = AuthorResponse(

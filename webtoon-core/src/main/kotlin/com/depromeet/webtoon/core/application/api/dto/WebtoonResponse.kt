@@ -40,7 +40,7 @@ fun Webtoon.convertToWebtoonResponse() = WebtoonResponse(
     this.site.name,
     this.title,
     this.summary,
-    this.authors.map { AuthorResponse(it.id!!, it.name) },
+    this.authors.map { AuthorResponse(it.id!!, it.name, null) },
     this.thumbnail,
     this.weekdays,
     this.url,
