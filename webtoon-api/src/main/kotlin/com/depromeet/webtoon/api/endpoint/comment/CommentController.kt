@@ -30,9 +30,9 @@ class CommentController(
     @GetMapping("/list")
     @SwaggerGetComments
     fun getComments(@RequestParam webtoonId: Long,
-                    @RequestParam offsetCommentId: Long?,
+                    @RequestParam lastCommentId: Long?,
                     @RequestParam(defaultValue = "20") pageSize: Long): ApiResponse<CommentsResponse> {
-        return ok(commentService.getComments(webtoonId, offsetCommentId, pageSize))
+        return ok(commentService.getComments(webtoonId, lastCommentId, pageSize))
     }
 
     @PostMapping

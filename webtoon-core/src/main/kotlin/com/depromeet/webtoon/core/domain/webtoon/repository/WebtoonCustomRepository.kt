@@ -8,5 +8,6 @@ interface WebtoonCustomRepository {
     fun genreRecommendWebtoon(random: Long, genre: String): Webtoon?
     fun get_Top10_Naver_Webtoons_ByGenre(genre: String): List<Webtoon>
     fun get_Top10_Daum_Webtoons_ByGenre(genre: String): List<Webtoon>
+    fun getCompletedWebtoons(lastWebtoonId: Long?, pageSize: Long): List<Webtoon>
 
 }

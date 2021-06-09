@@ -37,6 +37,22 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
             .fetch()
     }
 
+    override fun getCompletedWebtoons(lastWebtoonId: Long?, pageSize: Long): List<Webtoon> {
+        return query
+            .selectFrom(webtoon)
+            .where(webtoonIdGt(lastWebtoonId))
+            .orderBy(webtoon.title.asc())
+            .limit(pageSize)
+            .fetch()
+    }
+
+    private fun webtoonIdGt(lastWebtoonId: Long?): Predicate? {
+        if(lastWebtoonId != null){
+            return webtoon.id.gt(lastWebtoonId)
+        }
+        return null
+    }
+
     override fun genreRecommendWebtoon(random: Long, genres: String): Webtoon? {
         val dynamicSite = BooleanBuilder()
         // 두가지 사이트를 섞어서 보여주기 위함

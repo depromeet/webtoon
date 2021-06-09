@@ -1,6 +1,7 @@
 package com.depromeet.webtoon.api.endpoint.webtoon
 
 import com.depromeet.webtoon.api.common.annotation.SwaggerAuthApi
+import com.depromeet.webtoon.api.common.annotation.SwaggerGetCompletedWebtoons
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse.Companion.ok
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonSearchResponse
@@ -9,9 +10,11 @@ import com.depromeet.webtoon.api.endpoint.webtoon.dto.AuthorWebtoonResponse
 import com.depromeet.webtoon.api.endpoint.webtoon.service.AuthorWebtoonService
 import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
+import com.depromeet.webtoon.core.domain.webtoon.dto.CompleteWebtoonResponse
 import com.depromeet.webtoon.core.domain.webtoon.dto.RandomWebtoonsResponse
 import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonTop20Response
 import com.depromeet.webtoon.core.domain.webtoon.dto.convertToRandomWebtoonsResponse
+import com.depromeet.webtoon.core.domain.webtoon.service.CompleteWebtoonService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonSearchService
 import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
 import io.swagger.annotations.Api
@@ -28,10 +31,20 @@ import org.springframework.web.bind.annotation.RestController
 @Api("WebtoonListController")
 class WebtoonListController(
     val webtoonService: WebtoonService,
+    val completeWebtoonService: CompleteWebtoonService,
     val authorWebtoonService: AuthorWebtoonService,
     val webtoonSearchService: WebtoonSearchService,
 ) {
     private val log = LoggerFactory.getLogger(WebtoonListController::class.java)
+
+    @GetMapping("/completed")
+    @SwaggerGetCompletedWebtoons
+    fun findCompletedWebtoons(
+        @RequestParam lastWebtoonId: Long?,
+        @RequestParam(defaultValue = "20") pageSize: Long
+    ): ApiResponse<CompleteWebtoonResponse> {
+        return ok(completeWebtoonService.getCompleteWebtoons(lastWebtoonId, pageSize))
+    }
 
     @GetMapping("/random")
     @SwaggerAuthApi
