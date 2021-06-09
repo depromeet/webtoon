@@ -40,7 +40,7 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
     override fun getCompletedWebtoons(lastWebtoonId: Long?, pageSize: Long): List<Webtoon> {
         return query
             .selectFrom(webtoon)
-            .where(webtoonIdGt(lastWebtoonId))
+            .where(webtoonIdGt(lastWebtoonId), webtoon.isComplete.isTrue)
             .orderBy(webtoon.title.asc())
             .limit(pageSize)
             .fetch()
