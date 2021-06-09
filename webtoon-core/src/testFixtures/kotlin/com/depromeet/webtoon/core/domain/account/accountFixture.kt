@@ -7,6 +7,7 @@ fun accountFixture(
     id: Long? = null,
     authToken: String = "testToken",
     nickname: String = "testNick",
+    profileImage: String = "testProfile.com",
     createdAt: LocalDateTime = LocalDateTime.now(),
     modifiedAt: LocalDateTime = LocalDateTime.now()
 ) = Account(

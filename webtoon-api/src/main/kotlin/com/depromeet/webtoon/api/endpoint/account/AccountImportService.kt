@@ -7,9 +7,10 @@ import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import org.springframework.stereotype.Service
 
 @Service
-class AccountAuthService(
+class AccountImportService(
     val accountRepository: AccountRepository,
-    val accountNicknameGenerator: AccountNicknameGenerator
+    val nicknameGenerator: AccountNicknameGenerator,
+    val profileGenerator: AccountProfileGenerator
 ) {
     fun loginAccount(loginToken: String) :AccountResponse {
 
@@ -24,8 +25,10 @@ class AccountAuthService(
         return optionalAccount
     }
 
-    private fun createAccount(deviceId: String): Account {
-        val newAccount = Account(authToken = deviceId)
-        return accountNicknameGenerator.saveAccountWithGeneratedNickname(newAccount)
+    private fun createAccount(loginToken: String): Account {
+        var newAccount = Account(authToken = loginToken)
+        newAccount = nicknameGenerator.generateNickname(newAccount)
+        newAccount = profileGenerator.generateProfileImage(newAccount)
+        return newAccount
     }
 }

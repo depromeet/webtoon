@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Api(value = "AccountController")
 class AccountController(
-    private val authService: AccountAuthService,
+    private val importService: AccountImportService,
     private val updateService: AccountUpdateService
 ) {
     @PostMapping("/api/v1/login")
     fun loginWithToken(@RequestBody loginRequest: AccountLoginRequest):ApiResponse<AccountResponse>{
-        return ok(authService.loginAccount(loginRequest.loginToken))
+        return ok(importService.loginAccount(loginRequest.loginToken))
     }
 
     @PatchMapping("/api/v1/nickname")
