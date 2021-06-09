@@ -10,8 +10,8 @@ interface AuthorRepository : JpaRepository<Author, Long> {
     fun findAllByNameIn(names: List<String>): List<Author>
 
     @Query(
-        """
-            select * from author a,
+    """
+            select * from author a
             order by rand()
             limit 20
         """,
