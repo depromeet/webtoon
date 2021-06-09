@@ -1,12 +1,10 @@
 package com.depromeet.webtoon.api.endpoint.home
 
-import com.depromeet.webtoon.api.common.swaggerannotation.SwaggerAuthApi
+import com.depromeet.webtoon.api.common.annotation.SwaggerAuthApi
 import com.depromeet.webtoon.api.endpoint.dto.ApiResponse
 import com.depromeet.webtoon.core.application.api.home.HomeApiService
 import com.depromeet.webtoon.core.application.api.home.dto.HomeApiRequest
 import com.depromeet.webtoon.core.application.api.home.dto.HomeApiResponse
-import io.swagger.annotations.ApiImplicitParam
-import io.swagger.annotations.ApiImplicitParams
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam

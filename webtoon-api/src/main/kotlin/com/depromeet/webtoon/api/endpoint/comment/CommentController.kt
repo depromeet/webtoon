@@ -1,7 +1,7 @@
 package com.depromeet.webtoon.api.endpoint.comment
 
-import com.depromeet.webtoon.api.common.swaggerannotation.SwaggerAuthApi
-import com.depromeet.webtoon.api.common.swaggerannotation.SwaggerGetComments
+import com.depromeet.webtoon.api.common.annotation.SwaggerAuthApi
+import com.depromeet.webtoon.api.common.annotation.SwaggerGetComments
 import com.depromeet.webtoon.api.endpoint.comment.dto.CommentsResponse
 import com.depromeet.webtoon.api.endpoint.comment.dto.CreateCommentRequest
 import com.depromeet.webtoon.api.endpoint.comment.dto.UpdateCommentRequest
