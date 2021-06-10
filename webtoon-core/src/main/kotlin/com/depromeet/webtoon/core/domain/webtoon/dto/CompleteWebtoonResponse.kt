@@ -10,9 +10,9 @@ data class CompleteWebtoonResponse(
 
 fun List<WebtoonResponse>.convertToCompleteWebtoonResponse(pageSize: Long):CompleteWebtoonResponse{
     return CompleteWebtoonResponse(
-        isLast = (this.size != 21),
+        isLast = (this.size != pageSize.toInt()),
         lastWebtoonId =
-        if(this.size != 21){
+        if(this.size != pageSize.toInt()){
             null
         } else {
             this[lastIndex-1].id
