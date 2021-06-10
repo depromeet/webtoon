@@ -41,7 +41,7 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
         return query
             .selectFrom(webtoon)
             .where(webtoonIdGt(lastWebtoonId), webtoon.isComplete.isTrue)
-            .orderBy(webtoon.title.asc())
+            .orderBy(webtoon.id.asc())
             .limit(pageSize)
             .fetch()
     }
