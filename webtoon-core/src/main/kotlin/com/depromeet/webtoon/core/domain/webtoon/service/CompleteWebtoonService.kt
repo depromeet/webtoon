@@ -14,6 +14,6 @@ class CompleteWebtoonService (
         return webtoonRepository
             .getCompletedWebtoons(lastWebtoonId, pageSize)
             .convertToWebtoonResponses()
-            .convertToCompleteWebtoonResponse()
+            .convertToCompleteWebtoonResponse(pageSize)
     }
 }
