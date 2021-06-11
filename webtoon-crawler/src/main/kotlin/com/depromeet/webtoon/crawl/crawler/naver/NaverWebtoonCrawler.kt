@@ -16,12 +16,11 @@ class NaverWebtoonCrawler() {
             val doc: Document = Jsoup.connect("https://comic.naver.com/webtoon/weekdayList.nhn?week=$weekday").get()
             val webtoons: Elements = doc.select(".list_area ul li")
             webtoons.mapIndexed { index, it ->
-                val title = it.select("dl dt a").text()
                 val url = "https://comic.naver.com" + it.select("dl dt a").attr("href")
                 val score = it.select("dl .rating_type strong").text().toDouble()
 
                 val titleId = TITLE_ID_REGEX.find(url)!!.groupValues[1]
-                NaverWebtoonItem(titleId.toLong(), title, score, index, url, false, weekday)
+                NaverWebtoonItem(titleId.toLong(), score, index, url, false, weekday)
             }
         }
         .flatten()
@@ -30,12 +29,13 @@ class NaverWebtoonCrawler() {
             Thread.sleep(30)
             val doc: Document = Jsoup.connect(item.url).get()
             val webtoonDetail: Elements = doc.select(".comicinfo")
+            val title = webtoonDetail.select("div.detail h2").textNodes()[0].text().trim()
             val authors = webtoonDetail.select("div.detail span.wrt_nm").text().split("/").map { it.trim() }
             val thumbnailImage = webtoonDetail.select(".thumb img").attr("src")
             val genres = webtoonDetail.select(".detail_info .genre").text().split(",").map { it.trim() }
             val summary = webtoonDetail.select("h2").next("p").text()
 
-            item.putDetail(authors, thumbnailImage, genres, summary)
+            item.putDetail(title, authors, thumbnailImage, genres, summary)
             log.info("[NaverCrawlerService] $item")
         }.toWebtoonImportRequests()
 
@@ -45,12 +45,11 @@ class NaverWebtoonCrawler() {
 
         val naverWebtoonItems = webtoons
             .mapIndexed { index, it ->
-                val title = it.select("dl dt a").text()
                 val url = "https://comic.naver.com" + it.select("dl dt a").attr("href")
                 val score = it.select("dl .rating_type strong").text().toDouble()
 
                 val titleId = TITLE_ID_REGEX.find(url)!!.groupValues[1]
-                NaverWebtoonItem(titleId.toLong(), title, score, index, url, true)
+                NaverWebtoonItem(titleId.toLong(), score, index, url, true)
             }
             .fold(NaverWebtoonItems()) { acc, naverWebtoonItem -> acc.addItem(naverWebtoonItem); acc }
 
@@ -58,12 +57,13 @@ class NaverWebtoonCrawler() {
             Thread.sleep(30)
             val doc: Document = Jsoup.connect(item.url).get()
             val webtoonDetail: Elements = doc.select(".comicinfo")
+            val title = webtoonDetail.select("div.detail h2").textNodes()[0].text().trim()
             val authors = webtoonDetail.select("div.detail span.wrt_nm").text().split("/").map { it.trim() }
             val thumbnailImage = webtoonDetail.select(".thumb img").attr("src")
             val genres = webtoonDetail.select(".detail_info .genre").text().split(",").map { it.trim() }
             val summary = webtoonDetail.select("h2").next("p").text()
 
-            item.putDetail(authors, thumbnailImage, genres, summary)
+            item.putDetail(title, authors, thumbnailImage, genres, summary)
             log.info("[NaverCrawlerService] $item")
         }.toWebtoonImportRequests()
     }
@@ -120,7 +120,6 @@ class NaverWebtoonCrawler() {
 
     class NaverWebtoonItem(
         titleId: Long,
-        title: String,
         score: Double,
         rank: Int,
         url: String,
@@ -128,7 +127,6 @@ class NaverWebtoonCrawler() {
         weekday: String? = null
     ) {
         val titleId: Long = titleId
-        val title: String = title
         val score: Double = score
         val rank: Int = rank
         val url: String = url
@@ -136,6 +134,7 @@ class NaverWebtoonCrawler() {
         val weekdays: MutableSet<String> = weekday?.let { mutableSetOf(it) } ?: mutableSetOf()
 
         // 상세정보는 상세페이지에서 처리
+        lateinit var title: String
         lateinit var authors: List<String>
         lateinit var thumbnailImage: String
         lateinit var genres: List<String>
@@ -145,7 +144,14 @@ class NaverWebtoonCrawler() {
             this.weekdays.addAll(weekdays)
         }
 
-        fun putDetail(authors: List<String>, thumbnailImage: String, genres: List<String>, summary: String) {
+        fun putDetail(
+            title: String,
+            authors: List<String>,
+            thumbnailImage: String,
+            genres: List<String>,
+            summary: String
+        ) {
+            this.title = title
             this.authors = authors
             this.thumbnailImage = thumbnailImage
             this.genres = genres

@@ -19,12 +19,13 @@ class HomeApiService(
     val genreRecommendService: GenreRecommendService,
     val authorRecommendService: AuthorRecommendService,
 ) {
-    fun fetchHome(homeApiRequest: HomeApiRequest): HomeApiResponse {
-        val sampleWebtoons = webtoonService.getWeekdayWebtoons(WeekDay.MON)
-            .take(3)
+    fun fetchHome(request: HomeApiRequest): HomeApiResponse {
+        val weekDay = WeekDay.findByDayOfWeek(request.baseDateTime.dayOfWeek)
+        val sampleWebtoons = webtoonService.getWeekdayWebtoons(weekDay)
+            .take(5)
             .convertToWebtoonResponses()
 
-        val homeMainBanners = SearchBannerRequest(BannerInventory.HOME_MAIN, homeApiRequest.baseDateTime).let {
+        val homeMainBanners = SearchBannerRequest(BannerInventory.HOME_MAIN, request.baseDateTime).let {
             bannerService.searchBanners(it).convertToBannerResponses()
         }
 
