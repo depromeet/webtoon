@@ -21,7 +21,7 @@ class HomeApiService(
 ) {
     fun fetchHome(request: HomeApiRequest): HomeApiResponse {
         val weekDay = WeekDay.findByDayOfWeek(request.baseDateTime.dayOfWeek)
-        val sampleWebtoons = webtoonService.getWeekdayWebtoons(weekDay)
+        val weekdayWebtoons = webtoonService.getWeekdayWebtoons(weekDay)
             .take(5)
             .convertToWebtoonResponses()
 
@@ -34,12 +34,15 @@ class HomeApiService(
 
         val recommendedAuthors = authorRecommendService.getHomeApiRecommendAuthors()
 
+        // 완성을 위한.. 하드코딩
+        val bingeWatchableWebtoons = webtoonService.getWebtoons(listOf(84, 414, 423)).convertToWebtoonResponses()
+
         return HomeApiResponse(
             mainBanner = homeMainBanners,
-            weekdayWebtoons = sampleWebtoons,
-            trendingWebtoons = sampleWebtoons,
+            weekdayWebtoons = weekdayWebtoons,
+            trendingWebtoons = weekdayWebtoons,
             genreWebtoons = genreWebtoons,
-            bingeWatchableWebtoons = sampleWebtoons,
+            bingeWatchableWebtoons = bingeWatchableWebtoons,
             recommendAuthors = recommendedAuthors
         )
     }

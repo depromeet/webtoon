@@ -44,6 +44,10 @@ class WebtoonService(
         return webtoon.map { it.toWebtoonCreateResponseDto() }
     }
 
+    fun getWebtoons(ids: List<Long>): List<Webtoon> {
+        return webtoonRepository.findAllById(ids)
+    }
+
     fun createWebtoon(request: WebtoonCreateRequest): WebtoonCreateResponseDto {
         val newWebtoon = Webtoon(title = request.title, authors = request.authors)
         val savedNewWebtoon = webtoonRepository.save(newWebtoon)
