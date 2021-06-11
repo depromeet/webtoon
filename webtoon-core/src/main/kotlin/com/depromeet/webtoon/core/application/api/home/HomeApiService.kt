@@ -35,12 +35,19 @@ class HomeApiService(
         val recommendedAuthors = authorRecommendService.getHomeApiRecommendAuthors()
 
         // 완성을 위한.. 하드코딩
+        // 84  #1F1B2C 다음웹툰 [승리호]
+        // 414 #20689B 네이버웹툰 [3cm 헌터]
+        // 423 #5B97BD 다음웹툰 [나빌레라]
         val bingeWatchableWebtoons = webtoonService.getWebtoons(listOf(84, 414, 423)).convertToWebtoonResponses()
+
+        // 트렌딩 웹툰은 랜덤으로 웹툰 선정
+        // TODO 수정 필요
+        val trendingWebtoons = webtoonService.getRandomWebtoons().take(5).convertToWebtoonResponses()
 
         return HomeApiResponse(
             mainBanner = homeMainBanners,
             weekdayWebtoons = weekdayWebtoons,
-            trendingWebtoons = weekdayWebtoons,
+            trendingWebtoons = trendingWebtoons,
             genreWebtoons = genreWebtoons,
             bingeWatchableWebtoons = bingeWatchableWebtoons,
             recommendAuthors = recommendedAuthors
