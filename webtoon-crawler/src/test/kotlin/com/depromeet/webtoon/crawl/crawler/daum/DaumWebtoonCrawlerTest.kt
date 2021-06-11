@@ -44,7 +44,7 @@ class DaumWebtoonCrawlerTest : FunSpec({
                 title = detailResult.data.webtoon.title,
                 url = "http://webtoon.daum.net/webtoon/view/${detailResult.data.webtoon.nickname}",
                 thumbnailImage = detailResult.data.webtoon.thumbnailImage2.url,
-                weekdays = listOf(WeekDay.NONE),
+                weekdays = listOf(),
                 authors = emptyList(),
                 site = WebtoonSite.DAUM,
                 genres = emptyList(),
