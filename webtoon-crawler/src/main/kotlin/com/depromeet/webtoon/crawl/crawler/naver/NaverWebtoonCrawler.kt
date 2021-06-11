@@ -162,7 +162,7 @@ class NaverWebtoonCrawler() {
     companion object {
         val log = LoggerFactory.getLogger(NaverWebtoonCrawler::class.java)
 
-        val WEEKDAYS = listOf("mon")
+        val WEEKDAYS = listOf("mon", "tue", "wed", "thu", "fri", "sat", "sun")
         val TITLE_ID_REGEX = "titleId=(\\d*)".toRegex()
     }
 }
