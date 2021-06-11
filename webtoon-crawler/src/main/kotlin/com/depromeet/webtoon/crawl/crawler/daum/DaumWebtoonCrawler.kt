@@ -21,7 +21,7 @@ class DaumWebtoonCrawler(
                 title = it!!.data.webtoon.title,
                 url = DAUM_WEBTOON_URL + it.data.webtoon.nickname,
                 thumbnailImage = it.data.webtoon.thumbnailImage2.url,
-                weekdays = listOf(WeekDay.NONE),
+                weekdays = listOf(),
                 authors = it.data.webtoon.cartoon.artists.map { it.name }.distinct(),
                 site = WebtoonSite.DAUM,
                 popular = 0,
