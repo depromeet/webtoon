@@ -18,14 +18,13 @@ fun Author.convertToAuthorResponse() = AuthorResponse(
 fun List<Author>.convertToAuthorResponses() = this.map { it.convertToAuthorResponse() }
 
 private fun randomAuthorImage(): String {
-
     val imageList = listOf(
-        "https://iili.io/BQbI9f.png",
-        "https://iili.io/BQbnFn.png",
-        "https://iili.io/BQboas.png",
-        "https://iili.io/BQbx8G.png",
-        "https://iili.io/BQbTu4.png",
-        "https://iili.io/BQbuwl.png"
+    "https://i.ibb.co/BLjqQpt/Img-random1.png",
+    "https://i.ibb.co/Lx5TxXt/Img-random2.png",
+    "https://i.ibb.co/YNjdKcc/Img-random3.png",
+    "https://i.ibb.co/6g1DfvB/Img-random4.png",
+    "https://i.ibb.co/JdctPLc/Img-random5.png",
+    "https://i.ibb.co/Bc2gCgd/Img-random6.png"
     )
 
     return imageList[(Math.random()*imageList.size).toInt()]
