@@ -25,7 +25,7 @@ class WebtoonService(
         top20.addAll(webtoonRepository.get_Top10_Daum_Webtoons_ByGenre(genre))
         return WebtoonTop20Response(
             genre = genre,
-            top20Webtoons = top20.convertToWebtoonResponses()
+            top20Webtoons = top20.shuffled().convertToWebtoonResponses()
         )
     }
 
