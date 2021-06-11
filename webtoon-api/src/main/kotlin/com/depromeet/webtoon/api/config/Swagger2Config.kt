@@ -25,7 +25,7 @@ class Swagger2Config {
     private fun apiInfo(): ApiInfo {
         return ApiInfoBuilder()
             .title("투니투니 API")
-            .description("테스트")
+            .description("투니투니 API 명세서")
             .version("1.0")
             .build()
     }
