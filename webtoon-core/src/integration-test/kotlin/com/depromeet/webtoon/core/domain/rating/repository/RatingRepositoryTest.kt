@@ -78,7 +78,6 @@ class RatingRepositoryTest(
 
         // then
         storyScoreAvg.shouldBe(rating1.storyScore!!.plus(rating2.storyScore!!).div(2))
-
     }
 
 
