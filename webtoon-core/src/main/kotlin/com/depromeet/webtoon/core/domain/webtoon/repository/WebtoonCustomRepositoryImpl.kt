@@ -51,7 +51,9 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
         return null
     }
 
-    override fun genreRecommendWebtoon(random: Long, genres: String): Webtoon? {
+    override fun getGenreRecommendWebtoon(genres: String): Webtoon? {
+        // score 상위 5개중 한개를 선택할 것
+        val random = (Math.random() * 5).toLong()
         val dynamicSite = BooleanBuilder()
         // 두가지 사이트를 섞어서 보여주기 위함
         if (random.toInt() % 2 == 0) {
