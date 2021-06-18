@@ -40,6 +40,16 @@ class WebtoonService(
         return webtoonRepository.findAllByWeekdaysOrderByPopularityAsc(weekDay)
     }
 
+    fun getWebtoons(): List<WebtoonCreateResponseDto> {
+        val webtoon = webtoonRepository.findAll()
+
+        return webtoon.map { it.toWebtoonCreateResponseDto() }
+    }
+
+    fun getWebtoons(ids: List<Long>): List<Webtoon> {
+        return webtoonRepository.findAllById(ids)
+    }
+
     fun upsertWebtoon(request: WebtoonUpsertRequest): Webtoon {
         val optionalWebtoon = webtoonRepository.findBySiteAndTitle(request.site, request.title)
         // 이미 존재하는 경우 내부 데이터를 업데이트합니다.
