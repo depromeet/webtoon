@@ -22,7 +22,6 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
             .selectFrom(webtoon)
             .where(webtoonGenreEq(genre), webtoon.site.eq(WebtoonSite.NAVER))
             .orderBy(webtoon.score.desc())
-            .offset(1L)
             .limit(10)
             .fetch()
     }
@@ -32,7 +31,6 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
             .selectFrom(webtoon)
             .where(webtoonGenreEq(genre), webtoon.site.eq(WebtoonSite.DAUM))
             .orderBy(webtoon.score.desc())
-            .offset(1L)
             .limit(10)
             .fetch()
     }

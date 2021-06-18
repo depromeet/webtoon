@@ -9,7 +9,6 @@ import com.depromeet.webtoon.core.domain.webtoon.service.WebtoonService
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
@@ -66,20 +65,6 @@ class WebtoonServiceTest : FunSpec({
         weekdayWebtoons.size.shouldBe(2)
     }
 
-    test("getWebtoons") {
-        // given
-        every { webtoonRepository.findAll() } returns listOf(
-            webtoonFixture(title = "webtoon1"), webtoonFixture(title = "webtoon2")
-        )
-        // when
-        val webtoons = webtoonService.getWebtoons()
-
-        // then
-        verify(exactly = 1) { webtoonRepository.findAll() }
-        webtoons.map { it.title }.apply {
-            this shouldContainExactly listOf("webtoon1", "webtoon2")
-        }
-    }
 
     test("upsertWebtoon 존재하는 웹툰일 경우 Update"){
         // given

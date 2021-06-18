@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service
 class WebtoonService(
     val webtoonRepository: WebtoonRepository
 ) {
-    private val log = LoggerFactory.getLogger(WebtoonService::class.java)
 
+    // 장르별 점수 상위 웹툰 20개
     fun getTop20WebtoonsByGenre(genre: String): WebtoonTop20Response {
         log.info("$genre service")
         val top20 = mutableListOf<Webtoon>()
@@ -35,16 +35,10 @@ class WebtoonService(
             .orElseThrow { IllegalArgumentException("매칭되는 webtoon을 찾지 못했습니다. id: $id") }
     }
 
+    // 인기순 요일별 웹툰
     fun getWeekdayWebtoons(weekDay: WeekDay): List<Webtoon> {
         return webtoonRepository.findAllByWeekdaysOrderByPopularityAsc(weekDay)
     }
-
-    fun getWebtoons(): List<WebtoonCreateResponseDto> {
-        val webtoon = webtoonRepository.findAll()
-
-        return webtoon.map { it.toWebtoonCreateResponseDto() }
-    }
-
 
     fun upsertWebtoon(request: WebtoonUpsertRequest): Webtoon {
         val optionalWebtoon = webtoonRepository.findBySiteAndTitle(request.site, request.title)
@@ -60,5 +54,9 @@ class WebtoonService(
 
     fun getRandomWebtoons(): List<Webtoon> {
         return webtoonRepository.find20RandomWebtoons()
+    }
+
+    companion object{
+        val log = LoggerFactory.getLogger(WebtoonService::class.java)
     }
 }
