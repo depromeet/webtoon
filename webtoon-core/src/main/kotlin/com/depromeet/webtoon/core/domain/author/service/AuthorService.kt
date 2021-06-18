@@ -8,7 +8,7 @@ import com.depromeet.webtoon.core.domain.author.repository.AuthorRepository
 import org.springframework.stereotype.Service
 
 @Service
-class AuthorService constructor(val authorRepository: AuthorRepository) {
+class AuthorService (val authorRepository: AuthorRepository) {
 
     fun createAuthor(authorCreateRequestDto: AuthorCreateRequestDto): AuthorCreateResponseDto {
         val author = Author(name = authorCreateRequestDto.name)

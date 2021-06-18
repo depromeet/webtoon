@@ -1,18 +1,37 @@
-package com.depromeet.webtoon.core.domain.account
+package com.depromeet.webtoon.core.domain.account.repository
 
+import com.depromeet.webtoon.core.domain.account.accountFixture
 import com.depromeet.webtoon.core.domain.account.model.Account
-import com.depromeet.webtoon.core.domain.account.repository.AccountRepository
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.comparables.shouldBeEqualComparingTo
 import io.kotest.matchers.nulls.shouldNotBeNull
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import io.kotest.matchers.shouldBe
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
-@DataJpaTest
-class AccountCrudTest(
+@SpringBootTest
+@Transactional
+class AccountRepositoryTest(
     val accountRepository: AccountRepository
 ) : FunSpec({
+
+    test("findByAuthToken"){
+        val account = accountFixture()
+        accountRepository.save(account)
+        val findAccount = accountRepository.findByAuthToken(account.authToken)
+        findAccount.shouldNotBeNull()
+        findAccount.id.shouldBe(account.id)
+    }
+
+    test("findByNickname"){
+        val account = accountFixture()
+        accountRepository.save(account)
+        val findAccount = accountRepository.findByNickname(account.nickname)
+        findAccount.shouldNotBeNull()
+        findAccount.id.shouldBe(account.id)
+    }
 
     test("Create Account") {
         // given

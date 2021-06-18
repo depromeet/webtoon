@@ -14,9 +14,7 @@ class GenreRecommendService (
         val genreRecommendWebtoons = mutableListOf<Webtoon>()
 
         GENRE.map {
-            // random 은 사이트별 TOP 10 중 랜덤한 상위 5개 웹툰 중에서 추천 해주기 위함
-            val random = (Math.random() * 5).toLong()
-            val optionalRecommendWebtoon = webtoonRepository.genreRecommendWebtoon(random, it)
+            val optionalRecommendWebtoon = webtoonRepository.getGenreRecommendWebtoon(it)
             if(optionalRecommendWebtoon != null){
                 genreRecommendWebtoons.add(optionalRecommendWebtoon)
             }
