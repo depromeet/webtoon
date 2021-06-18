@@ -3,6 +3,7 @@ package com.depromeet.webtoon.core.domain.webtoon.dto
 import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.author.model.Author
+import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 
 data class WebtoonUpsertRequest(
     val title: String,
@@ -18,3 +19,18 @@ data class WebtoonUpsertRequest(
     val backgroundColor: String,
     val isComplete: Boolean,
 )
+
+fun WebtoonUpsertRequest.convertToWebtoon() = Webtoon(
+        title = title,
+        site = site,
+        authors = authors,
+        weekdays = dayOfWeeks,
+        popularity = popularity,
+        thumbnail = thumbnail,
+        summary = summary,
+        genres = genres,
+        url = url,
+        score = score,
+        backgroundColor = backgroundColor,
+        isComplete = isComplete
+    )

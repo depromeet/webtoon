@@ -42,12 +42,9 @@ class DaumWebtoonJobConfiguration(
     fun webtoonImportStep(@Value("#{jobParameters[requestDate]}") requestDate: String?): Step {
         return stepBuilderFactory.get("webtoonImportStep")
             .tasklet { _, _ ->
-                log.info("=====test$requestDate======")
-
                 val ongoingWebtoons = daumWebtoonCrawler.crawlOngoingWebtoons()
                 ongoingWebtoons.map { webtoonImportService.importWebtoon(it) }
-
-                log.info("=====test$requestDate======")
+                log.info("[$requestDate] 다음 연재중 웹툰 크롤링 완료")
                 RepeatStatus.FINISHED
             }
             .build()

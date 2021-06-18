@@ -3,6 +3,7 @@ package com.depromeet.webtoon.core.domain.webtoon.model
 import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.author.model.Author
+import com.depromeet.webtoon.core.domain.webtoon.dto.WebtoonUpsertRequest
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -116,5 +117,21 @@ class Webtoon constructor(
 
     override fun hashCode(): Int {
         return id?.hashCode() ?: 0
+    }
+
+    fun update(request: WebtoonUpsertRequest): Webtoon {
+        site = request.site
+        title = request.title
+        authors = request.authors.toMutableList()
+        weekdays = request.dayOfWeeks.toMutableList()
+        popularity = request.popularity
+        thumbnail = request.thumbnail
+        summary = request.summary
+        genres = request.genres.toMutableList()
+        url = request.url
+        score = request.score
+        backgroudColor = request.backgroundColor
+        isComplete = request.isComplete
+        return this
     }
 }
