@@ -40,12 +40,6 @@ class WebtoonService(
         return webtoonRepository.findAllByWeekdaysOrderByPopularityAsc(weekDay)
     }
 
-    fun getWebtoons(): List<WebtoonCreateResponseDto> {
-        val webtoon = webtoonRepository.findAll()
-
-        return webtoon.map { it.toWebtoonCreateResponseDto() }
-    }
-
     fun getWebtoons(ids: List<Long>): List<Webtoon> {
         return webtoonRepository.findAllById(ids)
     }
