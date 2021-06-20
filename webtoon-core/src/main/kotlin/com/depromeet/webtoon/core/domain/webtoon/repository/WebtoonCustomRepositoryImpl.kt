@@ -1,6 +1,7 @@
 package com.depromeet.webtoon.core.domain.webtoon.repository
 
 import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.core.domain.author.model.Author
 import com.depromeet.webtoon.core.domain.webtoon.model.QWebtoon.webtoon
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.querydsl.core.BooleanBuilder
@@ -23,6 +24,7 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
             .where(webtoonGenreEq(genre), webtoon.site.eq(WebtoonSite.NAVER))
             .orderBy(webtoon.score.desc())
             .limit(10)
+            .join(webtoon.authors).fetchJoin()
             .fetch()
     }
 
@@ -32,6 +34,7 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
             .where(webtoonGenreEq(genre), webtoon.site.eq(WebtoonSite.DAUM))
             .orderBy(webtoon.score.desc())
             .limit(10)
+            .join(webtoon.authors).fetchJoin()
             .fetch()
     }
 
@@ -41,6 +44,7 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
             .where(webtoonIdGt(lastWebtoonId), webtoon.isComplete.isTrue)
             .orderBy(webtoon.id.asc())
             .limit(pageSize+1)
+            .join(webtoon.authors).fetchJoin()
             .fetch()
     }
 
