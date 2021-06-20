@@ -92,12 +92,13 @@ class WebtoonRepositoryTest constructor(
     context("장르별 점수 상위 10개") {
         test("get_Top10_Naver_Webtoons_ByGenre") {
             // given
+            val testAuthor = authorFixture().save()
             val webtoons = (0..20).map {
                 webtoonFixture(
                     title = "네이버 웹툰$it",
                     site = WebtoonSite.NAVER,
                     genres = listOf("드라마"),
-                    authors = listOf(),
+                    authors = listOf(testAuthor),
                     score = it.toDouble()
                 )
             }.saveAll()
@@ -106,7 +107,7 @@ class WebtoonRepositoryTest constructor(
                     title = "다음 웹툰$it",
                     site = WebtoonSite.DAUM,
                     genres = listOf("드라마"),
-                    authors = listOf(),
+                    authors = listOf(testAuthor),
                     score = it.toDouble()
                 )
             }.saveAll()
@@ -114,19 +115,22 @@ class WebtoonRepositoryTest constructor(
             // when
             val result = webtoonRepository.get_Top10_Naver_Webtoons_ByGenre("드라마")
 
+            println(result)
+
             result.size shouldBe 10
             result.map { it.genres shouldNotContain WebtoonSite.DAUM }
             result shouldContainInOrder listOf(webtoons[20], webtoons[19], webtoons[15], webtoons[11])
         }
 
         test("get_Top10_Daum_Webtoons_ByGenre") {
+            val testAuthor = authorFixture().save()
             // given
             (0..20).map {
                 webtoonFixture(
                     title = "네이버 웹툰$it",
                     site = WebtoonSite.NAVER,
                     genres = listOf("드라마"),
-                    authors = listOf(),
+                    authors = listOf(testAuthor),
                     score = it.toDouble()
                 )
             }.saveAll()
@@ -135,7 +139,7 @@ class WebtoonRepositoryTest constructor(
                     title = "다음 웹툰$it",
                     site = WebtoonSite.DAUM,
                     genres = listOf("드라마"),
-                    authors = listOf(),
+                    authors = listOf(testAuthor),
                     score = it.toDouble()
                 )
             }.saveAll()
@@ -152,10 +156,12 @@ class WebtoonRepositoryTest constructor(
 
     context("완결웹툰") {
         test("getCompletedWebtoons") {
+            val testAuthor = authorFixture().save()
             (1..10).map {
                 webtoonFixture(
                     title = "네이버 웹툰$it",
                     site = WebtoonSite.NAVER,
+                    authors = listOf(testAuthor),
                     isComplete = true
                 )
             }.saveAll()
@@ -164,6 +170,7 @@ class WebtoonRepositoryTest constructor(
                 webtoonFixture(
                     title = "다음 웹툰$it",
                     site = WebtoonSite.DAUM,
+                    authors = listOf(testAuthor),
                     isComplete = false
                 )
             }.saveAll()
