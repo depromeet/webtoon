@@ -12,9 +12,10 @@ class AuthorWebtoonService(
     val webtoonRepository: WebtoonRepository
 ) {
     fun getAuthorWebtoons(authorId: Long): List<Webtoon> {
+
         val optionalAuthor = authorRepository.findById(authorId)
         optionalAuthor.orElseThrow { ApiValidationException("잘못된 작가 ID 입니다") }
-        val author = optionalAuthor.get()
-        return webtoonRepository.findByAuthors(author)
+
+        return webtoonRepository.findByAuthors(optionalAuthor.get())
     }
 }
