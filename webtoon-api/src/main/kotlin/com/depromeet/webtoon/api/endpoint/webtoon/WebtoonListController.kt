@@ -7,6 +7,7 @@ import com.depromeet.webtoon.api.endpoint.dto.ApiResponse.Companion.ok
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonSearchResponse
 import com.depromeet.webtoon.api.endpoint.dto.WebtoonWeekDayResponse
 import com.depromeet.webtoon.api.endpoint.webtoon.dto.AuthorWebtoonResponse
+import com.depromeet.webtoon.api.endpoint.webtoon.dto.convertToAuthorWebtoonResponse
 import com.depromeet.webtoon.api.endpoint.webtoon.service.AuthorWebtoonService
 import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.application.api.dto.convertToWebtoonResponses
@@ -72,7 +73,10 @@ class WebtoonListController(
         authorId: Long
     ): ApiResponse<AuthorWebtoonResponse> {
         log.info("[WebtoonListController] 작가별 작품 조회 작가id $authorId")
-        return authorWebtoonService.getAuthorWebtoons(authorId)
+
+        val authorWebtoons = authorWebtoonService.getAuthorWebtoons(authorId)
+
+        return ok(convertToAuthorWebtoonResponse(authorWebtoons))
     }
 
     @GetMapping("/weekday/{weekDay}")

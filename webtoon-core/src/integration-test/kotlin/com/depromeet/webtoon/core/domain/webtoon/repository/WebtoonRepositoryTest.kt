@@ -1,10 +1,12 @@
 package com.depromeet.webtoon.core.domain.webtoon.repository
 
 import com.depromeet.webtoon.common.type.WebtoonSite
+import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.author.authorFixture
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.depromeet.webtoon.core.domain.webtoon.model.webtoonFixture
 import com.depromeet.webtoon.core.testsupport.AuthorTestDataHelper.Companion.save
+import com.depromeet.webtoon.core.testsupport.WebtoonTestDataHelper.Companion.save
 import com.depromeet.webtoon.core.testsupport.WebtoonTestDataHelper.Companion.saveAll
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
@@ -16,11 +18,13 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.transaction.annotation.Transactional
+import javax.persistence.EntityManager
 
 @Transactional
 @SpringBootTest
 class WebtoonRepositoryTest constructor(
-    var webtoonRepository: WebtoonRepository
+    val webtoonRepository: WebtoonRepository,
+    val entityManger: EntityManager
 ) : FunSpec({
     context("Webtoon 생성 및 반환 확인") {
         test("create and selelct ") {
@@ -34,6 +38,24 @@ class WebtoonRepositoryTest constructor(
             val foundWebtoon = webtoonRepository.getOne(savedWebtoon.id!!)
             foundWebtoon.id.shouldNotBeNull()
             foundWebtoon.id shouldNotBe null
+        }
+    }
+
+    context("요일별 웹툰"){
+        test("findAllByWeekdaysOrderByPopularityAsc"){
+            // given
+            val testAuthor = authorFixture(name = "김훈").save()
+            val testWebtoon = webtoonFixture(authors = listOf(testAuthor), weekdays = listOf(WeekDay.FRI)).save()
+
+            entityManger.flush()
+            entityManger.clear()
+            // when
+            val findWebtoon = webtoonRepository.findAllByWeekdaysOrderByPopularityAsc(WeekDay.FRI)
+
+            // then
+            findWebtoon shouldHaveSize 1
+            findWebtoon.first().authors.first().name shouldBe "김훈"
+
         }
     }
 

@@ -18,8 +18,8 @@ data class AuthorWebtoonResponse(
     val webtoons: List<WebtoonResponse>,
 
 )
-fun convertToAuthorWebtoonResponse(authorName: String, webtoons: List<Webtoon>) = AuthorWebtoonResponse(
-    authorName = authorName,
+fun convertToAuthorWebtoonResponse(webtoons: List<Webtoon>) = AuthorWebtoonResponse(
+    authorName = webtoons.first().authors.first().name,
     totalWebtoon = webtoons.size,
     webtoons = webtoons.convertToWebtoonResponses()
 )
