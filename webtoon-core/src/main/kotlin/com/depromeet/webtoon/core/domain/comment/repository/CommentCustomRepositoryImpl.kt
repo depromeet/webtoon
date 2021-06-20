@@ -2,6 +2,7 @@ package com.depromeet.webtoon.core.domain.comment.repository
 
 import com.depromeet.webtoon.core.domain.comment.model.Comment
 import com.depromeet.webtoon.core.domain.comment.model.QComment.comment
+import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
 import com.querydsl.core.BooleanBuilder
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,6 +14,14 @@ import javax.persistence.EntityManager
 class CommentCustomRepositoryImpl(@Autowired private val entityManger: EntityManager): CommentCustomRepository, QuerydslRepositorySupport(Comment::class.java) {
 
     private val query = JPAQueryFactory(entityManger)
+
+    override fun findRecent5Comments(webtoon: Webtoon): List<Comment> {
+        return query
+            .selectFrom(comment)
+            .orderBy(comment.createdAt.desc())
+            .limit(5)
+            .fetch()
+    }
 
     override fun getComments(webtoonId: Long, commentId: Long?, pageSize: Long): List<Comment> {
         val dynamicLtId = BooleanBuilder()

@@ -35,7 +35,7 @@ class CommentRepositoryTest(
                 ))
             }
 
-            val result = commentRepository.findTop5ByWebtoonOrderByCreatedAtDesc(webtoon)
+            val result = commentRepository.findRecent5Comments(webtoon)
             result!!.size.shouldBe(5)
             // 최신순 정렬
             result[0].id.shouldBe(10)

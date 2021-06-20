@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.RestController
 class WebtoonDetailController(
     val webtoonDetailService: WebtoonDetailService,
 ) {
-    private val log = LoggerFactory.getLogger(WebtoonListController::class.java)
 
     @GetMapping("/api/v1/webtoons/detail")
     @SwaggerAuthApi
     fun getWebtoonDetail(
         @RequestParam id: Long,
     ): ApiResponse<WebtoonDetailResponse> {
+        log.info("[WebtoonDetailController] getWebtoonDetail( webtoonId : $id )")
         return webtoonDetailService.getWebtoonDetail(id)
+    }
+
+    companion object {
+        private val log = LoggerFactory.getLogger(WebtoonDetailController::class.java)
     }
 }

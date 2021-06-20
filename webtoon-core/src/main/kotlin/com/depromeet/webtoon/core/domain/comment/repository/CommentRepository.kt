@@ -10,12 +10,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CommentRepository : JpaRepository<Comment, Long>, CommentCustomRepository {
-
-    @Query("select c from Comment c where c.webtoon.id = :webtoonId and c.account.id = :accountId")
-    fun findByWebtoonIdAndAccountId(webtoonId: Long, accountId: Long): Comment?
-
-    @Query("select c from Comment c where c.webtoon.id = :webtoonId")
-    fun findAllByWebtoonId(webtoonId: Long): List<Comment>?
-
-    fun findTop5ByWebtoonOrderByCreatedAtDesc(webtoon: Webtoon): List<Comment>?
+    
 }
