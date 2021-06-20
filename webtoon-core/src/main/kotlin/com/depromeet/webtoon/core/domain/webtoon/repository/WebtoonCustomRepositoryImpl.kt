@@ -20,6 +20,7 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
     override fun get_Top10_Naver_Webtoons_ByGenre(genre: String): List<Webtoon> {
         return query
             .selectFrom(webtoon)
+            .join(webtoon.authors).fetchJoin()
             .where(webtoonGenreEq(genre), webtoon.site.eq(WebtoonSite.NAVER))
             .orderBy(webtoon.score.desc())
             .limit(10)
@@ -29,6 +30,7 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
     override fun get_Top10_Daum_Webtoons_ByGenre(genre: String): List<Webtoon> {
         return query
             .selectFrom(webtoon)
+            .join(webtoon.authors).fetchJoin()
             .where(webtoonGenreEq(genre), webtoon.site.eq(WebtoonSite.DAUM))
             .orderBy(webtoon.score.desc())
             .limit(10)
@@ -38,6 +40,7 @@ class WebtoonCustomRepositoryImpl(entityManger: EntityManager) : WebtoonCustomRe
     override fun getCompletedWebtoons(lastWebtoonId: Long?, pageSize: Long): List<Webtoon> {
         return query
             .selectFrom(webtoon)
+            .join(webtoon.authors).fetchJoin()
             .where(webtoonIdGt(lastWebtoonId), webtoon.isComplete.isTrue)
             .orderBy(webtoon.id.asc())
             .limit(pageSize+1)

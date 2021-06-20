@@ -4,6 +4,7 @@ import com.depromeet.webtoon.common.type.WebtoonSite
 import com.depromeet.webtoon.common.type.WeekDay
 import com.depromeet.webtoon.core.domain.author.model.Author
 import com.depromeet.webtoon.core.domain.webtoon.model.Webtoon
+import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -13,8 +14,10 @@ interface WebtoonRepository : JpaRepository<Webtoon, Long>, WebtoonCustomReposit
 
     fun findBySiteAndTitle(site: WebtoonSite, title: String): Webtoon?
 
+    @EntityGraph(attributePaths = ["authors"])
     fun findByAuthors(author: Author): List<Webtoon>
 
+    @EntityGraph(attributePaths = ["authors"])
     fun findAllByWeekdaysOrderByPopularityAsc(weekDay: WeekDay): List<Webtoon>
 
     // 망하기 딱 좋게 생김. lucene 으로 변경 필요.
