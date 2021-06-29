@@ -18,6 +18,7 @@ class CommentCustomRepositoryImpl(@Autowired private val entityManger: EntityMan
     override fun findRecent5Comments(webtoon: Webtoon): List<Comment> {
         return query
             .selectFrom(comment)
+            .where(comment.webtoon.eq(webtoon))
             .orderBy(comment.createdAt.desc())
             .limit(5)
             .fetch()
