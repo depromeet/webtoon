@@ -23,7 +23,6 @@ class DaumCompletedWebtoonJobConfiguration(
     val daumWebtoonCrawler: DaumWebtoonCrawler,
     val webtoonImportService: WebtoonImportService,
 ) {
-    private val log = LoggerFactory.getLogger(DaumCompletedWebtoonJobConfiguration::class.java)
 
     @Bean
     fun updateDaumCompletedWebtoons(): Job {
@@ -38,19 +37,14 @@ class DaumCompletedWebtoonJobConfiguration(
     fun daumCompletedWebtoonImportStep(): Step {
         return stepBuilderFactory.get("daumCompletedWebtoonImportStep")
             .tasklet { contribution, chunckContext ->
-                log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@STEP@@@@@@@")
-
                 val ongoingWebtoons = daumWebtoonCrawler.crawlCompletedWebtoons()
                 ongoingWebtoons.map { webtoonImportService.importWebtoon(it) }
-
-                log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@STEP@@@@@@@")
                 RepeatStatus.FINISHED
             }
             .build()
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(DaumCompletedWebtoonJobConfiguration::class.java)
         const val DAUM_COMPLETED_WEBTOON_UPDATE_JOB = "daumCompletedWebtoonUpdateJob"
     }
 }
